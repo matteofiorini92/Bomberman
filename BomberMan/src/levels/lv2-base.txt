@@ -1,0 +1,13 @@
+tc ht t t t t t t t t t t t t t htf tcf
+l sl es es es es es es es es w es es es es slf lf
+l sl e w e w e w e w es w e w e slf lf
+l sl e es e es e es e es e es e es e slf lf
+l sl e w e w e w e w e w e w e slf lf
+l sl e w e es e es e es e es e w e slf lf
+l sl e w e w e w e w e w e w e slf lf
+l sl e es e es e es e es e es e es e slf lf
+l sl e w e w e w e w e w e w e slf lf
+l sl e es e es e es e es e es e es e slf lf
+l sl w w e w w w e w e w e w e slf lf
+l sl es es e es es es e es w es e es e slf lf
+bc sbl b b b b b b b b b b b b b sblf slf lf bcf
