@@ -10,10 +10,11 @@ public class Tile extends StackPane {
 
     public static final int TILE_HEIGHT = 64;
     public static final int TILE_WIDTH = 64;
-
+    private String desc;
     private ImageView imageView;
 
-    public Tile(Image image) {
+    public Tile(String desc, Image image) {
+    	this.desc = desc;
         imageView = new ImageView(image);
         imageView.setFitWidth(TILE_WIDTH);
         imageView.setFitHeight(TILE_HEIGHT);
@@ -21,4 +22,7 @@ public class Tile extends StackPane {
         Rectangle rectangle = new Rectangle(TILE_WIDTH, TILE_HEIGHT, Color.TRANSPARENT);
         getChildren().addAll(rectangle, imageView);
     }
+
+	public String getDesc()	{ return desc; }
+	public void setDesc(String desc)	{ this.desc = desc; }
 }
