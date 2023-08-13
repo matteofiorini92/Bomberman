@@ -9,7 +9,7 @@ public class Accelerator extends PowerUp {
 		super(position, ACCELERATOR_POINTS);
 	}
 	
-	public void accelerate(Bomberman b) {
+	public void accelerate(BomberMan b) {
 		Double currSpeed = b.getSpeed();
 		b.setSpeed(currSpeed+0.5);
 	}

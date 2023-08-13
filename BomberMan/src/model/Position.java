@@ -8,10 +8,10 @@ public class Position {
 		p[1] = y;
 	}
 	
-	public void setPosition(int[] p) {
+	public void setCoordinates(int[] p) {
 		this.p[0] = p[0];
 		this.p[1] = p[1];
 	}
 	
-	public int[] getPosition() { return p; }
+	public int[] getCoordinates() { return p; }
 }

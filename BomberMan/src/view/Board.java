@@ -6,17 +6,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.scene.Group;
 import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
 
 public class Board {
 	
-	private Item[][] tiles = new Item[13][17];
 	private static Map<String, String> imageFiles = new HashMap<>();
-	private Group root = new Group();
-
-	public Board(String levelNumber)
-	{
+	static {
 		imageFiles.put("tc", "01");
 		imageFiles.put("ht", "02");
 		imageFiles.put("htf", "02-flipped");
@@ -37,14 +33,19 @@ public class Board {
 		imageFiles.put("bcf", "17-flipped");
 		imageFiles.put("sw", "05 06 07 08");
 		imageFiles.put("sws", "13 14 15 16");
-		
-		fillBaseBoard(levelNumber);
-
 	}
 	
-	public Group getRoot() { return root; }
+	private Item[][] tiles = new Item[13][17];
+	private GridPane gridPane = new GridPane();
 
-	private void fillBaseBoard(String levelNumber) {
+	public Board(String levelNumber)
+	{		
+		fillBoard(levelNumber);
+	}
+	
+	public GridPane getGridPane() { return gridPane; }
+
+	private void fillBoard(String levelNumber) {
 		String desc;
 		String levelFilePath = "src/levels/" + levelNumber + ".txt";
 		String line;
@@ -69,10 +70,10 @@ public class Board {
 	            	
 	            	tiles[i][j] = item;
 	            	
-	            	item.setLayoutX(j * Item.ITEM_HEIGHT);
-	            	item.setLayoutY(i * Item.ITEM_WIDTH);
+//	            	item.setLayoutX(j * Item.ITEM_HEIGHT);
+//	            	item.setLayoutY(i * Item.ITEM_WIDTH);
 	            	
-	            	root.getChildren().add(item);
+	            	gridPane.add(item, j, i);
 	            }
 	        }
 	        reader.close();

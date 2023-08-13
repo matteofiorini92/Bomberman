@@ -1,16 +1,10 @@
-package model;
+package view;
 
-/**
- * 
- * @author Matteo
- *
- */
+import javafx.scene.layout.StackPane;
+import model.Position;
 
-public abstract class Element {
-	/**
-	 * 
-	 */
-	
+public abstract class Element extends StackPane {
+
 	private Position position;
 	
 	public Element(Position position) {
@@ -19,5 +13,5 @@ public abstract class Element {
 
 	public Position getPosition() {	return position; }
 	public void setPosition(Position position) { this.position = position; }
-	
+
 }

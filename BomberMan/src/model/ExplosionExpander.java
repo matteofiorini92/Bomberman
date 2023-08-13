@@ -9,7 +9,7 @@ public class ExplosionExpander extends PowerUp {
 		super(position, EXPLOSION_EXPANDER_POINTS);
 	}
 	
-	public void increaseRange(Bomberman b) {
+	public void increaseRange(BomberMan b) {
 		int currRange = b.getRange();
 		b.setRange(++currRange);
 	}

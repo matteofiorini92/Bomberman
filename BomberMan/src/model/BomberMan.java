@@ -1,6 +1,6 @@
 package model;
 
-public class Bomberman extends Character {
+public class BomberMan extends Character {
 	public static final int INITIAL_LIVES = 3;
 	public static final int INITIAL_BOMBS = 1;
 	public static final int INITIAL_RANGE = 1;
@@ -8,8 +8,8 @@ public class Bomberman extends Character {
 	private int bombs;
 	private int range;
 	
-	public Bomberman(Position position, Double speed, Direction direction) {
-		super(position, speed, direction);
+	public BomberMan(Position position, Double speed) {
+		super(position, speed);
 		lives = INITIAL_LIVES;
 		bombs = INITIAL_BOMBS;
 		range = INITIAL_RANGE;

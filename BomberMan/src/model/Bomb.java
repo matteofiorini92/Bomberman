@@ -4,7 +4,7 @@ public class Bomb extends Item {
 
 	private int range;
 	
-	public Bomb(Bomberman b)
+	public Bomb(BomberMan b)
 	{
 		super(b.getPosition());
 		range = b.getRange();

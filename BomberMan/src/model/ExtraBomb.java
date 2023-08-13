@@ -9,7 +9,7 @@ public class ExtraBomb extends PowerUp {
 		super(position, EXTRA_BOMB_POINTS);
 	}
 	
-	public void increaseBombs(Bomberman b) {
+	public void increaseBombs(BomberMan b) {
 		int currBombs = b.getBombs();
 		b.setBombs(++currBombs);
 	}
