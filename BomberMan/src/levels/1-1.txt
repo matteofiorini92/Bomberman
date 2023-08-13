@@ -1,13 +1,13 @@
 tc ht t t t t t t t t t t t t t htf tcf
-l sl es es es es es w es es es es es es es slf lf
-l sl e w e w e w e w e w e w e slf lf
-l sl e es e es e es e es e es e es e slf lf
-l sl e w e w e w e w e w e w e slf lf
-l sl e es e es e es e es e es e w e slf lf
-l sl e w e w e w e w w w e w e slf lf
-l sl e es e es e es e w es es e es e slf lf
-l sl e w e w e w e w e w e w e slf lf
-l sl e es e es e es e es e es e es w slf lf
-l sl e w e w e w e w e w e w es slf lf
-l sl e es e w e w e w e es e es e slf lf
-bc sbl b b b b b b b b b b b b b sblf slf lf bcf
+l sl ess ess ess ess ess sws sws ess sws sws w ess ess slf lf
+l sl e w e w e w e w sws w sws w e slf lf
+l sl e ess e ess e ess e sws ers ess ers sws sw slf lf
+l sl sw w e w e w e w w w e w sws slf lf
+l sl sws ess e sws e sws sw sws ess ess e ess ers slf lf
+l sl w w e w e w ers w e w e w e slf lf
+l sl ess ess sw ess sw ess e ess e w sw ess sw slf lf
+l sl w w ers w ers w e w sw w w w ers slf lf
+l sl sws ess e ess e ess e ess sws sws sws w sw slf lf
+l sl ers w sw w e w e w sws w ers w ers slf lf
+l sl e ess w sws e sws e ess ers sws e ess e slf lf
+bc sbl b b b b b b b b b b b b b sblf bcf
