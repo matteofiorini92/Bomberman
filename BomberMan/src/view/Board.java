@@ -56,36 +56,23 @@ public class Board {
 				String[] elements = line.split("\\s+");
 	            for (int j = 0; j < 17; j++) {
 	            	
+	            	desc = elements[j];
+	            	Item item;
 	            	
 	            	if (elements[j].equals("sw") || elements[j].equals("sws")) {
-	            		desc = elements[j];
-	            		SoftWall sw = new SoftWall(imageFiles.get(desc));
-	            		tiles[i][j] = sw;
-	            		
-		                int swX = j * Tile.ITEM_HEIGHT;
-		                int swY = i * Tile.ITEM_WIDTH;
-	            		
-	        	        sw.setLayoutX(swX);
-	        	        sw.setLayoutY(swY);
-	        	        root.getChildren().add(sw);
-	            	}
-	            	
-	            	
+	            		item = new SoftWall(imageFiles.get(desc));
+	            	}        	
 	            	else {	            		
-	            		desc = elements[j];
 	            		Image image = new Image("tiles-64x64/" + imageFiles.get(desc) + ".png");
-	            		Tile tile = new Tile(desc, image);
-	            		
-	            		tiles[i][j] = tile;
-	            		
-	            		int tileX = j * Tile.ITEM_HEIGHT;
-	            		int tileY = i * Tile.ITEM_WIDTH;
-	            		
-	            		tile.setLayoutX(tileX);
-	            		tile.setLayoutY(tileY);
-	            		
-	            		root.getChildren().add(tile);
+	            		item = new Tile(desc, image);
 	            	}
+	            	
+	            	tiles[i][j] = item;
+	            	
+	            	item.setLayoutX(j * Item.ITEM_HEIGHT);
+	            	item.setLayoutY(i * Item.ITEM_WIDTH);
+	            	
+	            	root.getChildren().add(item);
 	            }
 	        }
 	        reader.close();
