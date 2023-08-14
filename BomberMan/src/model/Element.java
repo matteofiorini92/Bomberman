@@ -1,12 +1,14 @@
 package model;
 
+import java.util.Observable;
+
 /**
  * 
  * @author Matteo
  *
  */
 
-public abstract class Element {
+public abstract class Element extends Observable {
 	/**
 	 * 
 	 */
@@ -18,6 +20,10 @@ public abstract class Element {
 	}
 
 	public Position getPosition() {	return position; }
-	public void setPosition(Position position) { this.position = position; }
+	public void setPosition(Position position) { 
+		this.position = position;
+		setChanged();
+		notifyObservers();
+	}
 	
 }

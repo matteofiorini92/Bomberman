@@ -1,9 +1,11 @@
 package view;
 
+import java.util.Observer;
+
 import javafx.scene.layout.StackPane;
 import model.Position;
 
-public abstract class Element extends StackPane {
+public abstract class Element extends StackPane implements Observer {
 
 	private Position position;
 	

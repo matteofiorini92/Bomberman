@@ -2,6 +2,7 @@ package view;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,10 +36,16 @@ public class BomberMan extends Character {
 		imageView = new ImageView(im1);
 		imageView.setFitHeight(96);
 		imageView.setFitWidth(64);
-		StackPane.setAlignment(imageView, javafx.geometry.Pos.BOTTOM_CENTER);
+		
+		int[] coordinates = INITIAL_POSITION.getCoordinates();
+		
+		this.setLayoutY(coordinates[0] * Item.ITEM_HEIGHT - 32); // to improve
+		this.setLayoutX(coordinates[1] * Item.ITEM_WIDTH);
 
-		Rectangle rectangle = new Rectangle(CHARACTER_WIDTH, CHARACTER_HEIGHT, Color.TRANSPARENT);
-        getChildren().addAll(rectangle, imageView);
+		StackPane.setAlignment(this, javafx.geometry.Pos.BOTTOM_RIGHT);
+
+		// Rectangle rectangle = new Rectangle(CHARACTER_WIDTH, CHARACTER_HEIGHT, Color.TRANSPARENT);
+        getChildren().add(imageView);
 	}
 	
 	public void turn(Direction direction) {
@@ -47,6 +54,15 @@ public class BomberMan extends Character {
 	
 	public void move(Direction direction, double speed) {
 		
+	}
+
+	@Override
+	public void update(Observable o, Object arg)
+	{
+		
+		int[] coordinates = ((model.Element) o).getPosition().getCoordinates();
+		this.setLayoutY(coordinates[0] * Item.ITEM_HEIGHT - 32); // to improve
+		this.setLayoutX(coordinates[1] * Item.ITEM_WIDTH);
 	}
 
 

@@ -4,12 +4,14 @@ public class BomberMan extends Character {
 	public static final int INITIAL_LIVES = 3;
 	public static final int INITIAL_BOMBS = 1;
 	public static final int INITIAL_RANGE = 1;
+	public static final Position INITIAL_POSITION = new Position(1, 2);
+	public static final double INITIAL_SPEED = 1.0;
 	private int lives;
 	private int bombs;
 	private int range;
 	
-	public BomberMan(Position position, Double speed) {
-		super(position, speed);
+	public BomberMan() {
+		super(INITIAL_POSITION, INITIAL_SPEED);
 		lives = INITIAL_LIVES;
 		bombs = INITIAL_BOMBS;
 		range = INITIAL_RANGE;
@@ -31,5 +33,6 @@ public class BomberMan extends Character {
 		lives--;
 		System.out.println("You have " + lives + " lives left.");
 	}
+
 
 }
