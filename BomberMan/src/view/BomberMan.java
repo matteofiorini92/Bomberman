@@ -13,7 +13,7 @@ import model.Position;
 
 public class BomberMan extends Character {
 	
-	public static final Position INITIAL_POSITION = new Position(1, 2);
+	public static final int[] INITIAL_POSITION = {1, 2};
 	
 	private static Map<String, String> imageFiles = new HashMap<>();
 	static {
@@ -37,10 +37,8 @@ public class BomberMan extends Character {
 		imageView.setFitHeight(96);
 		imageView.setFitWidth(64);
 		
-		int[] coordinates = INITIAL_POSITION.getCoordinates();
-		
-		this.setLayoutY(coordinates[0] * Item.ITEM_HEIGHT - 32); // to improve
-		this.setLayoutX(coordinates[1] * Item.ITEM_WIDTH);
+		this.setLayoutY(INITIAL_POSITION[0] * Item.ITEM_HEIGHT - 32); // to improve
+		this.setLayoutX(INITIAL_POSITION[1] * Item.ITEM_WIDTH);
 
 		StackPane.setAlignment(this, javafx.geometry.Pos.BOTTOM_RIGHT);
 

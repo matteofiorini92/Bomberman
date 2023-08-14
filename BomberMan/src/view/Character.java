@@ -9,7 +9,7 @@ public abstract class Character extends Element {
 
 	private Direction direction;
 	
-	public Character(Position position, Direction direction)
+	public Character(int[] position, Direction direction)
 	{
 		super(position);
 		this.direction = direction;

@@ -7,13 +7,13 @@ import model.Position;
 
 public abstract class Element extends StackPane implements Observer {
 
-	private Position position;
+	private int[] position;
 	
-	public Element(Position position) {
+	public Element(int[] position) {
 		this.position = position;
 	}
 
-	public Position getPosition() {	return position; }
-	public void setPosition(Position position) { this.position = position; }
+	public int[] getPosition() {	return position; }
+	public void setPosition(int[] position) { this.position = position; }
 
 }
