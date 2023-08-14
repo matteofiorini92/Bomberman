@@ -4,7 +4,7 @@ public abstract class Enemy extends Character {
 	
 	private int points;
 
-	public Enemy(Position position, Double speed, int points)
+	public Enemy(int[] position, Double speed, int points)
 	{
 		super(position, speed);
 		this.points = points;

@@ -13,14 +13,14 @@ public abstract class Element extends Observable {
 	 * 
 	 */
 	
-	private Position position;
+	private int[] position = new int[2];
 	
-	public Element(Position position) {
+	public Element(int[] position) {
 		this.position = position;
 	}
 
-	public Position getPosition() {	return position; }
-	public void setPosition(Position position) { 
+	public int[] getPosition() {	return position; }
+	public void setPosition(int[] position) { 
 		this.position = position;
 		setChanged();
 		notifyObservers();

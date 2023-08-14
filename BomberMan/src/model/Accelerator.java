@@ -4,7 +4,7 @@ public class Accelerator extends PowerUp {
 	
 	public static final int ACCELERATOR_POINTS = 400;
 
-	public Accelerator(Position position)
+	public Accelerator(int[] position)
 	{
 		super(position, ACCELERATOR_POINTS);
 	}

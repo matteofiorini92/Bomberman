@@ -4,7 +4,7 @@ public class ExplosionExpander extends PowerUp {
 	
 	public static final int EXPLOSION_EXPANDER_POINTS = 200;
 
-	public ExplosionExpander(Position position)
+	public ExplosionExpander(int[] position)
 	{
 		super(position, EXPLOSION_EXPANDER_POINTS);
 	}

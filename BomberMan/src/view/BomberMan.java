@@ -60,7 +60,7 @@ public class BomberMan extends Character {
 	public void update(Observable o, Object arg)
 	{
 		
-		int[] coordinates = ((model.Element) o).getPosition().getCoordinates();
+		int[] coordinates = ((model.Element) o).getPosition();
 		this.setLayoutY(coordinates[0] * Item.ITEM_HEIGHT - 32); // to improve
 		this.setLayoutX(coordinates[1] * Item.ITEM_WIDTH);
 	}

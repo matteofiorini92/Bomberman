@@ -4,7 +4,7 @@ public abstract class Tile extends Item {
 	
 	private TileType type;
 
-	public Tile(Position position, TileType type)
+	public Tile(int[] position, TileType type)
 	{
 		super(position);
 		this.setType(type);

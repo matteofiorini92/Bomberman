@@ -2,7 +2,7 @@ package model;
 
 public abstract class Item extends Element {
 
-	public Item(Position position)
+	public Item(int[] position)
 	{
 		super(position);
 		

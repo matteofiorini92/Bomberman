@@ -64,8 +64,8 @@ public class Main extends Application {
 	
 	private void handleKeyPressed(KeyEvent event) {
         if (event.getCode().equals(KeyCode.DOWN)) {
-        	int[] currPosition = modelBm.getPosition().getCoordinates();
-        	Position newPosition = new Position(currPosition[0] + 1, currPosition[1]);
+        	int[] currPosition = modelBm.getPosition();
+        	int[] newPosition = new int[] {currPosition[0] + 1, currPosition[1]};
         	
         	modelBm.setPosition(newPosition);
         }
