@@ -15,7 +15,7 @@ public class BomberMan extends Character {
 	
 	public static final int[] INITIAL_POSITION = {1, 2};
 	
-	private static Map<String, String> imageFiles = new HashMap<>();
+	public static Map<String, String> imageFiles = new HashMap<>();
 	static {
 		imageFiles.put("N", "02");
 		imageFiles.put("E", "10");

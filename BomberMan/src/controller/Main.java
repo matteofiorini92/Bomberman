@@ -45,7 +45,7 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception
 	{
 		
-		String levelNumber = "1-1";
+		String levelNumber = "1-2";
 		
 		Group root = new Group();
 		
