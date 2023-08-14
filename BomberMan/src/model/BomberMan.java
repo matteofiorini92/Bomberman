@@ -39,7 +39,7 @@ public class BomberMan extends Character {
 	public void setDirection(Direction direction) { 
 		this.direction = direction;
 		setChanged();
-		notifyObservers("TURN");
+		notifyObservers();
 	}
 
 

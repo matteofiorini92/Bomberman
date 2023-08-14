@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import model.Direction;
 import model.Position;
 
@@ -43,36 +46,58 @@ public class BomberMan extends Character {
 
 		StackPane.setAlignment(this, javafx.geometry.Pos.BOTTOM_RIGHT);
 
-		// Rectangle rectangle = new Rectangle(CHARACTER_WIDTH, CHARACTER_HEIGHT, Color.TRANSPARENT);
         getChildren().add(imageView);
 	}
 	
-	public void turn(Direction direction) {
-		
-	}
-	
-	public void move(Direction direction, double speed) {
-		
-	}
+//	public void turn(Direction direction) {
+//		
+//	}
 
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		if (arg.equals("TURN")) {
-			Direction newDirection = ((model.BomberMan) o).getDirection();
-			Image image = new Image("bm-64x96/"+ imageFiles.get(newDirection.toString()) +".png");
-			imageView.setImage(image);
-		} else if (arg.equals("MOVE")) {
-			int[] coordinates = ((model.Element) o).getPosition();
-			this.setLayoutY(coordinates[0] * Item.ITEM_HEIGHT - 32); // to improve
-			this.setLayoutX(coordinates[1] * Item.ITEM_WIDTH);
+		Direction newDirection = ((model.BomberMan) o).getDirection();
+		Image image = new Image("bm-64x96/"+ imageFiles.get(newDirection.toString()) +".png");
+		imageView.setImage(image);
+
+		if (arg instanceof int[]) {
+			int[] newPosition = ((model.BomberMan) o).getPosition();
+			int[] prevPosition = (int[]) arg;
+			move(newDirection, prevPosition, newPosition);
+			// this.setLayoutY(newPosition[0] * Item.ITEM_HEIGHT - 32); // to improve
+			// this.setLayoutX(newPosition[1] * Item.ITEM_WIDTH);
 		}
 		
-		
-//		int[] coordinates = ((model.Element) o).getPosition();
-//		this.setLayoutY(coordinates[0] * Item.ITEM_HEIGHT - 32); // to improve
-//		this.setLayoutX(coordinates[1] * Item.ITEM_WIDTH);
 	}
 
+	private void move(Direction direction, int[] prevPosition, int[] newPosition) {
+		String[] files = imageFiles.get("M"+direction.toString()).split("\\s+");
+		Image sw1 = new Image("bm-64x96/" + files[0]+ ".png");
+		Image sw2 = new Image("bm-64x96/" + files[1]+ ".png");
+		Image sw3 = new Image("bm-64x96/" + files[2]+ ".png");
+		
+		int xMove = newPosition[1] - prevPosition[1];
+		int yMove = newPosition[0] - prevPosition[0];
+		
+		Timeline timeline = new Timeline(
+			    new KeyFrame(Duration.millis(125), event -> {
+			    	imageView.setImage(sw1);
+			    	this.setLayoutX(prevPosition[1] * Item.ITEM_WIDTH + xMove * Item.ITEM_WIDTH * 1 / 3);
+			    	this.setLayoutY(prevPosition[0] * Item.ITEM_HEIGHT + yMove * Item.ITEM_HEIGHT * 1 / 3 - 32);
+			    }),
+			    new KeyFrame(Duration.millis(250), event -> { 
+			    	imageView.setImage(sw2);
+			    	this.setLayoutX(prevPosition[1] * Item.ITEM_WIDTH + xMove * Item.ITEM_WIDTH * 2 / 3);
+			    	this.setLayoutY(prevPosition[0] * Item.ITEM_HEIGHT + yMove * Item.ITEM_HEIGHT * 2 / 3 - 32);
+		    	}),
+			    new KeyFrame(Duration.millis(375), event -> { 
+			    	imageView.setImage(sw3);
+			    	this.setLayoutX(prevPosition[1] * Item.ITEM_WIDTH + xMove * Item.ITEM_WIDTH * 3 / 3);
+			    	this.setLayoutY(prevPosition[0] * Item.ITEM_HEIGHT + yMove * Item.ITEM_HEIGHT * 3 / 3 - 32);
+		    	})
+			);
+
+		timeline.play();
+	}
 
 }

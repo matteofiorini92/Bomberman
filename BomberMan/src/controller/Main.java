@@ -137,31 +137,31 @@ public class Main extends Application {
 	}
 	
 	private void handleKeyPressed(KeyEvent event) {
-		int[] currPosition = modelBm.getPosition();
+		int[] prevPosition = modelBm.getPosition();
 		int[] newPosition;
 		switch (event.getCode()) {
 		case DOWN:
 			modelBm.setDirection(model.Direction.S);
-			newPosition = new int[] {currPosition[0] + 1, currPosition[1]};
+			newPosition = new int[] {prevPosition[0] + 1, prevPosition[1]};
 			break;
 		case UP:
 			modelBm.setDirection(model.Direction.N);
-			newPosition = new int[] {currPosition[0] - 1, currPosition[1]};
+			newPosition = new int[] {prevPosition[0] - 1, prevPosition[1]};
 			
 			break;
 		case LEFT:
 			modelBm.setDirection(model.Direction.W);
-			newPosition = new int[] {currPosition[0], currPosition[1] - 1};
+			newPosition = new int[] {prevPosition[0], prevPosition[1] - 1};
 			break;
 		case RIGHT:
 			modelBm.setDirection(model.Direction.E);
-			newPosition = new int[] {currPosition[0], currPosition[1] + 1};
+			newPosition = new int[] {prevPosition[0], prevPosition[1] + 1};
 			break;
 		default:
-			newPosition = currPosition;
+			newPosition = prevPosition;
 			break;
 		}
-		modelBm.setPosition(newPosition);
+		modelBm.setPosition(prevPosition, newPosition);
 //        	int[] currPosition = modelBm.getPosition();
 //        	int[] newPosition = new int[] {currPosition[0] + 1, currPosition[1]};
         	
