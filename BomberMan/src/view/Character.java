@@ -1,5 +1,6 @@
 package view;
 
+import model.Direction;
 import model.Position;
 
 public abstract class Character extends Element {

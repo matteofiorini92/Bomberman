@@ -9,6 +9,7 @@ public class BomberMan extends Character {
 	private int lives;
 	private int bombs;
 	private int range;
+	private Direction direction;
 	
 	public BomberMan() {
 		super(INITIAL_POSITION, INITIAL_SPEED);
@@ -32,6 +33,13 @@ public class BomberMan extends Character {
 	public void die() {
 		lives--;
 		System.out.println("You have " + lives + " lives left.");
+	}
+
+	public Direction getDirection()	{ return direction; }
+	public void setDirection(Direction direction) { 
+		this.direction = direction;
+		setChanged();
+		notifyObservers("TURN");
 	}
 
 

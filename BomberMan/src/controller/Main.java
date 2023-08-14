@@ -127,7 +127,7 @@ public class Main extends Application {
 			int[] position = {coordinateX, coordinateY};
 			try {
 				mc = modelCharacterClass.getDeclaredConstructor(int[].class, double.class).newInstance(position, character[4]);
-				vc = viewCharacterClass.getDeclaredConstructor(int[].class, view.Direction.class).newInstance(position, view.Direction.E); // to improve
+				vc = viewCharacterClass.getDeclaredConstructor(int[].class, model.Direction.class).newInstance(position, model.Direction.E); // to improve
 				mc.addObserver(vc);
 				root.getChildren().add(vc);
 			} catch (Exception ex) {
@@ -137,11 +137,34 @@ public class Main extends Application {
 	}
 	
 	private void handleKeyPressed(KeyEvent event) {
-        if (event.getCode().equals(KeyCode.DOWN)) {
-        	int[] currPosition = modelBm.getPosition();
-        	int[] newPosition = new int[] {currPosition[0] + 1, currPosition[1]};
+		int[] currPosition = modelBm.getPosition();
+		int[] newPosition;
+		switch (event.getCode()) {
+		case DOWN:
+			modelBm.setDirection(model.Direction.S);
+			newPosition = new int[] {currPosition[0] + 1, currPosition[1]};
+			break;
+		case UP:
+			modelBm.setDirection(model.Direction.N);
+			newPosition = new int[] {currPosition[0] - 1, currPosition[1]};
+			
+			break;
+		case LEFT:
+			modelBm.setDirection(model.Direction.W);
+			newPosition = new int[] {currPosition[0], currPosition[1] - 1};
+			break;
+		case RIGHT:
+			modelBm.setDirection(model.Direction.E);
+			newPosition = new int[] {currPosition[0], currPosition[1] + 1};
+			break;
+		default:
+			newPosition = currPosition;
+			break;
+		}
+		modelBm.setPosition(newPosition);
+//        	int[] currPosition = modelBm.getPosition();
+//        	int[] newPosition = new int[] {currPosition[0] + 1, currPosition[1]};
         	
-        	modelBm.setPosition(newPosition);
-        }
+//        	modelBm.setPosition(newPosition);
     }
 }

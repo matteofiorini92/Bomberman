@@ -24,7 +24,7 @@ public abstract class Element extends Observable {
 	public void setPosition(int[] position) { 
 		this.position = position;
 		setChanged();
-		notifyObservers();
+		notifyObservers("MOVE");
 	}
 	
 }

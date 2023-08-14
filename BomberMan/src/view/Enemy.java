@@ -2,6 +2,8 @@ package view;
 
 import java.util.Observable;
 
+import model.Direction;
+
 public abstract class Enemy extends Character {
 
 	public Enemy(int[] position, Direction direction)

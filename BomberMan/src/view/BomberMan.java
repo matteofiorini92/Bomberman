@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import model.Direction;
 import model.Position;
 
 public class BomberMan extends Character {
@@ -57,10 +58,20 @@ public class BomberMan extends Character {
 	@Override
 	public void update(Observable o, Object arg)
 	{
+		if (arg.equals("TURN")) {
+			Direction newDirection = ((model.BomberMan) o).getDirection();
+			Image image = new Image("bm-64x96/"+ imageFiles.get(newDirection.toString()) +".png");
+			imageView.setImage(image);
+		} else if (arg.equals("MOVE")) {
+			int[] coordinates = ((model.Element) o).getPosition();
+			this.setLayoutY(coordinates[0] * Item.ITEM_HEIGHT - 32); // to improve
+			this.setLayoutX(coordinates[1] * Item.ITEM_WIDTH);
+		}
 		
-		int[] coordinates = ((model.Element) o).getPosition();
-		this.setLayoutY(coordinates[0] * Item.ITEM_HEIGHT - 32); // to improve
-		this.setLayoutX(coordinates[1] * Item.ITEM_WIDTH);
+		
+//		int[] coordinates = ((model.Element) o).getPosition();
+//		this.setLayoutY(coordinates[0] * Item.ITEM_HEIGHT - 32); // to improve
+//		this.setLayoutX(coordinates[1] * Item.ITEM_WIDTH);
 	}
 
 
