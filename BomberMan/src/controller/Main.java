@@ -30,8 +30,13 @@ public class Main extends Application {
 	{
 		
 		
+		
 		Group root = new Group();
-		GridPane boardGridPane = new Board("1-1").getGridPane();
+		model.Board modelBoard = new model.Board();
+		view.Board viewBoard = new view.Board();
+		modelBoard.addObserver(viewBoard);
+		modelBoard.fillEmptyBoard("1-2");
+		GridPane boardGridPane = viewBoard.getGridPane();
 		// boardGridPane.setGridLinesVisible(true);
 		
 		
@@ -39,13 +44,7 @@ public class Main extends Application {
 		modelBm = new model.BomberMan();
 		
 		modelBm.addObserver(viewBm);
-		
-//		GridPane.setRowSpan(bm, 2);
-//		int[] coordinates = bm.getPosition().getCoordinates();
-//		boardGridPane.add(bm, coordinates[1], coordinates[0]-1);
-		
-		
-		
+	
 		root.getChildren().addAll(boardGridPane, viewBm);
 		Scene scene = new Scene(root, 1088, 832, Color.BLACK);
 		

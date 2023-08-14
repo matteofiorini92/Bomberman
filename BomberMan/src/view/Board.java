@@ -5,11 +5,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 
-public class Board {
+public class Board implements Observer {
 	
 	private static Map<String, String> imageFiles = new HashMap<>();
 	static {
@@ -37,49 +39,31 @@ public class Board {
 	
 	private Item[][] tiles = new Item[13][17];
 	private GridPane gridPane = new GridPane();
-
-	public Board(String levelNumber)
-	{		
-		fillBoard(levelNumber);
-	}
 	
 	public GridPane getGridPane() { return gridPane; }
 
-	private void fillBoard(String levelNumber) {
-		String desc;
-		String levelFilePath = "src/levels/" + levelNumber + ".txt";
-		String line;
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader(levelFilePath));
-		
-	        for (int i = 0; i < 13; i++) {
-	        	line = reader.readLine();
-				String[] elements = line.split("\\s+");
-	            for (int j = 0; j < 17; j++) {
-	            	
-	            	desc = elements[j];
-	            	Item item;
-	            	
-	            	if (elements[j].equals("sw") || elements[j].equals("sws")) {
-	            		item = new SoftWall(imageFiles.get(desc));
-	            	}        	
-	            	else {	            		
-	            		Image image = new Image("tiles-64x64/" + imageFiles.get(desc) + ".png");
-	            		item = new Tile(desc, image);
-	            	}
-	            	
-	            	tiles[i][j] = item;
-	            	
-//	            	item.setLayoutX(j * Item.ITEM_HEIGHT);
-//	            	item.setLayoutY(i * Item.ITEM_WIDTH);
-	            	
-	            	gridPane.add(item, j, i);
-	            }
-	        }
-	        reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+	@Override
+	public void update(Observable o, Object arg)
+	{
+		model.Element[][] cells = ((model.Board) o).getCells();
+		for (int i=0; i < 13; i++) {
+			for (int j = 0; j < 17; j++) {
+				String desc = ((model.Tile)cells[i][j]).getLabel();
+            	Item item;
+            	
+            	if (desc.equals("sw") || desc.equals("sws")) {
+            		item = new SoftWall(imageFiles.get(desc));
+            	}        	
+            	else {	            		
+            		Image image = new Image("tiles-64x64/" + imageFiles.get(desc) + ".png");
+            		item = new Tile(desc, image);
+            	}
+            	
+            	tiles[i][j] = item;
+            	gridPane.add(item, j, i);
+			}
 		}
+		
 	}
 	
 }
