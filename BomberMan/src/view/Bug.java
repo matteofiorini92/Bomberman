@@ -12,24 +12,21 @@ import model.Position;
 
 public class Bug extends Enemy {
 	
-	public static Map<String, String> imageFiles = new HashMap<>();
+	public static Map<Direction, String> imageFiles = new HashMap<>();
 	static {
-		imageFiles.put("N", "10");
-		imageFiles.put("E", "26");
-		imageFiles.put("S", "01");
-		imageFiles.put("W", "19");
-		imageFiles.put("MN", "10 11 12 13 14 15 16 17 18");
-		imageFiles.put("ME", "26 27 28 29 30 31 32");
-		imageFiles.put("MS", "01 02 03 04 05 06 07 08 09");
-		imageFiles.put("MW", "19 20 21 22 23 24 25");
+		imageFiles.put(Direction.INITIAL, "26");
+		imageFiles.put(Direction.UP, "10 11 12 13 14 15 16 17 18");
+		imageFiles.put(Direction.RIGHT, "26 27 28 29 30 31 32");
+		imageFiles.put(Direction.DOWN, "01 02 03 04 05 06 07 08 09");
+		imageFiles.put(Direction.LEFT, "19 20 21 22 23 24 25");
 	}
 
 	private ImageView imageView;
 
-	public Bug(int[] position, Direction direction)
+	public Bug(int[] position)
 	{
-		super(position, direction);
-		Image im1 = new Image("bug-64x96/26.png");
+		super(position);
+		Image im1 = new Image("bug-64x96/" + imageFiles.get(Direction.INITIAL) + ".png");
 		imageView = new ImageView(im1);
 		imageView.setFitHeight(96);
 		imageView.setFitWidth(64);

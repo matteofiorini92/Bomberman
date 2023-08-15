@@ -32,7 +32,7 @@ public class BomberMan extends Character {
 
 	public BomberMan()
 	{
-		super(INITIAL_POSITION, Direction.RIGHT);
+		super(INITIAL_POSITION);
 		Image im1 = new Image("bm-64x96/10.png");
 		imageView = new ImageView(im1);
 		imageView.setFitHeight(96);

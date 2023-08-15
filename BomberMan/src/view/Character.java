@@ -10,10 +10,10 @@ public abstract class Character extends Element {
 
 	private Direction direction;
 	
-	public Character(int[] position, Direction direction)
+	public Character(int[] position)
 	{
 		super(position);
-		this.direction = direction;
+		this.direction = Direction.INITIAL;
 	}
 
 	public Direction getDirection()	{ return direction;	}

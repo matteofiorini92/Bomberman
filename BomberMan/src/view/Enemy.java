@@ -6,9 +6,9 @@ import model.Direction;
 
 public abstract class Enemy extends Character {
 
-	public Enemy(int[] position, Direction direction)
+	public Enemy(int[] position)
 	{
-		super(position, direction);
+		super(position);
 		// TODO Auto-generated constructor stub
 	}
 

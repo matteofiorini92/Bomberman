@@ -12,25 +12,22 @@ import model.Position;
 
 public class Helix extends Enemy {
 	
-	public static Map<String, String> imageFiles = new HashMap<>();
+	public static Map<Direction, String> imageFiles = new HashMap<>();
 	static {
-		imageFiles.put("N", "05");
-		imageFiles.put("E", "13");
-		imageFiles.put("S", "01");
-		imageFiles.put("W", "09");
-		imageFiles.put("MN", "05 06 07 08");
-		imageFiles.put("ME", "13 14 15 16");
-		imageFiles.put("MS", "01 02 03 04");
-		imageFiles.put("MW", "09 10 11 12");
+		imageFiles.put(Direction.INITIAL, "13");
+		imageFiles.put(Direction.UP, "05 06 07 08");
+		imageFiles.put(Direction.RIGHT, "13 14 15 16");
+		imageFiles.put(Direction.DOWN, "01 02 03 04");
+		imageFiles.put(Direction.LEFT, "09 10 11 12");
 	}
 
 	private ImageView imageView;
 
 	
-	public Helix(int[] position, Direction direction)
+	public Helix(int[] position)
 	{
-		super(position, direction);
-		Image im1 = new Image("helix-64x96/13.png");
+		super(position);
+		Image im1 = new Image("helix-64x96/" + imageFiles.get(Direction.INITIAL) + ".png");
 		imageView = new ImageView(im1);
 		imageView.setFitHeight(96);
 		imageView.setFitWidth(64);

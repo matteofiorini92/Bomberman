@@ -128,7 +128,7 @@ public class Main extends Application {
 			int[] position = {coordinateX, coordinateY};
 			try {
 				modelCharacter = modelCharacterClass.getDeclaredConstructor(int[].class, double.class).newInstance(position, character[4]);
-				viewCharacter = viewCharacterClass.getDeclaredConstructor(int[].class, model.Direction.class).newInstance(position, model.Direction.RIGHT); // to improve
+				viewCharacter = viewCharacterClass.getDeclaredConstructor(int[].class).newInstance(position); // to improve
 				modelCharacter.addObserver(viewCharacter);
 				modelBoard.setCell(modelCharacter, position);
 				root.getChildren().add(viewCharacter);
