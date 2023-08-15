@@ -26,11 +26,7 @@ public class Bug extends Enemy {
 	public Bug(int[] position)
 	{
 		super(position, new Image("bug-64x96/" + imageFiles.get(Direction.INITIAL) + ".png"));
-//		Image im1 = new Image("bug-64x96/" + imageFiles.get(Direction.INITIAL) + ".png");
-//		imageView = new ImageView(im1);
-//		imageView.setFitHeight(96);
-//		imageView.setFitWidth(64);
-//		
+		
 		this.setLayoutY(position[0] * Item.ITEM_HEIGHT - 32); // to improve
 		this.setLayoutX(position[1] * Item.ITEM_WIDTH);
 
@@ -39,11 +35,8 @@ public class Bug extends Enemy {
 	}
 
 	@Override
-	public void update(Observable o, Object arg)
-	{
-		int[] coordinates = ((model.Element) o).getPosition();
-		this.setLayoutY(coordinates[0] * Item.ITEM_HEIGHT - 32); // to improve
-		this.setLayoutX(coordinates[1] * Item.ITEM_WIDTH);
+	public void update(Observable o, Object arg) {
+		super.move((model.Character)o, imageFiles, arg);
 	}
 
 }

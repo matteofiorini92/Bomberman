@@ -21,21 +21,22 @@ public abstract class Enemy extends Character {
 	public void setPoints(int points) { this.points = points; }
 	
 	public void startMoving() {
+		boolean[] needsNewDirection = { true };
+		Direction[] randomDirection = { getRandomDirection(this) };
 		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 		Runnable moveTask = () -> {
-			boolean needsNewDirection = true;
-			Direction randomDirection = getRandomDirection(this, Direction.class);
-			needsNewDirection = !this.move(Board.getInstance(), randomDirection);
-			if (needsNewDirection) {				
-				randomDirection = getRandomDirection(this, Direction.class);
+			needsNewDirection[0] = !this.move(Board.getInstance(), randomDirection[0]);
+			if (needsNewDirection[0]) {				
+				randomDirection[0] = getRandomDirection(this);
 			}
 		};
-		executor.scheduleAtFixedRate(moveTask, 0, 500, TimeUnit.MILLISECONDS);
+		executor.scheduleAtFixedRate(moveTask, 0, 375, TimeUnit.MILLISECONDS);
 	}
 	
-	public static Direction getRandomDirection(Enemy e, Class<Direction> d) { // public?
+	public static Direction getRandomDirection(Enemy enemy) { // public?
+		// Class<Direction> directionClass;
 		Element[][] cells = Board.getInstance().getCells();
-		int[] currPosition = e.getPosition();
+		int[] currPosition = enemy.getPosition();
 		List<Direction> availableDirections = getAvailableDirections(currPosition, cells);
 		if (availableDirections.size() != 0) {			
 			Random random = new Random();

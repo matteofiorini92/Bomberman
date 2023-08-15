@@ -65,15 +65,5 @@ public abstract class Character extends Element {
 		this.direction = direction;
 	}
 	
-//	public void move(Board board, int[] prevPosition, int[] newPosition) {
-//		Element newCell = board.getCell(newPosition);
-//		if (newCell instanceof Bomb || (newCell instanceof Tile && (((Tile)newCell).getType() == TileType.WALL || ((Tile)newCell).getType() == TileType.SOFT_WALL))) { // can't walk over walls or bombs
-//			newPosition = prevPosition;
-//		}
-//		board.setCell(new EmptyTile(prevPosition), prevPosition);
-//		board.setCell(this, newPosition);
-//		this.setPosition(prevPosition, newPosition);
-//	}
-	
 
 }
