@@ -21,21 +21,21 @@ public class Bug extends Enemy {
 		imageFiles.put(Direction.LEFT, "19 20 21 22 23 24 25");
 	}
 
-	private ImageView imageView;
+//	private ImageView imageView;
 
 	public Bug(int[] position)
 	{
-		super(position);
-		Image im1 = new Image("bug-64x96/" + imageFiles.get(Direction.INITIAL) + ".png");
-		imageView = new ImageView(im1);
-		imageView.setFitHeight(96);
-		imageView.setFitWidth(64);
-		
+		super(position, new Image("bug-64x96/" + imageFiles.get(Direction.INITIAL) + ".png"));
+//		Image im1 = new Image("bug-64x96/" + imageFiles.get(Direction.INITIAL) + ".png");
+//		imageView = new ImageView(im1);
+//		imageView.setFitHeight(96);
+//		imageView.setFitWidth(64);
+//		
 		this.setLayoutY(position[0] * Item.ITEM_HEIGHT - 32); // to improve
 		this.setLayoutX(position[1] * Item.ITEM_WIDTH);
 
 		StackPane.setAlignment(this, javafx.geometry.Pos.BOTTOM_RIGHT);
-        getChildren().add(imageView);
+        getChildren().add(getImageView());
 	}
 
 	@Override

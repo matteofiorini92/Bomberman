@@ -28,7 +28,7 @@ public abstract class Enemy extends Character {
 				randomDirection = getRandomDirection(Direction.class);
 			}
 		};
-		executor.scheduleAtFixedRate(moveTask, 0, 1000, TimeUnit.MILLISECONDS);
+		executor.scheduleAtFixedRate(moveTask, 0, 375, TimeUnit.MILLISECONDS);
 
 		
 	}

@@ -21,31 +21,36 @@ public class Helix extends Enemy {
 		imageFiles.put(Direction.LEFT, "09 10 11 12");
 	}
 
-	private ImageView imageView;
+//	private ImageView imageView;
 
 	
 	public Helix(int[] position)
 	{
-		super(position);
-		Image im1 = new Image("helix-64x96/" + imageFiles.get(Direction.INITIAL) + ".png");
-		imageView = new ImageView(im1);
-		imageView.setFitHeight(96);
-		imageView.setFitWidth(64);
+		super(position, new Image("helix-64x96/" + imageFiles.get(Direction.INITIAL) + ".png"));
+//		Image im1 = new Image("helix-64x96/" + imageFiles.get(Direction.INITIAL) + ".png");
+//		imageView = new ImageView(im1);
+//		imageView.setFitHeight(96);
+//		imageView.setFitWidth(64);
 		
 		this.setLayoutY(position[0] * Item.ITEM_HEIGHT - 32); // to improve
 		this.setLayoutX(position[1] * Item.ITEM_WIDTH);
 
 		StackPane.setAlignment(this, javafx.geometry.Pos.BOTTOM_RIGHT);
-        getChildren().add(imageView);
+        getChildren().add(getImageView());
 	}
 
+//	@Override
+//	public void update(Observable o, Object arg)
+//	{
+//		
+//		int[] coordinates = ((model.Element) o).getPosition();
+//		this.setLayoutY(coordinates[0] * Item.ITEM_HEIGHT - 32); // to improve
+//		this.setLayoutX(coordinates[1] * Item.ITEM_WIDTH);
+//	}
+	
 	@Override
-	public void update(Observable o, Object arg)
-	{
-		
-		int[] coordinates = ((model.Element) o).getPosition();
-		this.setLayoutY(coordinates[0] * Item.ITEM_HEIGHT - 32); // to improve
-		this.setLayoutX(coordinates[1] * Item.ITEM_WIDTH);
+	public void update(Observable o, Object arg) {
+		super.move((model.Character)o, imageFiles, arg);
 	}
 
 }

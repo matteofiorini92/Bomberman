@@ -25,6 +25,8 @@ public class Main extends Application {
 	
 	private view.BomberMan viewBm;
 	private model.BomberMan modelBm;
+//	private view.Helix viewHe;
+//	private model.Helix modelHe;
 	private model.Board modelBoard;
 	private view.Board viewBoard;
 	
@@ -128,8 +130,8 @@ public class Main extends Application {
 			int coordinateY = (int) character[2];
 			int[] position = {coordinateX, coordinateY};
 			try {
-				modelCharacter = modelCharacterClass.getDeclaredConstructor(int[].class, double.class).newInstance(position, character[4]);
-				viewCharacter = viewCharacterClass.getDeclaredConstructor(int[].class).newInstance(position); // to improve
+				modelCharacter = modelCharacterClass.getDeclaredConstructor(int[].class).newInstance(position);
+				viewCharacter = viewCharacterClass.getDeclaredConstructor(int[].class).newInstance(position); // to improve SHOULD POSITION BE USED TO CONSTRUCT VIEW CHARACTERS??
 				modelCharacter.addObserver(viewCharacter);
 				modelBoard.setCell(modelCharacter, position);
 				root.getChildren().add(viewCharacter);
@@ -140,6 +142,15 @@ public class Main extends Application {
 		modelBm = new model.BomberMan();
 		viewBm = new view.BomberMan();
 		modelBm.addObserver(viewBm);
+		
+		
+//		modelHe = new model.Helix(new int[] {1,2});
+//		viewHe = new view.Helix(new int[] {1,2});
+//		modelHe.addObserver(viewHe);
+//		root.getChildren().add(viewHe);
+		
+		
+		
 		modelBoard.setCell(modelBm, modelBm.INITIAL_POSITION);
 		root.getChildren().add(viewBm);
 	}
@@ -184,6 +195,8 @@ public class Main extends Application {
 	        		break;	
 	        	}
 	        	modelBm.move(modelBoard, direction);
+	        	// modelHe.move(modelBoard, direction);
+	        	
 	        } catch (NullPointerException e) {
 	        	System.out.println("Invalid command");
 	        }

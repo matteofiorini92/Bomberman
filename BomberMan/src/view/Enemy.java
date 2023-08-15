@@ -2,13 +2,14 @@ package view;
 
 import java.util.Observable;
 
+import javafx.scene.image.Image;
 import model.Direction;
 
 public abstract class Enemy extends Character {
 
-	public Enemy(int[] position)
+	public Enemy(int[] position, Image image)
 	{
-		super(position);
+		super(position, image);
 		// TODO Auto-generated constructor stub
 	}
 
