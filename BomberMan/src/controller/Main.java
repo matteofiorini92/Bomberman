@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -73,6 +74,7 @@ public class Main extends Application {
 		
 		Scene scene = new Scene(root, 1088, 832, Color.BLACK);
 		scene.setOnKeyPressed(this::handleKeyPressed);
+		scene.setOnKeyReleased(this::handleKeyReleased);
 		
 		/**
 		 * define window properties
@@ -136,35 +138,61 @@ public class Main extends Application {
 		}
 	}
 	
+	private long lastKeyPressTime = 0;
+	private static final long THROTTLE_DELAY = 375; // Milliseconds
+	private boolean keyHeld = false;
+
 	private void handleKeyPressed(KeyEvent event) {
-		int[] prevPosition = modelBm.getPosition();
-		int[] newPosition;
-		switch (event.getCode()) {
-		case DOWN:
-			modelBm.setDirection(model.Direction.S);
-			newPosition = new int[] {prevPosition[0] + 1, prevPosition[1]};
-			break;
-		case UP:
-			modelBm.setDirection(model.Direction.N);
-			newPosition = new int[] {prevPosition[0] - 1, prevPosition[1]};
-			
-			break;
-		case LEFT:
-			modelBm.setDirection(model.Direction.W);
-			newPosition = new int[] {prevPosition[0], prevPosition[1] - 1};
-			break;
-		case RIGHT:
-			modelBm.setDirection(model.Direction.E);
-			newPosition = new int[] {prevPosition[0], prevPosition[1] + 1};
-			break;
-		default:
-			newPosition = prevPosition;
-			break;
-		}
-		modelBm.setPosition(prevPosition, newPosition);
-//        	int[] currPosition = modelBm.getPosition();
-//        	int[] newPosition = new int[] {currPosition[0] + 1, currPosition[1]};
-        	
-//        	modelBm.setPosition(newPosition);
+	    if (!keyHeld) {
+	        keyHeld = true;
+	        processKeyPress(event);
+	    }
+
     }
+
+	private void handleKeyReleased(KeyEvent event) {
+	    keyHeld = false;
+	}
+
+	private void processKeyPress(KeyEvent event) {
+	    long currentTime = System.currentTimeMillis();
+
+	    if (currentTime - lastKeyPressTime >= THROTTLE_DELAY) {
+	        lastKeyPressTime = currentTime;
+
+			int[] prevPosition = modelBm.getPosition();
+			int[] newPosition;
+			
+			switch (event.getCode()) {
+			case DOWN:
+				modelBm.setDirection(model.Direction.S);
+				newPosition = new int[] {prevPosition[0] + 1, prevPosition[1]};
+				break;
+			case UP:
+				modelBm.setDirection(model.Direction.N);
+				newPosition = new int[] {prevPosition[0] - 1, prevPosition[1]};
+				
+				break;
+			case LEFT:
+				modelBm.setDirection(model.Direction.W);
+				newPosition = new int[] {prevPosition[0], prevPosition[1] - 1};
+				break;
+			case RIGHT:
+				modelBm.setDirection(model.Direction.E);
+				newPosition = new int[] {prevPosition[0], prevPosition[1] + 1};
+				break;
+			default:
+				newPosition = prevPosition;
+				break;
+			}
+			modelBm.setPosition(prevPosition, newPosition);
+	    }
+
+	    if (keyHeld) {
+	    	Platform.runLater(() -> processKeyPress(event));
+	    }
+	}
+
+	
+
 }
