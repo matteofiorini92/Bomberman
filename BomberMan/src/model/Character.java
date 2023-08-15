@@ -45,7 +45,11 @@ public abstract class Character extends Element {
 
 		newCell = board.getCell(newPosition);
 		
-		if (newCell instanceof Bomb || (newCell instanceof Tile && (((Tile)newCell).getType() == TileType.WALL || ((Tile)newCell).getType() == TileType.SOFT_WALL))) { // can't walk over walls or bombs
+		if (
+				newCell instanceof Bomb || 
+				newCell instanceof Character || 
+				(newCell instanceof Tile && (((Tile)newCell).getType() == TileType.WALL || ((Tile)newCell).getType() == TileType.SOFT_WALL))) 
+		{ // can't walk over walls, bombs or characters
 			newPosition = prevPosition;
 			hasMoved = false;
 		}
