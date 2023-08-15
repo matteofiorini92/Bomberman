@@ -76,5 +76,6 @@ public class Board extends Observable {
 	public int getWidth() { return WIDTH; }
 	public int getHeight() { return HEIGHT; }
 	public Element[][] getCells() { return cells; }
+	public Element getCell(int[] coordinates) { return cells[coordinates[0]][coordinates[1]];}
 
 }

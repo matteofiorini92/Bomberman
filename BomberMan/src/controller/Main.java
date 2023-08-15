@@ -24,6 +24,9 @@ public class Main extends Application {
 	
 	private view.BomberMan viewBm;
 	private model.BomberMan modelBm;
+	private model.Board modelBoard;
+	private view.Board viewBoard;
+	
 	private static Map<String, Class<? extends model.Enemy>> modelEnemies = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
 	static {
 //		modelCharacters.put("bm", model.BomberMan.class);
@@ -55,8 +58,8 @@ public class Main extends Application {
 		 * initialise board
 		 */
 		
-		model.Board modelBoard = new model.Board();
-		view.Board viewBoard = new view.Board();
+		modelBoard = new model.Board();
+		viewBoard = new view.Board();
 		modelBoard.addObserver(viewBoard);
 		modelBoard.fillEmptyBoard(levelNumber);
 		GridPane boardGridPane = viewBoard.getGridPane();
@@ -115,10 +118,6 @@ public class Main extends Application {
 	}
 	
 	private void initialiseCharacters(List<Object[]> characters, Group root) {
-		modelBm = new model.BomberMan();
-		viewBm = new view.BomberMan();
-		modelBm.addObserver(viewBm);
-		root.getChildren().add(viewBm);
 		for (Object[] character : characters) {
 			Class<? extends model.Character> modelCharacterClass = modelEnemies.get(character[0]);
 			Class<? extends view.Character> viewCharacterClass = viewEnemies.get(character[0]);
@@ -136,6 +135,10 @@ public class Main extends Application {
 				ex.printStackTrace();
 			}
 		}
+		modelBm = new model.BomberMan();
+		viewBm = new view.BomberMan();
+		modelBm.addObserver(viewBm);
+		root.getChildren().add(viewBm);
 	}
 	
 	private long lastKeyPressTime = 0;
@@ -185,7 +188,7 @@ public class Main extends Application {
 				newPosition = prevPosition;
 				break;
 			}
-			modelBm.setPosition(prevPosition, newPosition);
+			modelBm.move(modelBoard, prevPosition, newPosition);
 	    }
 
 	    if (keyHeld) {
