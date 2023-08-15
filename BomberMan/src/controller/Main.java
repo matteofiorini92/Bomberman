@@ -26,6 +26,7 @@ public class Main extends Application {
 	private model.BomberMan modelBm;
 	private model.Board modelBoard;
 	private view.Board viewBoard;
+	private int test;
 	
 	private static Map<String, Class<? extends model.Enemy>> modelEnemies = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
 	static {
@@ -121,16 +122,17 @@ public class Main extends Application {
 		for (Object[] character : characters) {
 			Class<? extends model.Character> modelCharacterClass = modelEnemies.get(character[0]);
 			Class<? extends view.Character> viewCharacterClass = viewEnemies.get(character[0]);
-			model.Character mc;
-			view.Character vc;
+			model.Character modelCharacter;
+			view.Character viewCharacter;
 			int coordinateX = (int) character[1];
 			int coordinateY = (int) character[2];
 			int[] position = {coordinateX, coordinateY};
 			try {
-				mc = modelCharacterClass.getDeclaredConstructor(int[].class, double.class).newInstance(position, character[4]);
-				vc = viewCharacterClass.getDeclaredConstructor(int[].class, model.Direction.class).newInstance(position, model.Direction.E); // to improve
-				mc.addObserver(vc);
-				root.getChildren().add(vc);
+				modelCharacter = modelCharacterClass.getDeclaredConstructor(int[].class, double.class).newInstance(position, character[4]);
+				viewCharacter = viewCharacterClass.getDeclaredConstructor(int[].class, model.Direction.class).newInstance(position, model.Direction.E); // to improve
+				modelCharacter.addObserver(viewCharacter);
+				modelBoard.setCell(modelCharacter, position);
+				root.getChildren().add(viewCharacter);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -138,6 +140,7 @@ public class Main extends Application {
 		modelBm = new model.BomberMan();
 		viewBm = new view.BomberMan();
 		modelBm.addObserver(viewBm);
+		modelBoard.setCell(modelBm, modelBm.INITIAL_POSITION);
 		root.getChildren().add(viewBm);
 	}
 	
@@ -158,6 +161,7 @@ public class Main extends Application {
 	}
 
 	private void processKeyPress(KeyEvent event) {
+		System.out.println(++test);
 	    long currentTime = System.currentTimeMillis();
 
 	    if (currentTime - lastKeyPressTime >= THROTTLE_DELAY) {
