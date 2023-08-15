@@ -18,6 +18,7 @@ import model.Position;
 public class BomberMan extends Character {
 	
 	public static final int[] INITIAL_POSITION = {1, 2};
+	public static long TIME_FOR_MOVEMENT = 375;
 	
 	public static Map<Direction, String> imageFiles = new HashMap<>();
 	static {
@@ -59,34 +60,26 @@ public class BomberMan extends Character {
 			int[] prevPosition = (int[]) arg;
 			
 			String[] files = imageFiles.get(newDirection).split("\\s+");
-			Image sw1 = new Image("bm-64x96/" + files[0]+ ".png");
-			Image sw2 = new Image("bm-64x96/" + files[1]+ ".png");
-			Image sw3 = new Image("bm-64x96/" + files[2]+ ".png");
 			
 			int xMove = newPosition[1] - prevPosition[1];
 			int yMove = newPosition[0] - prevPosition[0];
 			
-			Timeline timeline = new Timeline(
-				    new KeyFrame(Duration.millis(125), event -> {
-				    	imageView.setImage(sw1);
-				    	this.setLayoutX(prevPosition[1] * Item.ITEM_WIDTH + xMove * Item.ITEM_WIDTH * 1 / 3);
-				    	this.setLayoutY(prevPosition[0] * Item.ITEM_HEIGHT + yMove * Item.ITEM_HEIGHT * 1 / 3 - 32);
-				    }),
-				    new KeyFrame(Duration.millis(250), event -> { 
-				    	imageView.setImage(sw2);
-				    	this.setLayoutX(prevPosition[1] * Item.ITEM_WIDTH + xMove * Item.ITEM_WIDTH * 2 / 3);
-				    	this.setLayoutY(prevPosition[0] * Item.ITEM_HEIGHT + yMove * Item.ITEM_HEIGHT * 2 / 3 - 32);
-			    	}),
-				    new KeyFrame(Duration.millis(375), event -> { 
-				    	imageView.setImage(sw3);
-				    	this.setLayoutX(prevPosition[1] * Item.ITEM_WIDTH + xMove * Item.ITEM_WIDTH * 3 / 3);
-				    	this.setLayoutY(prevPosition[0] * Item.ITEM_HEIGHT + yMove * Item.ITEM_HEIGHT * 3 / 3 - 32);
-			    	})
-				);
+			Timeline timeline = new Timeline();
+			
+			for (int i = 0; i < files.length; i++) {
+				final int iPlusOne = i+1;
+				Image image = new Image("bm-64x96/" + files[i]+ ".png");
+				KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_MOVEMENT/files.length * iPlusOne), event -> {
+			    	imageView.setImage(image);
+			    	this.setLayoutX(prevPosition[1] * Item.ITEM_WIDTH + xMove * Item.ITEM_WIDTH * iPlusOne / files.length);
+			    	this.setLayoutY(prevPosition[0] * Item.ITEM_HEIGHT + yMove * Item.ITEM_HEIGHT * iPlusOne / files.length - 32);
+			    });
+				timeline.getKeyFrames().add(keyFrame);
+			}
+			
 
 			timeline.play();
-		}
-		
+			
+		}	
 	}
-
 }
