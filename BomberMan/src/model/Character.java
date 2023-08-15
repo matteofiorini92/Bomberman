@@ -16,31 +16,30 @@ public abstract class Character extends Element {
 	public Double getSpeed() { return speed; }
 	public void setSpeed(Double speed) { this.speed = speed; }
 	
-	public void move(Board board, KeyEvent event) {
-
+	public boolean move(Board board, Direction direction) {
+		boolean hasMoved = true;
 		int[] prevPosition = this.getPosition();
 		int[] newPosition = new int[2];
 		Element newCell;
 		
-		switch (event.getCode()) {
+		setDirection(direction);
+		
+		switch (direction) {
 		case DOWN:
-			direction = Direction.DOWN;
 			newPosition = new int[] {prevPosition[0] + 1, prevPosition[1]};
 			break;
 		case UP:
-			direction = Direction.UP;
 			newPosition = new int[] {prevPosition[0] - 1, prevPosition[1]};
 			break;
 		case LEFT:
-			direction = Direction.LEFT;
 			newPosition = new int[] {prevPosition[0], prevPosition[1] - 1};
 			break;
 		case RIGHT:
-			direction = Direction.RIGHT;
 			newPosition = new int[] {prevPosition[0], prevPosition[1] + 1};
 			break;
 		default:
 			newPosition = prevPosition;
+			hasMoved = false;
 			break;
 		}
 
@@ -48,10 +47,12 @@ public abstract class Character extends Element {
 		
 		if (newCell instanceof Bomb || (newCell instanceof Tile && (((Tile)newCell).getType() == TileType.WALL || ((Tile)newCell).getType() == TileType.SOFT_WALL))) { // can't walk over walls or bombs
 			newPosition = prevPosition;
+			hasMoved = false;
 		}
 		board.setCell(new EmptyTile(prevPosition), prevPosition);
 		board.setCell(this, newPosition);
 		this.setPosition(prevPosition, newPosition);
+		return hasMoved;
 	}
 
 	public Direction getDirection()

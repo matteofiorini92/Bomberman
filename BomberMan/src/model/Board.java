@@ -9,6 +9,7 @@ import java.util.Observable;
 
 public class Board extends Observable {
 	
+	private static Board board;
 	public static final int WIDTH = 17;
 	public static final int HEIGHT = 13;
 	private Element[][] cells = new Element[HEIGHT][WIDTH];
@@ -35,6 +36,8 @@ public class Board extends Observable {
 		Elements.put("sw", model.SoftWall.class);
 		Elements.put("sws", model.SoftWall.class);
 	}
+	
+	private Board() {}
 	
 	public void fillEmptyBoard(String levelNumber) {
 		/**
@@ -72,6 +75,12 @@ public class Board extends Observable {
 		notifyObservers();
 	}
 	
+	public static Board getInstance(){
+		if (board == null) {
+			board = new Board();
+		}
+		return board;
+	}
 
 	public int getWidth() { return WIDTH; }
 	public int getHeight() { return HEIGHT; }

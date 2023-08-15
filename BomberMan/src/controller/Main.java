@@ -11,6 +11,7 @@ import java.util.Map;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import model.Direction;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -49,7 +50,7 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception
 	{
 		
-		String levelNumber = "1-2";
+		String levelNumber = "1-1";
 		
 		Group root = new Group();
 		
@@ -58,7 +59,7 @@ public class Main extends Application {
 		 * initialise board
 		 */
 		
-		modelBoard = new model.Board();
+		modelBoard = model.Board.getInstance();
 		viewBoard = new view.Board();
 		modelBoard.addObserver(viewBoard);
 		modelBoard.fillEmptyBoard(levelNumber);
@@ -163,8 +164,29 @@ public class Main extends Application {
 	    long currentTime = System.currentTimeMillis();
 
 	    if (currentTime - lastKeyPressTime >= THROTTLE_DELAY) {
-	        lastKeyPressTime = currentTime;			
-			modelBm.move(modelBoard, event);
+	        lastKeyPressTime = currentTime;
+	        Direction direction = null;
+	        try {	        	
+	        	switch (event.getCode()) {
+	        	case DOWN:
+	        		direction = Direction.DOWN;
+	        		break;
+	        	case RIGHT:
+	        		direction = Direction.RIGHT;
+	        		break;
+	        	case UP:
+	        		direction = Direction.UP;
+	        		break;
+	        	case LEFT:
+	        		direction = Direction.LEFT;
+	        		break;
+	        	default:
+	        		break;	
+	        	}
+	        	modelBm.move(modelBoard, direction);
+	        } catch (NullPointerException e) {
+	        	System.out.println("Invalid command");
+	        }
 	    }
 
 	    if (keyHeld) {

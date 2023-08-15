@@ -35,12 +35,7 @@ public class BomberMan extends Character {
 		System.out.println("You have " + lives + " lives left.");
 	}
 
-//	public Direction getDirection()	{ return direction; }
-//	public void setDirection(Direction direction) { 
-//		this.direction = direction;
-//		setChanged();
-//		notifyObservers();
-//	}
+
 
 
 }
