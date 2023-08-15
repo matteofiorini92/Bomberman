@@ -9,6 +9,8 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class Enemy extends Character {
 	
+	private static Board board = Board.getInstance();
+	
 	private int points;
 
 	public Enemy(int[] position, Double speed, int points)
@@ -25,7 +27,7 @@ public abstract class Enemy extends Character {
 		Direction[] randomDirection = { getRandomDirection(this) };
 		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 		Runnable moveTask = () -> {
-			needsNewDirection[0] = !this.move(Board.getInstance(), randomDirection[0]);
+			needsNewDirection[0] = !this.move(board, randomDirection[0]);
 			if (needsNewDirection[0]) {				
 				randomDirection[0] = getRandomDirection(this);
 			}
@@ -35,7 +37,7 @@ public abstract class Enemy extends Character {
 	
 	public static Direction getRandomDirection(Enemy enemy) { // public?
 		// Class<Direction> directionClass;
-		Element[][] cells = Board.getInstance().getCells();
+		Element[][] cells = board.getCells();
 		int[] currPosition = enemy.getPosition();
 		List<Direction> availableDirections = getAvailableDirections(currPosition, cells);
 		if (availableDirections.size() != 0) {			
