@@ -26,7 +26,6 @@ public class Main extends Application {
 	private model.BomberMan modelBm;
 	private model.Board modelBoard;
 	private view.Board viewBoard;
-	private int test;
 	
 	private static Map<String, Class<? extends model.Enemy>> modelEnemies = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
 	static {
@@ -129,7 +128,7 @@ public class Main extends Application {
 			int[] position = {coordinateX, coordinateY};
 			try {
 				modelCharacter = modelCharacterClass.getDeclaredConstructor(int[].class, double.class).newInstance(position, character[4]);
-				viewCharacter = viewCharacterClass.getDeclaredConstructor(int[].class, model.Direction.class).newInstance(position, model.Direction.E); // to improve
+				viewCharacter = viewCharacterClass.getDeclaredConstructor(int[].class, model.Direction.class).newInstance(position, model.Direction.RIGHT); // to improve
 				modelCharacter.addObserver(viewCharacter);
 				modelBoard.setCell(modelCharacter, position);
 				root.getChildren().add(viewCharacter);
@@ -161,38 +160,11 @@ public class Main extends Application {
 	}
 
 	private void processKeyPress(KeyEvent event) {
-		System.out.println(++test);
 	    long currentTime = System.currentTimeMillis();
 
 	    if (currentTime - lastKeyPressTime >= THROTTLE_DELAY) {
-	        lastKeyPressTime = currentTime;
-
-			int[] prevPosition = modelBm.getPosition();
-			int[] newPosition;
-			
-			switch (event.getCode()) {
-			case DOWN:
-				modelBm.setDirection(model.Direction.S);
-				newPosition = new int[] {prevPosition[0] + 1, prevPosition[1]};
-				break;
-			case UP:
-				modelBm.setDirection(model.Direction.N);
-				newPosition = new int[] {prevPosition[0] - 1, prevPosition[1]};
-				
-				break;
-			case LEFT:
-				modelBm.setDirection(model.Direction.W);
-				newPosition = new int[] {prevPosition[0], prevPosition[1] - 1};
-				break;
-			case RIGHT:
-				modelBm.setDirection(model.Direction.E);
-				newPosition = new int[] {prevPosition[0], prevPosition[1] + 1};
-				break;
-			default:
-				newPosition = prevPosition;
-				break;
-			}
-			modelBm.move(modelBoard, prevPosition, newPosition);
+	        lastKeyPressTime = currentTime;			
+			modelBm.move(modelBoard, event);
 	    }
 
 	    if (keyHeld) {
