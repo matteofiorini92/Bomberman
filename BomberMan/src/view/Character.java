@@ -1,5 +1,6 @@
 package view;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
@@ -16,13 +17,20 @@ public abstract class Character extends Element {
     public static final int CHARACTER_HEIGHT = 96;
     public static final int CHARACTER_WIDTH = 64;
 	public static long TIME_FOR_MOVEMENT = 375;
+	
+	public static Map<Class<? extends model.Character>, String> prefixes = new HashMap<>();
+	static {
+		prefixes.put(model.BomberMan.class, "bm");
+		prefixes.put(model.Helix.class, "helix");
+		prefixes.put(model.Bug.class, "bug");
+	}
 
 	private Direction direction;
 	private ImageView imageView;
 	
 	public Character(int[] position, Image im1)
 	{
-		super(position);
+//		super(position);
 		this.direction = Direction.INITIAL;
 		imageView = new ImageView(im1);
 		imageView.setFitHeight(96);
@@ -36,14 +44,8 @@ public abstract class Character extends Element {
 	
 
 	public void move(model.Character character, Map<Direction, String> imageFiles, Object arg) {
-		String prefix = ""; // TODO IMPROVE ME PLEASE!!!
-		if (character instanceof model.BomberMan) {
-			prefix = "bm";
-		} else if (character instanceof model.Helix) {
-			prefix = "helix";
-		} else if (character instanceof model.Bug) {
-			prefix = "bug";
-		}
+		
+		String prefix = prefixes.get(character.getClass());
 		Direction newDirection =  character.getDirection();
 		
 		if (newDirection.equals(Direction.INITIAL)) {

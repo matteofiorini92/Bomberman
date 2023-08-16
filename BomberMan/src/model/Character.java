@@ -1,7 +1,5 @@
 package model;
 
-import javafx.scene.input.KeyEvent;
-
 public abstract class Character extends Element {
 	
 	private Double speed;

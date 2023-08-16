@@ -1,8 +1,10 @@
 package view;
 
+import java.util.Observable;
+
 import javafx.scene.layout.StackPane;
 
-public class Item extends StackPane {
+public abstract class Item extends Element {
 	
     public static final int ITEM_HEIGHT = 64;
     public static final int ITEM_WIDTH = 64;
@@ -11,5 +13,7 @@ public class Item extends StackPane {
 	{
 		// TODO Auto-generated constructor stub
 	}
+
+
 
 }

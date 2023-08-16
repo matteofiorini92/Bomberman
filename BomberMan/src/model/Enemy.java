@@ -7,6 +7,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import javafx.application.Platform;
+
 public abstract class Enemy extends Character {
 	
 	private static Board board = Board.getInstance();
@@ -27,11 +29,14 @@ public abstract class Enemy extends Character {
 		Direction[] randomDirection = { getRandomDirection(this) };
 		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 		Runnable moveTask = () -> {
-			needsNewDirection[0] = !this.move(board, randomDirection[0]);
-			if (needsNewDirection[0]) {				
-				randomDirection[0] = getRandomDirection(this);
-			}
+			Platform.runLater(() -> { // to have UI related operations all run on the JavaFX thread 				
+				needsNewDirection[0] = !this.move(board, randomDirection[0]);
+				if (needsNewDirection[0]) {				
+					randomDirection[0] = getRandomDirection(this);
+				}
+			});
 		};
+
 		executor.scheduleAtFixedRate(moveTask, 0, 375, TimeUnit.MILLISECONDS);
 	}
 	

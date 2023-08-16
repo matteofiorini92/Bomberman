@@ -4,12 +4,18 @@ public class Bomb extends Item {
 
 	private int range;
 	
-	public Bomb(BomberMan b)
+	public Bomb(int range, int[] position)
 	{
-		super(b.getPosition());
-		range = b.getRange();
+		super(position);
+		this.range = range;
+		
 	}
 
 	public int getRange() { return range; }
+	
+	public void trigger() {		
+		setChanged();
+		notifyObservers("TRIGGER");
+	}
 	
 }

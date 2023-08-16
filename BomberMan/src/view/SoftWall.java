@@ -2,6 +2,8 @@ package view;
 
 import javafx.util.Duration;
 
+import java.util.Observable;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
@@ -35,6 +37,13 @@ public class SoftWall extends Item {
 		
 		getChildren().add(imageView);
 
+	}
+
+	@Override
+	public void update(Observable o, Object arg)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

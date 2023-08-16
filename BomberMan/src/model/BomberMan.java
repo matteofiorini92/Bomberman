@@ -25,10 +25,21 @@ public class BomberMan extends Character {
 	public int getRange() {	return range; }
 	public void setRange(int range)	{ this.range = range; }
 	
-	public void dropBomb() {
-		bombs--;
-		System.out.println(getPosition());
-	}
+//	public Bomb dropBomb() {
+//		
+//		/**
+//		 * Check if there are bombs available
+//		 * Generate new bomb in current position
+//		 * Decrease number of available bombs
+//		 */
+//		if (bombs > 0) {			
+//			bombs--;
+//			return new Bomb(range, getPosition());
+//		} else {
+//			return null;
+//		}
+//
+//	}
 	
 	public void die() {
 		lives--;

@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Observable;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -23,4 +25,11 @@ public class Tile extends Item {
 
 	public String getDesc()	{ return desc; }
 	// public void setDesc(String desc)	{ this.desc = desc; }
+
+	@Override
+	public void update(Observable o, Object arg)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }

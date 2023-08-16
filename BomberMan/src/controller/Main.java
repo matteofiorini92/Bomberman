@@ -29,6 +29,7 @@ public class Main extends Application {
 //	private model.Helix modelHe;
 	private model.Board modelBoard;
 	private view.Board viewBoard;
+	private Group root = new Group();
 	
 	private static Map<String, Class<? extends model.Enemy>> modelEnemies = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
 	static {
@@ -54,7 +55,7 @@ public class Main extends Application {
 		
 		String levelNumber = "1-2";
 		
-		Group root = new Group();
+		//Group root = new Group();
 		
 		
 		/**
@@ -174,29 +175,44 @@ public class Main extends Application {
 
 	    if (currentTime - lastKeyPressTime >= THROTTLE_DELAY) {
 	        lastKeyPressTime = currentTime;
-	        Direction direction = null;
-	        try {	        	
-	        	switch (event.getCode()) {
-	        	case DOWN:
-	        		direction = Direction.DOWN;
-	        		break;
-	        	case RIGHT:
-	        		direction = Direction.RIGHT;
-	        		break;
-	        	case UP:
-	        		direction = Direction.UP;
-	        		break;
-	        	case LEFT:
-	        		direction = Direction.LEFT;
-	        		break;
-	        	default:
-	        		break;	
-	        	}
-	        	modelBm.move(modelBoard, direction);
-	        	// modelHe.move(modelBoard, direction);
+	        
+	        
+	        
+	        if (event.getCode() == KeyCode.SPACE && modelBm.getBombs() > 0) {
+	        	int currBombs = modelBm.getBombs();
+	        	model.Bomb modelBomb = new model.Bomb(currBombs, modelBm.getPosition());
+	        	view.Bomb viewBomb = new view.Bomb();
+	        	modelBomb.addObserver(viewBomb);
+	        	// modelBm.setBombs(--currBombs); TODO DISABLED FOR DEBUGGING
+	        	// get viewBm stackPane index in order to add the bomb behind it
+	        	int viewBmStackPaneIndex = root.getChildren().indexOf(viewBm);
 	        	
-	        } catch (NullPointerException e) {
-	        	System.out.println("Invalid command");
+	        	root.getChildren().add(viewBmStackPaneIndex - 1, viewBomb);
+	        	modelBomb.trigger();	        	
+	        } else {	        	
+	        	Direction direction = null;
+	        	try {	        	
+	        		switch (event.getCode()) {
+	        		case DOWN:
+	        			direction = Direction.DOWN;
+	        			break;
+	        		case RIGHT:
+	        			direction = Direction.RIGHT;
+	        			break;
+	        		case UP:
+	        			direction = Direction.UP;
+	        			break;
+	        		case LEFT:
+	        			direction = Direction.LEFT;
+	        			break;
+	        		default:
+	        			break;	
+	        		}
+	        		modelBm.move(modelBoard, direction);
+	        		
+	        	} catch (NullPointerException e) {
+	        		System.out.println("Invalid command");
+	        	}
 	        }
 	    }
 
@@ -204,7 +220,4 @@ public class Main extends Application {
 	    	Platform.runLater(() -> processKeyPress(event));
 	    }
 	}
-
-	
-
 }
