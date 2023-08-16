@@ -2,13 +2,14 @@ package model;
 
 public class Bomb extends Item {
 
+	private static Board board = model.Board.getInstance();
 	private int range;
 	
 	public Bomb(int range, int[] position)
 	{
 		super(position);
-		this.range = range;
-		
+		board.setCell(this, position);
+		this.range = range;		
 	}
 
 	public int getRange() { return range; }

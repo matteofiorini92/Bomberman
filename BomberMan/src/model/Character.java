@@ -2,6 +2,7 @@ package model;
 
 public abstract class Character extends Element {
 	
+	private static Board board = model.Board.getInstance();
 	private Double speed;
 	private Direction direction;
 	
@@ -14,7 +15,7 @@ public abstract class Character extends Element {
 	public Double getSpeed() { return speed; }
 	public void setSpeed(Double speed) { this.speed = speed; }
 	
-	public boolean move(Board board, Direction direction) {
+	public boolean move(Direction direction) {
 		boolean hasMoved = true;
 		int[] prevPosition = this.getPosition();
 		int[] newPosition = new int[2];
@@ -51,7 +52,10 @@ public abstract class Character extends Element {
 			newPosition = prevPosition;
 			hasMoved = false;
 		}
-		board.setCell(new EmptyTile(prevPosition), prevPosition);
+		model.Element prevCell = board.getCell(prevPosition);
+		prevCell = prevCell instanceof Bomb ? prevCell : new EmptyTile(prevPosition);// to prevent BM from setting an EmptyTile where he's just dropped a bomb
+		//board.setCell(new EmptyTile(prevPosition), prevPosition);
+		board.setCell(prevCell, prevPosition);
 		board.setCell(this, newPosition);
 		this.setPosition(prevPosition, newPosition);
 		return hasMoved;

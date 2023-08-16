@@ -7,7 +7,6 @@ public class Wall extends Tile {
 	public Wall(int[] position)
 	{
 		super(position, WALL);
-		
 	}
 
 }

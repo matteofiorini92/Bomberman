@@ -184,6 +184,7 @@ public class Main extends Application {
 	        	view.Bomb viewBomb = new view.Bomb();
 	        	modelBomb.addObserver(viewBomb);
 	        	// modelBm.setBombs(--currBombs); TODO DISABLED FOR DEBUGGING
+	        	
 	        	// get viewBm stackPane index in order to add the bomb behind it
 	        	int viewBmStackPaneIndex = root.getChildren().indexOf(viewBm);
 	        	
@@ -208,7 +209,7 @@ public class Main extends Application {
 	        		default:
 	        			break;	
 	        		}
-	        		modelBm.move(modelBoard, direction);
+	        		modelBm.move(direction);
 	        		
 	        	} catch (NullPointerException e) {
 	        		System.out.println("Invalid command");

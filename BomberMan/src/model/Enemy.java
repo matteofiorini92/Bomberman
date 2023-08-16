@@ -30,7 +30,7 @@ public abstract class Enemy extends Character {
 		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 		Runnable moveTask = () -> {
 			Platform.runLater(() -> { // to have UI related operations all run on the JavaFX thread 				
-				needsNewDirection[0] = !this.move(board, randomDirection[0]);
+				needsNewDirection[0] = !this.move(randomDirection[0]);
 				if (needsNewDirection[0]) {				
 					randomDirection[0] = getRandomDirection(this);
 				}
