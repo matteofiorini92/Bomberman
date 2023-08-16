@@ -17,7 +17,7 @@ public abstract class Enemy extends Character {
 	{
 		super(position, speed);
 		this.points = points;
-		startMoving();
+		//startMoving();
 	}
 	public int getPoints() { return points;	}
 	public void setPoints(int points) { this.points = points; }

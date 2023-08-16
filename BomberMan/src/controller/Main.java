@@ -74,7 +74,7 @@ public class Main extends Application {
 		 * initialise characters
 		 */
 		List<Object[]> characters = readCharactersFile(levelNumber);
-		initialiseCharacters(characters, root);
+		List<model.Enemy> enemies = initialiseCharacters(characters, root);
 		
 
 		
@@ -93,6 +93,9 @@ public class Main extends Application {
 		
 		stage.setScene(scene);
 		stage.show();
+		for (model.Enemy enemy : enemies) {
+			enemy.startMoving();
+		}
 	}
 	
 	private List<Object[]> readCharactersFile(String levelNumber) {
@@ -120,7 +123,8 @@ public class Main extends Application {
 		return result;
 	}
 	
-	private void initialiseCharacters(List<Object[]> characters, Group root) {
+	private List<model.Enemy> initialiseCharacters(List<Object[]> characters, Group root) {
+		List<model.Enemy> enemies = new ArrayList<model.Enemy>();
 		for (Object[] character : characters) {
 			Class<? extends model.Character> modelCharacterClass = modelEnemies.get(character[0]);
 			Class<? extends view.Character> viewCharacterClass = viewEnemies.get(character[0]);
@@ -133,6 +137,7 @@ public class Main extends Application {
 				modelCharacter = modelCharacterClass.getDeclaredConstructor(int[].class).newInstance(position);
 				viewCharacter = viewCharacterClass.getDeclaredConstructor(int[].class).newInstance(position); // to improve SHOULD POSITION BE USED TO CONSTRUCT VIEW CHARACTERS??
 				modelCharacter.addObserver(viewCharacter);
+				enemies.add((model.Enemy)modelCharacter);
 				modelBoard.setCell(modelCharacter, position);
 				root.getChildren().add(viewCharacter);
 			} catch (Exception ex) {
@@ -143,16 +148,9 @@ public class Main extends Application {
 		viewBm = new view.BomberMan();
 		modelBm.addObserver(viewBm);
 		
-		
-//		modelHe = new model.Helix(new int[] {1,2});
-//		viewHe = new view.Helix(new int[] {1,2});
-//		modelHe.addObserver(viewHe);
-//		root.getChildren().add(viewHe);
-		
-		
-		
 		modelBoard.setCell(modelBm, modelBm.INITIAL_POSITION);
 		root.getChildren().add(viewBm);
+		return enemies;
 	}
 	
 	private long lastKeyPressTime = 0;
