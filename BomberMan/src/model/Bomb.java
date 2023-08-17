@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 
 import javafx.application.Platform;
 
@@ -19,7 +20,7 @@ public class Bomb extends Item {
 	{
 		super(position);
 		board.setCell(this, position);
-		this.range = 4;		
+		this.range = 3;		
 	}
 
 	public int getRange() { return range; }
@@ -56,9 +57,14 @@ public class Bomb extends Item {
 					}
 				}
 			}
+			
+			int[] bombPosition = this.getPosition();
+			board.setCell(new EmptyTile(bombPosition), bombPosition);
+			
 			List<Object> options = new ArrayList();
 			options.add("EXPLODE");
-			options.add(surroundings);
+			String[][] simplifiedSurroundings = simplifySurroundings(surroundings);
+			options.add(simplifiedSurroundings);
 			setChanged();
 			notifyObservers(options);
 		});
@@ -95,6 +101,50 @@ public class Bomb extends Item {
 		}
 		
 	    return surroundings;
+	}
+	
+	private String[][] simplifySurroundings(Map<Direction, List<Element>> surroundings) {
+		String[][] result = new String[range*2+1][range*2+1];
+		int[] currPosition = this.getPosition();
+		
+		result[range][range] = "ex"; //explosion is at the centre of the grid
+		
+		List<Element> elements;
+		Predicate<Element> isWallOrSoftWall = element ->
+        	element instanceof Wall || element instanceof SoftWall;
+		
+		elements = surroundings.get(Direction.UP);
+		elements.removeIf(isWallOrSoftWall);
+		
+		for (int i = 1; i <= elements.size(); i++) {
+			result[range - i][range] = i == range ? "edgeUp" : "midUp";
+		}
+		
+		elements = surroundings.get(Direction.DOWN);
+		elements.removeIf(isWallOrSoftWall);
+		
+		for (int i = 1; i <= elements.size(); i++) {
+			result[range + i][range] = i == range ? "edgeDown" : "midDown";
+		}
+		
+		elements = surroundings.get(Direction.LEFT);
+		elements.removeIf(isWallOrSoftWall);
+		
+		for (int i = 1; i <= elements.size(); i++) {
+			result[range][range - i] = i == range ? "edgeLeft" : "midLeft";
+		}
+		
+		elements = surroundings.get(Direction.RIGHT);
+		elements.removeIf(isWallOrSoftWall);
+		
+		for (int i = 1; i <= elements.size(); i++) {
+			result[range][range + i] = i == range ? "edgeRight" : "midRight";
+		}
+		
+		
+		
+		
+		return result;
 	}
 
 
