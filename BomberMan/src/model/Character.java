@@ -5,11 +5,13 @@ public abstract class Character extends Element {
 	private static Board board = model.Board.getInstance();
 	private Double speed;
 	private Direction direction;
+	private int lives;
 	
-	public Character(int[] position, Double speed)
+	public Character(int[] position, Double speed, int lives)
 	{
 		super(position);
-		this.setSpeed(speed);
+		this.speed = speed;
+		this.lives = lives;
 	}
 	
 	public Double getSpeed() { return speed; }
@@ -61,15 +63,22 @@ public abstract class Character extends Element {
 		return hasMoved;
 	}
 
-	public Direction getDirection()
-	{
-		return direction;
-	}
+	public Direction getDirection() { return direction; }
+	public void setDirection(Direction direction) {	this.direction = direction; }
 
-	public void setDirection(Direction direction)
-	{
-		this.direction = direction;
-	}
+	public int getLives() { return lives; }
+	public void setLives(int lives) { this.lives = lives; }
 	
+	public void die() {
+		lives--;
+		
+		if (lives == 0) {
+			board.setCell(new EmptyTile(getPosition()), getPosition());
+		}
+		
+		setChanged();
+		notifyObservers(lives);
+		System.out.println("You have " + lives + " lives left.");
+	}
 
 }

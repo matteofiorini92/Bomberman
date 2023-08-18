@@ -45,6 +45,7 @@ public class Bomb extends Item {
 					}
 					if (e instanceof model.Character) {
 						// TODO kills character
+						((Character) e).die();
 						System.out.println("I'm hitting a character on my " + surrounding.getKey().toString());
 					}
 					if (e instanceof model.EmptyTile) {
@@ -61,6 +62,11 @@ public class Bomb extends Item {
 			int[] bombPosition = this.getPosition();
 			board.setCell(new EmptyTile(bombPosition), bombPosition);
 			
+			
+			model.BomberMan bm = model.BomberMan.getInstance();
+			bm.setBombs(bm.getBombs()+1);
+			
+			
 			List<Object> options = new ArrayList();
 			options.add("EXPLODE");
 			String[][] simplifiedSurroundings = simplifySurroundings(surroundings);
@@ -68,6 +74,7 @@ public class Bomb extends Item {
 			setChanged();
 			notifyObservers(options);
 		});
+		
 	}
 	
 	private Map<Direction, List<Element>> checkSurroundings() {

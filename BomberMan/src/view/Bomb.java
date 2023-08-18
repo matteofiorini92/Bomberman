@@ -125,7 +125,6 @@ public class Bomb extends Item {
 			timeline.getKeyFrames().add(keyFrame);
 		}
 		KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_EXPLOSION), event -> {
-//			gridPane.getChildren().clear();
 			getChildren().clear();
 		});
 		timeline.getKeyFrames().add(keyFrame);

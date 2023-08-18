@@ -13,6 +13,7 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import model.Direction;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -157,7 +158,7 @@ public class Main extends Application {
 				ex.printStackTrace();
 			}
 		}
-		modelBm = new model.BomberMan();
+		modelBm = model.BomberMan.getInstance();
 		viewBm = new view.BomberMan();
 		modelBm.addObserver(viewBm);
 		
@@ -195,12 +196,12 @@ public class Main extends Application {
 	        	model.Bomb modelBomb = new model.Bomb(currBombs, modelBm.getPosition());
 	        	view.Bomb viewBomb = new view.Bomb();
 	        	modelBomb.addObserver(viewBomb);
-	        	// modelBm.setBombs(--currBombs); TODO DISABLED FOR DEBUGGING
+	        	modelBm.setBombs(--currBombs);
+	        	List<Node> nodes = root.getChildren();
+	        	// get viewBm stackPane index in order to add the bomb behind it !!!!!!!!!!!!!!!!!!!!!!
+	        	int viewBmStackPaneIndex = root.getChildren().indexOf(viewBoard.getGridPane());
 	        	
-	        	// get viewBm stackPane index in order to add the bomb behind it
-	        	int viewBmStackPaneIndex = root.getChildren().indexOf(viewBm);
-	        	
-	        	root.getChildren().add(viewBmStackPaneIndex - 1, viewBomb);
+	        	root.getChildren().add(viewBmStackPaneIndex + 1, viewBomb);
 	        	modelBomb.trigger();	        	
 	        } else {	        	
 	        	Direction direction = null;
