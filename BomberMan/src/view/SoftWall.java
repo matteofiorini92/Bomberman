@@ -85,6 +85,7 @@ public class SoftWall extends Item {
 				// SoftWall tileBelow = (SoftWall)view.Board.getInstance().getTile(positionBelow);
 				String desc = "05 06 07 08";
 				SoftWall tileBelow = new view.SoftWall(desc);
+				cellBelow.addObserver(tileBelow);
 				view.Board.getInstance().setTile(tileBelow, positionBelow);
 			}
 			
