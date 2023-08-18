@@ -10,9 +10,11 @@ import java.util.Observer;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+//import model.Board;
 
 public class Board implements Observer {
 	
+	private static view.Board board;
 	private static Map<String, String> imageFiles = new HashMap<>();
 	static {
 		imageFiles.put("tc", "01");
@@ -40,8 +42,22 @@ public class Board implements Observer {
 	private Item[][] tiles = new Item[13][17];
 	private GridPane gridPane = new GridPane();
 	
+	private Board() {}
+	public static view.Board getInstance(){
+		if (board == null) {
+			board = new view.Board();
+		}
+		return board;
+	}
+	
+	
 	public GridPane getGridPane() { return gridPane; }
-
+	public Item[][] getTiles() { return tiles; }
+	public Item getTile(int[] position) { return tiles[position[0]][position[1]]; }
+	public void setTile(Tile t, int[] position) { tiles[position[0]][position[1]] = t; }
+	public void setTile(SoftWall sw, int[] position) { gridPane.add(sw, position[1], position[0]); }
+	
+	
 	@Override
 	public void update(Observable o, Object arg)
 	{

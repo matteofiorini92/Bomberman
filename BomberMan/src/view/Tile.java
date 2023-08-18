@@ -22,6 +22,8 @@ public class Tile extends Item {
         Rectangle rectangle = new Rectangle(ITEM_WIDTH, ITEM_HEIGHT, Color.TRANSPARENT);
         getChildren().addAll(rectangle, imageView);
     }
+    
+    public void setImageView(Image im) { imageView.setImage(im); }
 
 	public String getDesc()	{ return desc; }
 	// public void setDesc(String desc)	{ this.desc = desc; }

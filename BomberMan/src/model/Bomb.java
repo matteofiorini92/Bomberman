@@ -40,7 +40,7 @@ public class Bomb extends Item {
 				List<Element> values = surrounding.getValue();
 				for (Element e : values) {					
 					if (e instanceof model.SoftWall) {
-						// TODO destroy soft wall
+						((SoftWall) e).destroy();
 						System.out.println("I'm hitting a soft wall on my " + surrounding.getKey().toString());
 					}
 					if (e instanceof model.Character) {

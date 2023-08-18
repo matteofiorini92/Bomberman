@@ -63,10 +63,22 @@ public class Main extends Application {
 		 */
 		
 		modelBoard = model.Board.getInstance();
-		viewBoard = new view.Board();
+		viewBoard = view.Board.getInstance();
 		modelBoard.addObserver(viewBoard);
 		modelBoard.fillEmptyBoard(levelNumber);
 		GridPane boardGridPane = viewBoard.getGridPane();
+		
+		model.Element[][] cells = modelBoard.getCells();
+		view.Item[][] tiles = viewBoard.getTiles();
+		
+		for (int i = 0; i < 13; i++) {
+			for (int j = 0; j < 17; j++) {
+				cells[i][j].addObserver(tiles[i][j]);
+			}
+		}
+		
+		
+		
 		// boardGridPane.setGridLinesVisible(true);
 		root.getChildren().add(boardGridPane);
 		
@@ -89,7 +101,7 @@ public class Main extends Application {
 		
 		Image icon = new Image("bm_icon.png");
 		stage.getIcons().add(icon);
-		stage.setTitle("Bomberman");
+		stage.setTitle("BomberMan");
 		stage.setResizable(false);
 		
 		stage.setScene(scene);
