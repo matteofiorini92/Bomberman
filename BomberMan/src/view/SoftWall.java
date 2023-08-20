@@ -45,12 +45,11 @@ public class SoftWall extends Item {
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		// TODO Auto-generated method stub
+		view.Board b = view.Board.getInstance();
 		String imageFiles = "63 64 65 66 67 68";
 		String[] files = imageFiles.split("\\s+");
 		timeline.getKeyFrames().clear();
 		timeline = new Timeline();
-//		timeline.setCycleCount(1);
 		
 		for (int frame = 0; frame < files.length; frame++) {
 			final int framePlusOne = frame+1;
@@ -63,12 +62,12 @@ public class SoftWall extends Item {
 		}
 		
 		
+		int[] softWallPosition = ((model.Element) o).getPosition();
+		int y = softWallPosition[0];
+		int x = softWallPosition[1];
 		
 		KeyFrame keyFrame = new KeyFrame(Duration.millis(SOFT_WALL_EXPLOSION), event -> {
 			
-			int[] softWallPosition = ((model.Element) o).getPosition();
-			int y = softWallPosition[0];
-			int x = softWallPosition[1];
 		
 			// remove shadow from tile below if present
 			
@@ -76,9 +75,12 @@ public class SoftWall extends Item {
 			model.Element cellBelow = model.Board.getInstance().getCell(positionBelow);
 			
 			if (cellBelow instanceof model.EmptyTile) {
+				
 				view.Tile tileBelow = (Tile)view.Board.getInstance().getTile(positionBelow);
 				Image im = new Image("tiles-64x64/" + "20" + ".png");
 				tileBelow.setImageView(im);
+//				view.Board.getInstance().setTile(tileBelow, positionBelow);
+				
 			}
 			if (cellBelow instanceof model.SoftWall) {
 				
@@ -93,15 +95,19 @@ public class SoftWall extends Item {
 			
 			int[] positionAbove = {y-1, x};
 			model.Element cellAbove = model.Board.getInstance().getCell(positionAbove);
+			String desc = "e";
 			String file = "20";
 			if (cellAbove instanceof model.Wall) {
+				desc = "ess";
 				file = "12";
 			}
 			if (cellAbove instanceof model.SoftWall) {
+				desc = "ers";
 				file = "21";
 			}
 			Image im = new Image("tiles-64x64/" + file + ".png");
 			imageView.setImage(im);	
+			view.Board.getInstance().setTile(new view.Tile(desc, im), softWallPosition);
 		});
 		
 		
