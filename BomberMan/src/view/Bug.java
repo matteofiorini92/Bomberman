@@ -22,6 +22,7 @@ public class Bug extends Enemy {
 		imageFiles.put(Direction.RIGHT, "26 27 28 29 30 31 32");
 		imageFiles.put(Direction.DOWN, "01 02 03 04 05 06 07 08 09");
 		imageFiles.put(Direction.LEFT, "19 20 21 22 23 24 25");
+		imageFiles.put(Direction.DEAD, "72 73 74 75 76 77 78");
 	}
 
 	public Bug(int[] position)

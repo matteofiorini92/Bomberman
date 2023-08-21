@@ -25,6 +25,7 @@ public class BomberMan extends Character {
 		imageFiles.put(Direction.RIGHT, "11 10 12");
 		imageFiles.put(Direction.DOWN, "07 08 09");
 		imageFiles.put(Direction.LEFT, "05 04 06");
+		imageFiles.put(Direction.DEAD, "13 14 15 16 17 18");
 	}
 
 	public BomberMan()

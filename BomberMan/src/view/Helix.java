@@ -24,6 +24,7 @@ public class Helix extends Enemy {
 		imageFiles.put(Direction.RIGHT, "13 14 15 16");
 		imageFiles.put(Direction.DOWN, "01 02 03 04");
 		imageFiles.put(Direction.LEFT, "09 10 11 12");
+		imageFiles.put(Direction.DEAD, "72 73 74 75 76 77 78");
 	}
 	
 	public Helix(int[] position)

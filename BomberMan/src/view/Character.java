@@ -8,6 +8,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import model.Direction;
 import model.Position;
@@ -16,12 +17,13 @@ public abstract class Character extends Element {
 	
 	public static final int CHARACTER_HEIGHT = 96;
 	public static final int CHARACTER_WIDTH = 64;
-	public static final int heightDifference = CHARACTER_HEIGHT - view.Item.ITEM_HEIGHT;
+	public static final int HEIGHT_DIFFERENCE = CHARACTER_HEIGHT - view.Item.ITEM_HEIGHT;
 
 	public static final long INVULNERABILITY_TIME = 3000;
 	public static final int INVULNERABILITY_FRAMES = 20;
 	
 	public static long TIME_FOR_MOVEMENT = 375;
+	public static long TIME_FOR_DEATH = 3000;
 	
 	
 	public static Map<Class<? extends model.Character>, String> prefixes = new HashMap<>();
@@ -37,8 +39,10 @@ public abstract class Character extends Element {
 	{
 		imageView = new ImageView(im1);
 		
-		this.setLayoutY(position[0] * Item.ITEM_HEIGHT - heightDifference);
+		this.setLayoutY(position[0] * Item.ITEM_HEIGHT - HEIGHT_DIFFERENCE);
 		this.setLayoutX(position[1] * Item.ITEM_WIDTH);
+		
+//		StackPane.setAlignment(this, javafx.geometry.Pos.BASELINE_CENTER);
 		
         getChildren().add(imageView);
 	}
@@ -53,7 +57,7 @@ public abstract class Character extends Element {
 			loseLife();
 		}
 		else if (args[0].equals(model.ChangeType.DIE)) {
-			die();
+			die((model.Character)o, imageFiles);
 		}
 	}
 
@@ -79,7 +83,7 @@ public abstract class Character extends Element {
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_MOVEMENT/files.length * framePlusOne), event -> {
 		    	imageView.setImage(image);
 		    	this.setLayoutX(prevPosition[1] * Item.ITEM_WIDTH + xMove * Item.ITEM_WIDTH * framePlusOne / files.length);
-		    	this.setLayoutY(prevPosition[0] * Item.ITEM_HEIGHT + yMove * Item.ITEM_HEIGHT * framePlusOne / files.length - 32);
+		    	this.setLayoutY(prevPosition[0] * Item.ITEM_HEIGHT + yMove * Item.ITEM_HEIGHT * framePlusOne / files.length - HEIGHT_DIFFERENCE);
 		    });
 			timeline.getKeyFrames().add(keyFrame);
 		}
@@ -97,7 +101,7 @@ public abstract class Character extends Element {
 		Timeline timeline = new Timeline();
 		
 		for (int frame = 0; frame < INVULNERABILITY_FRAMES; frame++) {
-			final int framePlusOne = frame+1;
+			final int framePlusOne = frame + 1;
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(INVULNERABILITY_TIME/INVULNERABILITY_FRAMES * framePlusOne), event -> {
 				imageView.setVisible(framePlusOne % 2 == 0);				
 			});
@@ -107,7 +111,30 @@ public abstract class Character extends Element {
 	}
 	
 	
-	public void die() {
+	public void die(model.Character character, Map<Direction, String> imageFiles) {
+		
+		String prefix = prefixes.get(character.getClass());
+		String[] files = imageFiles.get(model.Direction.DEAD).split("\\s+");
+		
+//		double newLayoutY = this.getLayoutY() + HEIGHT_DIFFERENCE;
+
+		Timeline timeline = new Timeline();
+		
+		for (int frame = 0; frame < files.length; frame++) {
+			final int framePlusOne = frame + 1;
+			Image image = new Image(prefix + "-64x96/" + files[frame] + ".png");
+			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH/(files.length + 1) * framePlusOne), event -> {
+//				this.setLayoutY(newLayoutY);
+		    	imageView.setImage(image);
+		    });
+			timeline.getKeyFrames().add(keyFrame);
+		}
+		
+		KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH), event -> {
+	    	imageView.setVisible(false);
+	    });
+		timeline.getKeyFrames().add(keyFrame);
+		timeline.play();
 		
 	}
 	

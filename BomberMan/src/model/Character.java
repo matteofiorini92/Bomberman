@@ -80,7 +80,6 @@ public abstract class Character extends Element {
 			Object[] args = { model.ChangeType.LOSE_LIFE, lives };
 			setChanged();
 			notifyObservers(args);
-			System.out.println("You have " + lives + " lives left.");	
 		}		
 	}
 
@@ -89,7 +88,6 @@ public abstract class Character extends Element {
 		Object[] args = { model.ChangeType.DIE, lives };
 		setChanged();
 		notifyObservers(args);
-		System.out.println("You're dead.");	
 		
 	}
 	
