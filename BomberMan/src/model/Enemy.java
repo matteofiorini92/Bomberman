@@ -12,7 +12,7 @@ import javafx.application.Platform;
 public abstract class Enemy extends Character {
 	
 	private static Board board = Board.getInstance();
-	
+	ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();	
 	private int points;
 
 	public Enemy(int[] position, Double speed, int points, int lives)
@@ -24,10 +24,17 @@ public abstract class Enemy extends Character {
 	public int getPoints() { return points;	}
 	public void setPoints(int points) { this.points = points; }
 	
+	@Override
+	public void die() {
+		super.die();
+		if (this.getLives() == 0) {
+			executor.shutdownNow(); //stop moving when the enemy dies
+		}
+	}
+	
 	public void startMoving() {
 		boolean[] needsNewDirection = { true };
 		Direction[] randomDirection = { getRandomDirection(this) };
-		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 		Runnable moveTask = () -> {
 			Platform.runLater(() -> { // to have UI related operations all run on the JavaFX thread 				
 				needsNewDirection[0] = !this.move(randomDirection[0]);

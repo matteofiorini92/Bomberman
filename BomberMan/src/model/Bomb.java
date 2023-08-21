@@ -27,7 +27,7 @@ public class Bomb extends Item {
 	
 	public void trigger() {
 		setChanged();
-		notifyObservers("TRIGGER");
+		notifyObservers(model.ChangeType.TRIGGER);
 		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 		executor.schedule(this::explode, 3000, TimeUnit.MILLISECONDS);
 	}
@@ -45,7 +45,7 @@ public class Bomb extends Item {
 					}
 					if (e instanceof model.Character) {
 						// TODO kills character
-						((Character) e).die();
+						((Character) e).loseLife();
 						System.out.println("I'm hitting a character on my " + surrounding.getKey().toString());
 					}
 					if (e instanceof model.EmptyTile) {
@@ -68,7 +68,7 @@ public class Bomb extends Item {
 			
 			
 			List<Object> options = new ArrayList();
-			options.add("EXPLODE");
+			options.add(model.ChangeType.EXPLODE);
 			String[][] simplifiedSurroundings = simplifySurroundings(surroundings);
 			options.add(simplifiedSurroundings);
 			setChanged();

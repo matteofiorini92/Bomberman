@@ -23,8 +23,9 @@ public abstract class Element extends Observable {
 	public int[] getPosition() {	return position; }
 	public void setPosition(int[] prevPosition, int[] newPosition) { 
 		this.position = newPosition;
+		Object[] args = { model.ChangeType.MOVE, prevPosition };
 		setChanged();
-		notifyObservers(prevPosition);
+		notifyObservers(args);
 	}
 	
 }

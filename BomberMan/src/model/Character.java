@@ -17,6 +17,13 @@ public abstract class Character extends Element {
 	public Double getSpeed() { return speed; }
 	public void setSpeed(Double speed) { this.speed = speed; }
 	
+	public Direction getDirection() { return direction; }
+	public void setDirection(Direction direction) {	this.direction = direction; }
+	
+	public int getLives() { return lives; }
+	public void setLives(int lives) { this.lives = lives; }
+
+	
 	public boolean move(Direction direction) {
 		boolean hasMoved = true;
 		int[] prevPosition = this.getPosition();
@@ -63,22 +70,27 @@ public abstract class Character extends Element {
 		return hasMoved;
 	}
 
-	public Direction getDirection() { return direction; }
-	public void setDirection(Direction direction) {	this.direction = direction; }
-
-	public int getLives() { return lives; }
-	public void setLives(int lives) { this.lives = lives; }
 	
-	public void die() {
+	public void loseLife() {
 		lives--;
 		
 		if (lives == 0) {
-			board.setCell(new EmptyTile(getPosition()), getPosition());
-		}
-		
-		setChanged();
-		notifyObservers(lives);
-		System.out.println("You have " + lives + " lives left.");
+			die();
+		} else {
+			Object[] args = { model.ChangeType.LOSE_LIFE, lives };
+			setChanged();
+			notifyObservers(args);
+			System.out.println("You have " + lives + " lives left.");	
+		}		
 	}
 
+	public void die() {
+		board.setCell(new EmptyTile(getPosition()), getPosition());
+		Object[] args = { model.ChangeType.DIE, lives };
+		setChanged();
+		notifyObservers(args);
+		System.out.println("You're dead.");	
+		
+	}
+	
 }

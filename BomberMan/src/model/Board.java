@@ -15,33 +15,46 @@ public class Board extends Observable {
 	private Element[][] cells = new Element[HEIGHT][WIDTH];
 	private static Map<String, Class<? extends Element>> Elements = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
 	static {
-		Elements.put("tc", model.Wall.class);
-		Elements.put("ht", model.Wall.class);
-		Elements.put("htf", model.Wall.class);
-		Elements.put("t", model.Wall.class);
-		Elements.put("tcf", model.Wall.class);
-		Elements.put("l", model.Wall.class);
-		Elements.put("sl", model.Wall.class);
-		Elements.put("ess", model.EmptyTile.class);
-		Elements.put("ers", model.EmptyTile.class);
-		Elements.put("e", model.EmptyTile.class);
-		Elements.put("w", model.Wall.class);
-		Elements.put("slf", model.Wall.class);
-		Elements.put("lf", model.Wall.class);
-		Elements.put("bc", model.Wall.class);
-		Elements.put("sbl", model.Wall.class);
-		Elements.put("b", model.Wall.class);
-		Elements.put("sblf", model.Wall.class);
-		Elements.put("bcf", model.Wall.class);
-		Elements.put("sw", model.SoftWall.class);
-		Elements.put("sws", model.SoftWall.class);
+		Elements.put("tc", model.Wall.class);			// top corner
+		Elements.put("st", model.Wall.class);			// second top
+		Elements.put("stf", model.Wall.class);			// second top flipped
+		Elements.put("t", model.Wall.class);			// top
+		Elements.put("tcf", model.Wall.class);			// top corner flipped
+		Elements.put("l", model.Wall.class);			// left
+		Elements.put("sl", model.Wall.class);			// second left
+		Elements.put("ebs", model.EmptyTile.class);		// empty with border shadow
+		Elements.put("ews", model.EmptyTile.class);		// empty with wall shadow
+		Elements.put("esws", model.EmptyTile.class);	// empty with soft wall shadow
+		Elements.put("e", model.EmptyTile.class);		// empty
+		Elements.put("w", model.Wall.class);			// wall
+		Elements.put("slf", model.Wall.class);			// second left flipped
+		Elements.put("lf", model.Wall.class);			// left flipped
+		Elements.put("bc", model.Wall.class);			// bottom corner
+		Elements.put("sbl", model.Wall.class);			// second bottom left
+		Elements.put("b", model.Wall.class);			// bottom
+		Elements.put("sblf", model.Wall.class);			// second bottom left flipped
+		Elements.put("bcf", model.Wall.class);			// bottom corner flipped
+		Elements.put("sw", model.SoftWall.class);		// soft wall
+		Elements.put("sws", model.SoftWall.class);		// soft wall with shadow
 	}
 	
 	private Board() {}
 	
+	
+	/**
+	 * Singleton pattern
+	 * @return only existing instance of board (creates one if it doesn't already exist)
+	 */
+	public static Board getInstance(){
+		if (board == null) {
+			board = new Board();
+		}
+		return board;
+	}
+	
 	public void fillEmptyBoard(String levelNumber) {
 		/**
-		 * initialize empty board
+		 * initialize board
 		 */
 		String desc;
 		String levelFilePath = "src/levels/" + levelNumber + ".txt";
@@ -49,10 +62,10 @@ public class Board extends Observable {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(levelFilePath));
 		
-	        for (int i = 0; i < 13; i++) {
+	        for (int i = 0; i < HEIGHT; i++) {
 	        	line = reader.readLine();
 				String[] elements = line.split("\\s+");
-	            for (int j = 0; j < 17; j++) {
+	            for (int j = 0; j < WIDTH; j++) {
 	            	
 	            	desc = elements[j];
 	            	Class<? extends Element> c = Elements.get(desc);
@@ -75,12 +88,6 @@ public class Board extends Observable {
 		notifyObservers();
 	}
 	
-	public static Board getInstance(){
-		if (board == null) {
-			board = new Board();
-		}
-		return board;
-	}
 
 	public int getWidth() { return WIDTH; }
 	public int getHeight() { return HEIGHT; }

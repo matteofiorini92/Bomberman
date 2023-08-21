@@ -79,7 +79,7 @@ public class SoftWall extends Item {
 				view.Tile tileBelow = (Tile)view.Board.getInstance().getTile(positionBelow);
 				Image im = new Image("tiles-64x64/" + "20" + ".png");
 				tileBelow.setImageView(im);
-//				view.Board.getInstance().setTile(tileBelow, positionBelow);
+				view.Board.getInstance().setTile(tileBelow, positionBelow);
 				
 			}
 			if (cellBelow instanceof model.SoftWall) {
@@ -91,18 +91,22 @@ public class SoftWall extends Item {
 				view.Board.getInstance().setTile(tileBelow, positionBelow);
 			}
 			
-			// set tile where SoftWall was to either empty, empty with square shadow or empty with round shadow
+			// set tile where SoftWall was to either empty, empty with softWall shadow, empty with wall shadow or empty with border shadow
 			
 			int[] positionAbove = {y-1, x};
 			model.Element cellAbove = model.Board.getInstance().getCell(positionAbove);
 			String desc = "e";
 			String file = "20";
-			if (cellAbove instanceof model.Wall) {
-				desc = "ess";
-				file = "12";
+			if (cellAbove instanceof model.Wall && positionAbove[0] == 1) {
+				desc = "ebs";
+				file = "12"; // file shouldn't be set here
+			}
+			if (cellAbove instanceof model.Wall && positionAbove[0] != 1) {
+				desc = "ews";
+				file = "12"; // file shouldn't be set here
 			}
 			if (cellAbove instanceof model.SoftWall) {
-				desc = "ers";
+				desc = "esws";
 				file = "21";
 			}
 			Image im = new Image("tiles-64x64/" + file + ".png");

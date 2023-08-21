@@ -56,10 +56,10 @@ public class Bomb extends Item {
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		if (arg.equals("TRIGGER")) {
+		if (arg.equals(model.ChangeType.TRIGGER)) {
 			triggerBomb((model.Bomb)o);
 		}
-		if (arg.getClass().equals(new ArrayList<Object>().getClass()) && ((ArrayList<Object>) arg).get(0).equals("EXPLODE")) {
+		if (arg.getClass().equals(new ArrayList<Object>().getClass()) && ((ArrayList<Object>) arg).get(0).equals(model.ChangeType.EXPLODE)) {
 			System.out.println("I'm exploding");
 			explode((model.Bomb)o, (ArrayList<Object>) arg);
 		}

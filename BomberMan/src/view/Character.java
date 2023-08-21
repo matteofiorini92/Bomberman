@@ -13,7 +13,7 @@ import model.Direction;
 import model.Position;
 
 public abstract class Character extends Element {
-	
+	public static final long INVULNERABILITY_TIME = 3000;
     public static final int CHARACTER_HEIGHT = 96;
     public static final int CHARACTER_WIDTH = 64;
 	public static long TIME_FOR_MOVEMENT = 375;
@@ -76,4 +76,44 @@ public abstract class Character extends Element {
 			timeline.play();
 		}	
 	}
+	
+	public void loseLife() {
+		Timeline timeline = new Timeline();
+		
+		for (int frame = 0; frame < 10; frame++) {
+			final int framePlusOne = frame+1;
+			KeyFrame keyFrame = new KeyFrame(Duration.millis(INVULNERABILITY_TIME/10 * framePlusOne), event -> {
+
+				
+				imageView.setVisible(framePlusOne % 2 == 0);	
+				
+			});
+			timeline.getKeyFrames().add(keyFrame);
+		}
+		timeline.play();
+	}
+	
+	
+	public void die() {
+		
+	}
+	
+	
+	public void update(Observable o, Object arg, Map<Direction, String> imageFiles) {
+		Object[] args = (Object[]) arg;
+
+		if (args[0].equals(model.ChangeType.MOVE)) {			
+			move((model.Character)o, imageFiles, args[1]);
+		}
+		else if (args[0].equals(model.ChangeType.LOSE_LIFE)) {
+			//flash();
+			loseLife();
+		}
+		else if (args[0].equals(model.ChangeType.DIE)) {
+			die();
+		}
+	}
+	
+	
+	
 }

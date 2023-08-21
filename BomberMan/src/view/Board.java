@@ -17,29 +17,33 @@ public class Board implements Observer {
 	private static view.Board board;
 	private static Map<String, String> imageFiles = new HashMap<>();
 	static {
-		imageFiles.put("tc", "01");
-		imageFiles.put("ht", "02");
-		imageFiles.put("htf", "02-flipped");
-		imageFiles.put("t", "04");
-		imageFiles.put("tcf", "01-flipped");
-		imageFiles.put("l", "09");
-		imageFiles.put("sl", "10");
-		imageFiles.put("ess", "12");
-		imageFiles.put("ers", "21");
-		imageFiles.put("e", "20");
-		imageFiles.put("w", "11");
-		imageFiles.put("slf", "10-flipped");
-		imageFiles.put("lf", "09-flipped");
-		imageFiles.put("bc", "17");
-		imageFiles.put("sbl", "18");
-		imageFiles.put("b", "19");
-		imageFiles.put("sblf", "18-flipped");
-		imageFiles.put("bcf", "17-flipped");
-		imageFiles.put("sw", "05 06 07 08");
-		imageFiles.put("sws", "13 14 15 16");
+		imageFiles.put("tc", "01");				// top corner
+		imageFiles.put("st", "02");				// second top
+		imageFiles.put("stf", "02-flipped");	// second top flipped
+		imageFiles.put("t", "04");				// top
+		imageFiles.put("tcf", "01-flipped");	// top corner flipped
+		imageFiles.put("l", "09");				// left
+		imageFiles.put("sl", "10");				// second left
+		imageFiles.put("ebs", "12");			// empty with border shadow
+		imageFiles.put("ews", "12");			// empty with wall shadow
+		imageFiles.put("esws", "21");			// empty with soft wall shadow
+		imageFiles.put("e", "20");				// empty
+		imageFiles.put("w", "11");				// wall
+		imageFiles.put("slf", "10-flipped");	// second left flipped
+		imageFiles.put("lf", "09-flipped");		// left flipped
+		imageFiles.put("bc", "17");				// bottom corner
+		imageFiles.put("sbl", "18");			// second bottom left
+		imageFiles.put("b", "19");				// bottom
+		imageFiles.put("sblf", "18-flipped");	// second bottom left flipped
+		imageFiles.put("bcf", "17-flipped");	// bottom corner flipped
+		imageFiles.put("sw", "05 06 07 08");	// soft wall
+		imageFiles.put("sws", "13 14 15 16");	// soft wall with shadow
 	}
 	
-	private Item[][] tiles = new Item[13][17];
+	private model.Board modelBoard = model.Board.getInstance();
+	private int height = modelBoard.getHeight();
+	private int width = modelBoard.getWidth();
+	private Item[][] tiles = new Item[height][width];
 	private GridPane gridPane = new GridPane();
 	
 	private Board() {}
@@ -62,8 +66,8 @@ public class Board implements Observer {
 	public void update(Observable o, Object arg)
 	{
 		model.Element[][] cells = ((model.Board) o).getCells();
-		for (int i=0; i < 13; i++) {
-			for (int j = 0; j < 17; j++) {
+		for (int i=0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
 				String desc = ((model.Tile)cells[i][j]).getLabel();
             	Item item;
             	
