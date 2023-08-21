@@ -39,11 +39,11 @@ public class Main extends Application {
 		modelEnemies.put("bug", model.Bug.class);
 	}
 	
-	private static Map<String, Class<? extends view.Enemy>> viewEnemies = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
+	private static Map<String, Class<? extends view.Character>> viewCharacters = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
 	static {
 //		viewCharacters.put("bm", view.BomberMan.class);
-		viewEnemies.put("he", view.Helix.class);
-		viewEnemies.put("bug", view.Bug.class);
+		viewCharacters.put("he", view.Helix.class);
+		viewCharacters.put("bug", view.Bug.class);
 	}
 	
 	public static void main(String[] args) {
@@ -141,7 +141,7 @@ public class Main extends Application {
 		List<model.Enemy> enemies = new ArrayList<model.Enemy>();
 		for (Object[] character : characters) {
 			Class<? extends model.Character> modelCharacterClass = modelEnemies.get(character[0]);
-			Class<? extends view.Character> viewCharacterClass = viewEnemies.get(character[0]);
+			Class<? extends view.Character> viewCharacterClass = viewCharacters.get(character[0]);
 			model.Character modelCharacter;
 			view.Character viewCharacter;
 			int coordinateX = (int) character[1];

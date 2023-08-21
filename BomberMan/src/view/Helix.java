@@ -15,7 +15,7 @@ import javafx.util.Duration;
 import model.Direction;
 import model.Position;
 
-public class Helix extends Enemy {
+public class Helix extends Character {
 	
 	public static Map<Direction, String> imageFiles = new HashMap<>();
 	static {

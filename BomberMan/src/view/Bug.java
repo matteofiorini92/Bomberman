@@ -13,7 +13,7 @@ import javafx.util.Duration;
 import model.Direction;
 import model.Position;
 
-public class Bug extends Enemy {
+public class Bug extends Character {
 
 	public static Map<Direction, String> imageFiles = new HashMap<>();
 	static {

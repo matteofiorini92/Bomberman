@@ -42,8 +42,6 @@ public abstract class Character extends Element {
 		this.setLayoutY(position[0] * Item.ITEM_HEIGHT - HEIGHT_DIFFERENCE);
 		this.setLayoutX(position[1] * Item.ITEM_WIDTH);
 		
-//		StackPane.setAlignment(this, javafx.geometry.Pos.BASELINE_CENTER);
-		
         getChildren().add(imageView);
 	}
 	
@@ -115,8 +113,6 @@ public abstract class Character extends Element {
 		
 		String prefix = prefixes.get(character.getClass());
 		String[] files = imageFiles.get(model.Direction.DEAD).split("\\s+");
-		
-//		double newLayoutY = this.getLayoutY() + HEIGHT_DIFFERENCE;
 
 		Timeline timeline = new Timeline();
 		
@@ -124,7 +120,6 @@ public abstract class Character extends Element {
 			final int framePlusOne = frame + 1;
 			Image image = new Image("images-" + prefix + "/" + files[frame] + ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH/(files.length + 1) * framePlusOne), event -> {
-//				this.setLayoutY(newLayoutY);
 		    	imageView.setImage(image);
 		    });
 			timeline.getKeyFrames().add(keyFrame);
