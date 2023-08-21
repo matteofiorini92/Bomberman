@@ -29,7 +29,7 @@ public class Helix extends Enemy {
 	
 	public Helix(int[] position)
 	{
-		super(position, new Image("helix/" + imageFiles.get(Direction.INITIAL) + ".png"));
+		super(position, new Image("images-helix/" + imageFiles.get(Direction.INITIAL) + ".png"));
 	}
 	
 	@Override

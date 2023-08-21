@@ -30,7 +30,7 @@ public class BomberMan extends Character {
 
 	public BomberMan()
 	{
-		super(INITIAL_POSITION, new Image("bm/" + imageFiles.get(Direction.INITIAL) + ".png"));
+		super(INITIAL_POSITION, new Image("images-bm/" + imageFiles.get(Direction.INITIAL) + ".png"));
 	}
 	
 	@Override

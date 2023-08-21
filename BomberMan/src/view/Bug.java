@@ -27,7 +27,7 @@ public class Bug extends Enemy {
 
 	public Bug(int[] position)
 	{
-		super(position, new Image("bug/" + imageFiles.get(Direction.INITIAL) + ".png"));
+		super(position, new Image("images-bug/" + imageFiles.get(Direction.INITIAL) + ".png"));
 	}
 
 	@Override
