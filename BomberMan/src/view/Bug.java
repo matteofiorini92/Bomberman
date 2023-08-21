@@ -14,7 +14,7 @@ import model.Direction;
 import model.Position;
 
 public class Bug extends Enemy {
-	public static final long INVULNERABILITY_TIME = 3000;
+
 	public static Map<Direction, String> imageFiles = new HashMap<>();
 	static {
 		imageFiles.put(Direction.INITIAL, "26");
@@ -24,38 +24,14 @@ public class Bug extends Enemy {
 		imageFiles.put(Direction.LEFT, "19 20 21 22 23 24 25");
 	}
 
-//	private ImageView imageView;
-
 	public Bug(int[] position)
 	{
 		super(position, new Image("bug-64x96/" + imageFiles.get(Direction.INITIAL) + ".png"));
-		
-		this.setLayoutY(position[0] * Item.ITEM_HEIGHT - 32); // to improve
-		this.setLayoutX(position[1] * Item.ITEM_WIDTH);
-
-		StackPane.setAlignment(this, javafx.geometry.Pos.BOTTOM_RIGHT);
-        getChildren().add(getImageView());
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		super.update(o, arg, imageFiles);
 	}
-	
-//	private void flash() {
-//		Timeline timeline = new Timeline();
-//		
-//		for (int frame = 0; frame < 10; frame++) {
-//			final int framePlusOne = frame+1;
-//			KeyFrame keyFrame = new KeyFrame(Duration.millis(INVULNERABILITY_TIME/10 * framePlusOne), event -> {
-//
-//				ImageView im = getImageView();
-//				im.setVisible(framePlusOne % 2 == 0);	
-//				
-//			});
-//			timeline.getKeyFrames().add(keyFrame);
-//		}
-//		timeline.play();
-//	}
 
 }

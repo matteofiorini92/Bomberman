@@ -18,6 +18,8 @@ public abstract class Character extends Element {
     public static final int CHARACTER_WIDTH = 64;
 	public static long TIME_FOR_MOVEMENT = 375;
 	
+	private int heightDifference = CHARACTER_HEIGHT - view.Item.ITEM_HEIGHT;
+	
 	public static Map<Class<? extends model.Character>, String> prefixes = new HashMap<>();
 	static {
 		prefixes.put(model.BomberMan.class, "bm");
@@ -30,11 +32,16 @@ public abstract class Character extends Element {
 	
 	public Character(int[] position, Image im1)
 	{
-//		super(position);
 		this.direction = Direction.INITIAL;
 		imageView = new ImageView(im1);
-		imageView.setFitHeight(96);
-		imageView.setFitWidth(64);
+		
+		this.setLayoutY(position[0] * Item.ITEM_HEIGHT - heightDifference);
+		this.setLayoutX(position[1] * Item.ITEM_WIDTH);
+		
+        getChildren().add(getImageView());
+		
+//		imageView.setFitHeight(96);
+//		imageView.setFitWidth(64);
 	}
 
 	public Direction getDirection()	{ return direction;	}

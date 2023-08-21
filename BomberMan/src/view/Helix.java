@@ -17,7 +17,6 @@ import model.Position;
 
 public class Helix extends Enemy {
 	
-	public static final long INVULNERABILITY_TIME = 3000;
 	public static Map<Direction, String> imageFiles = new HashMap<>();
 	static {
 		imageFiles.put(Direction.INITIAL, "13");
@@ -26,19 +25,10 @@ public class Helix extends Enemy {
 		imageFiles.put(Direction.DOWN, "01 02 03 04");
 		imageFiles.put(Direction.LEFT, "09 10 11 12");
 	}
-
-//	private ImageView imageView;
-
 	
 	public Helix(int[] position)
 	{
 		super(position, new Image("helix-64x96/" + imageFiles.get(Direction.INITIAL) + ".png"));
-		
-		this.setLayoutY(position[0] * Item.ITEM_HEIGHT - 32); // to improve
-		this.setLayoutX(position[1] * Item.ITEM_WIDTH);
-
-		StackPane.setAlignment(this, javafx.geometry.Pos.BOTTOM_RIGHT);
-        getChildren().add(getImageView());
 	}
 	
 	@Override
@@ -46,40 +36,4 @@ public class Helix extends Enemy {
 		super.update(o, arg, imageFiles);
 	}
 	
-//	@Override
-//	public void update(Observable o, Object arg) {
-//		Object[] args = (Object[]) arg;
-//
-//		if (args[0].equals(model.ChangeType.MOVE)) {			
-//			super.move((model.Character)o, imageFiles, args[1]);
-//		}
-//		else if (args[0].equals(model.ChangeType.LOSE_LIFE)) {
-//			//flash();
-//			super.loseLife();
-//		}
-//		else if (args[0].equals(model.ChangeType.DIE)) {
-//			die();
-//		}
-//	}
-	
-	
-//	private void flash() {
-//		Timeline timeline = new Timeline();
-//		
-//		for (int frame = 0; frame < 10; frame++) {
-//			final int framePlusOne = frame+1;
-//			KeyFrame keyFrame = new KeyFrame(Duration.millis(INVULNERABILITY_TIME/10 * framePlusOne), event -> {
-//
-//				ImageView im = getImageView();
-//				im.setVisible(framePlusOne % 2 == 0);	
-//				
-//			});
-//			timeline.getKeyFrames().add(keyFrame);
-//		}
-//		timeline.play();
-//	}
-//	
-//	private void die() {
-//		
-//	}
 }
