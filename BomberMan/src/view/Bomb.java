@@ -37,7 +37,7 @@ public class Bomb extends Item {
 		imageFiles.put("edgeRight", "26 27 28 29 30");
 	}
 	private String explosionSequence = "01 02 03 04 05";
-	private ImageView imageView = new ImageView();
+//	private ImageView imageView = new ImageView();
 	private String sequence = "70 71 70 69 70 71 70 69";
 	private Image smallBomb = new Image("tiles-64x64/69.png");
 	private Image mediumBomb = new Image("tiles-64x64/70.png");

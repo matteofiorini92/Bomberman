@@ -72,7 +72,7 @@ public class Board implements Observer {
             	Item item;
             	
             	if (desc.equals("sw") || desc.equals("sws")) {
-            		item = new SoftWall(imageFiles.get(desc));
+            		item = new SoftWall(desc);
             	}        	
             	else {	            		
             		Image image = new Image("tiles-64x64/" + imageFiles.get(desc) + ".png");

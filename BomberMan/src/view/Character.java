@@ -33,16 +33,15 @@ public abstract class Character extends Element {
 		prefixes.put(model.Bug.class, "bug");
 	}
 
-	private ImageView imageView;
+//	private ImageView imageView;
 	
 	public Character(int[] position, Image im1)
 	{
-		imageView = new ImageView(im1);
+		super(new ImageView(im1));
 		
 		this.setLayoutY(position[0] * Item.ITEM_HEIGHT - HEIGHT_DIFFERENCE);
 		this.setLayoutX(position[1] * Item.ITEM_WIDTH);
 		
-        getChildren().add(imageView);
 	}
 	
 	public void update(Observable o, Object arg, Map<Direction, String> imageFiles) {
@@ -79,7 +78,7 @@ public abstract class Character extends Element {
 			final int framePlusOne = frame+1;
 			Image image = new Image("images-" + prefix + "/" + files[frame]+ ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_MOVEMENT/files.length * framePlusOne), event -> {
-		    	imageView.setImage(image);
+		    	this.getImageView().setImage(image);
 		    	this.setLayoutX(prevPosition[1] * Item.ITEM_WIDTH + xMove * Item.ITEM_WIDTH * framePlusOne / files.length);
 		    	this.setLayoutY(prevPosition[0] * Item.ITEM_HEIGHT + yMove * Item.ITEM_HEIGHT * framePlusOne / files.length - HEIGHT_DIFFERENCE);
 		    });
@@ -101,7 +100,7 @@ public abstract class Character extends Element {
 		for (int frame = 0; frame < INVULNERABILITY_FRAMES; frame++) {
 			final int framePlusOne = frame + 1;
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(INVULNERABILITY_TIME/INVULNERABILITY_FRAMES * framePlusOne), event -> {
-				imageView.setVisible(framePlusOne % 2 == 0);				
+				this.getImageView().setVisible(framePlusOne % 2 == 0);				
 			});
 			timeline.getKeyFrames().add(keyFrame);
 		}
@@ -120,13 +119,13 @@ public abstract class Character extends Element {
 			final int framePlusOne = frame + 1;
 			Image image = new Image("images-" + prefix + "/" + files[frame] + ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH/(files.length + 1) * framePlusOne), event -> {
-		    	imageView.setImage(image);
+		    	this.getImageView().setImage(image);
 		    });
 			timeline.getKeyFrames().add(keyFrame);
 		}
 		
 		KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH), event -> {
-	    	imageView.setVisible(false);
+	    	this.getImageView().setVisible(false);
 	    });
 		timeline.getKeyFrames().add(keyFrame);
 		timeline.play();

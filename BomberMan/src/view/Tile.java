@@ -9,24 +9,14 @@ import javafx.scene.shape.Rectangle;
 
 public class Tile extends Item {
 
-
     private String desc;
-    private ImageView imageView;
 
     public Tile(String desc, Image image) {
+    	super(new ImageView(image));
     	this.desc = desc;
-        imageView = new ImageView(image);
-        imageView.setFitWidth(ITEM_WIDTH);
-        imageView.setFitHeight(ITEM_HEIGHT);
-
-        Rectangle rectangle = new Rectangle(ITEM_WIDTH, ITEM_HEIGHT, Color.TRANSPARENT);
-        getChildren().addAll(rectangle, imageView);
     }
-    
-    public void setImageView(Image im) { imageView.setImage(im); }
 
 	public String getDesc()	{ return desc; }
-	// public void setDesc(String desc)	{ this.desc = desc; }
 
 	@Override
 	public void update(Observable o, Object arg)
