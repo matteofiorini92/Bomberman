@@ -79,7 +79,7 @@ public abstract class Character extends Element {
 		
 		for (int frame = 0; frame < files.length; frame++) {
 			final int framePlusOne = frame+1;
-			Image image = new Image(prefix + "-64x96/" + files[frame]+ ".png");
+			Image image = new Image(prefix + "/" + files[frame]+ ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_MOVEMENT/files.length * framePlusOne), event -> {
 		    	imageView.setImage(image);
 		    	this.setLayoutX(prevPosition[1] * Item.ITEM_WIDTH + xMove * Item.ITEM_WIDTH * framePlusOne / files.length);
@@ -122,7 +122,7 @@ public abstract class Character extends Element {
 		
 		for (int frame = 0; frame < files.length; frame++) {
 			final int framePlusOne = frame + 1;
-			Image image = new Image(prefix + "-64x96/" + files[frame] + ".png");
+			Image image = new Image(prefix + "/" + files[frame] + ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH/(files.length + 1) * framePlusOne), event -> {
 //				this.setLayoutY(newLayoutY);
 		    	imageView.setImage(image);
