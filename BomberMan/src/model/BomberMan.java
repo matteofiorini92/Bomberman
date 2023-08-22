@@ -27,6 +27,8 @@ public class BomberMan extends Character {
 	
 	public int getBombs() {	return bombs; }
 	public void setBombs(int bombs)	{ this.bombs = bombs; }
+	public void incBombs() { bombs++; }
+	public void decBombs() { bombs--; }
 	public int getRange() {	return range; }
 	public void setRange(int range)	{ this.range = range; }
 	

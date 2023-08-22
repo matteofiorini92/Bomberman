@@ -12,6 +12,8 @@ import java.util.function.Predicate;
 import javafx.application.Platform;
 
 public class Bomb extends Item {
+	
+	public static final int TIME_FOR_EXPLOSION = 3000;
 
 	private static Board board = model.Board.getInstance();
 	private int range;
@@ -31,44 +33,35 @@ public class Bomb extends Item {
 		setChanged();
 		notifyObservers(args);
 		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-		executor.schedule(this::explode, 3000, TimeUnit.MILLISECONDS);
+		executor.schedule(this::explode, TIME_FOR_EXPLOSION, TimeUnit.MILLISECONDS);
 	}
 	
 	@SuppressWarnings("deprecation")
 	public void explode() {
 		Platform.runLater(() -> { // to have UI related operations all run on the JavaFX thread 				
-			System.out.println("BOOOOOM");
 			Map<Direction, List<Element>> surroundings = checkSurroundings();
 			for(Map.Entry<Direction, List<Element>> surrounding : surroundings.entrySet()) {
 				List<Element> values = surrounding.getValue();
 				for (Element e : values) {					
 					if (e instanceof model.SoftWall) {
 						((SoftWall) e).destroy();
-						System.out.println("I'm hitting a soft wall on my " + surrounding.getKey().toString());
 					}
 					if (e instanceof model.Character) {
-						// TODO kills character
 						((Character) e).loseLife();
-						System.out.println("I'm hitting a character on my " + surrounding.getKey().toString());
-					}
-					if (e instanceof model.EmptyTile) {
-						// TODO becomes explosion
-						System.out.println("I'm hitting an empty tile on my " + surrounding.getKey().toString());
 					} 
 					if (e instanceof model.Bomb) {
-						// TODO explode
-						System.out.println("I'm hitting a bomb on my " + surrounding.getKey().toString());
+						((model.Bomb)e).explode();
 					}
 				}
 			}
 			
+			// simplistic. if the bomberman never leaves the cell, the cell shouldn't become empty.
 			int[] bombPosition = this.getPosition();
 			board.setCell(new EmptyTile(bombPosition), bombPosition);
 			
-			
-			model.BomberMan bm = model.BomberMan.getInstance();
-			bm.setBombs(bm.getBombs()+1);
-			
+//			model.BomberMan bm = model.BomberMan.getInstance();
+//			bm.setBombs(bm.getBombs()+1);
+			model.BomberMan.getInstance().incBombs();
 			
 			String[][] simplifiedSurroundings = simplifySurroundings(surroundings);
 			Object[] args = { model.ChangeType.EXPLODE, simplifiedSurroundings };
@@ -82,6 +75,7 @@ public class Bomb extends Item {
 		int[] currPosition = this.getPosition();
 		Element e;
 		
+		// array of "tuples"
 		Object[][] directions = {
 				{Direction.UP, 0, -1},
 				{Direction.DOWN, 0, 1},
@@ -89,14 +83,22 @@ public class Bomb extends Item {
 				{Direction.RIGHT, 1, 0}
 		};
 
+		/**
+		 *  the result is a map like this
+		 *  { UP: [empty, empty, wall],
+		 *    DOWN: [character],
+		 *    etc.
+		 *  }
+		 */
+		
 		Map<Direction, List<Element>> surroundings = new HashMap<Direction, List<Element>>();
 		
-		for (Object[] direction : directions) {
+		for (Object[] tuple : directions) {
 			List<Element> l = new ArrayList<Element>();
-			Direction d = (Direction) direction[0];
+			Direction d = (Direction) tuple[0];
 			surroundings.put(d, l);
-			int valX = (int)direction[1];
-			int valY = (int)direction[2];
+			int valX = (int)tuple[1];
+			int valY = (int)tuple[2];
 			for (int i = 1; i <= range; i++) {
 				int x = currPosition[1] + valX * i;
 				int y = currPosition[0] + valY * i;
@@ -107,15 +109,27 @@ public class Bomb extends Item {
 				}
 			}
 		}
-		
 	    return surroundings;
 	}
 	
 	private String[][] simplifySurroundings(Map<Direction, List<Element>> surroundings) {
-		String[][] result = new String[range*2+1][range*2+1];
-//		int[] currPosition = this.getPosition();
 		
+		String[][] result = new String[range*2+1][range*2+1];
 		result[range][range] = "ex"; //explosion is at the centre of the grid
+		
+		
+		
+		/**
+		 * could use this here as well ?
+		 * 		Object[][] directions = {
+				{Direction.UP, 0, -1},
+				{Direction.DOWN, 0, 1},
+				{Direction.LEFT, -1, 0},
+				{Direction.RIGHT, 1, 0}
+		};
+		 */
+		
+		
 		
 		List<Element> elements;
 		Predicate<Element> isWallOrSoftWall = element ->
