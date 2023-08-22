@@ -45,10 +45,11 @@ public class Bomb extends Item {
 	GridPane gridPane = new GridPane();
 	
 	public Bomb() {
+		super(new ImageView());
 //		imageView.setImage(mediumBomb);
-		imageView.setFitHeight(64);
-		imageView.setFitWidth(64);
-        getChildren().addAll(imageView, gridPane);
+//		imageView.setFitHeight(64);
+//		imageView.setFitWidth(64);
+        getChildren().add(gridPane);
 		
 	}
 	
@@ -79,7 +80,7 @@ public class Bomb extends Item {
 			final int iPlusOne = i+1;
 			Image image = new Image("tiles-64x64/" + files[i]+ ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_TO_TRIGGER/files.length * iPlusOne), event -> {
-		    	imageView.setImage(image);
+		    	this.getImageView().setImage(image);
 		    });
 			timeline.getKeyFrames().add(keyFrame);
 		}

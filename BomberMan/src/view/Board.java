@@ -57,10 +57,17 @@ public class Board implements Observer {
 	
 	public GridPane getGridPane() { return gridPane; }
 	public Item[][] getTiles() { return tiles; }
-	public Item getTile(int[] position) { return tiles[position[0]][position[1]]; }
-	public void setTile(Tile t, int[] position) { tiles[position[0]][position[1]] = t; }
-	public void setTile(SoftWall sw, int[] position) { gridPane.add(sw, position[1], position[0]); }
+
+	public void setTile(Item item, int[] position) { 
+		gridPane.add(item, position[1], position[0]);
+		tiles[position[0]][position[1]] = item;
+	}
 	
+//	public void setTile(SoftWall sw, int[] position) {
+//		gridPane.add(sw, position[1], position[0]);
+//		tiles[position[0]][position[1]] = sw;
+//	}
+//	
 	
 	@Override
 	public void update(Observable o, Object arg)
@@ -71,7 +78,7 @@ public class Board implements Observer {
 				String desc = ((model.Tile)cells[i][j]).getLabel();
             	Item item;
             	
-            	if (desc.equals("sw") || desc.equals("sws")) {
+            	if (desc.equals("sw") || desc.equals("sws")) { // needs a separate assignement because of animation
             		item = new SoftWall(desc);
             	}        	
             	else {	            		

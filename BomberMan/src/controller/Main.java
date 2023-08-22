@@ -1,12 +1,14 @@
 package controller;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -24,24 +26,21 @@ import javafx.scene.paint.Color;
 
 public class Main extends Application {
 	
-	private view.BomberMan viewBm;
 	private model.BomberMan modelBm;
-//	private view.Helix viewHe;
-//	private model.Helix modelHe;
+	private view.BomberMan viewBm;
 	private model.Board modelBoard;
 	private view.Board viewBoard;
 	private Group root = new Group();
+	private int level;
 	
 	private static Map<String, Class<? extends model.Enemy>> modelEnemies = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
 	static {
-//		modelCharacters.put("bm", model.BomberMan.class);
 		modelEnemies.put("he", model.Helix.class);
 		modelEnemies.put("bug", model.Bug.class);
 	}
 	
 	private static Map<String, Class<? extends view.Character>> viewCharacters = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
 	static {
-//		viewCharacters.put("bm", view.BomberMan.class);
 		viewCharacters.put("he", view.Helix.class);
 		viewCharacters.put("bug", view.Bug.class);
 	}
@@ -53,8 +52,17 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) throws Exception
 	{
-		
-		String levelNumber = "1-2";
+		String levelNumber = "";
+		Properties properties = new Properties();
+        try (FileInputStream input = new FileInputStream("resources/levels.properties")) {
+            properties.load(input);
+            levelNumber = (String)properties.get("2");
+            System.out.println(levelNumber);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//		String levelNumber = "1-2";
 		
 		//Group root = new Group();
 		
