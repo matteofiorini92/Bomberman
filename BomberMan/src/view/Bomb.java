@@ -23,7 +23,7 @@ public class Bomb extends Item {
 		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/explosions/" + currLevel + ".properties");
 	}
 	
-	GridPane gridPane = new GridPane();
+	private GridPane gridPane = new GridPane();
 	
 	public Bomb() {
 		super(new ImageView());
@@ -61,9 +61,9 @@ public class Bomb extends Item {
 		    });
 			timeline.getKeyFrames().add(keyFrame);
 		}
-		
 		timeline.play();
 	}
+	
 	
 	public void explode(model.Bomb bomb, String[][] grid) {
 		
@@ -80,18 +80,18 @@ public class Bomb extends Item {
 						String type = grid[i][j];
 						if (type != null) {							
 							String[] files = imageFiles.get(type).split("\\s+");
-							Image im = new Image("explosions-64x64/" + files[framePlusOne-1] + ".png");
+							Image im = new Image("explosions-/" + files[framePlusOne-1] + ".png");
 							ImageView iv = new ImageView(im);
 							gridPane.add(iv, j, i);
 						}
 						else {
-							Rectangle rect = new Rectangle(64,64, Color.TRANSPARENT);
+							Rectangle rect = new Rectangle(view.Item.ITEM_WIDTH,view.Item.ITEM_HEIGHT, Color.TRANSPARENT);
 							gridPane.add(rect, j, i);
 						}
 					}
 				}
-				this.setLayoutX((bombPosition[1] - range) * 64);
-				this.setLayoutY((bombPosition[0] - range) * 64);
+				this.setLayoutX((bombPosition[1] - range) * view.Item.ITEM_WIDTH);
+				this.setLayoutY((bombPosition[0] - range) * view.Item.ITEM_HEIGHT);
 			});
 			timeline.getKeyFrames().add(keyFrame);
 		}
@@ -100,8 +100,5 @@ public class Bomb extends Item {
 		});
 		timeline.getKeyFrames().add(keyFrame);
 		timeline.play();
-		
 	}
-	
-	
 }

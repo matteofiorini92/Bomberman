@@ -62,7 +62,6 @@ public class SoftWall extends Item {
 		for (int frame = 0; frame < files.length; frame++) {
 			final int framePlusOne = frame+1;
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(SOFT_WALL_EXPLOSION/(files.length+1) * framePlusOne), event -> {
-				
 				Image im = new Image("tiles-64x64/" + files[framePlusOne-1] + ".png");
 				this.getImageView().setImage(im);				
 			});
