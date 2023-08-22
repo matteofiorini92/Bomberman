@@ -20,7 +20,6 @@ public class SoftWall extends Item {
 	static {
 		String currLevel = controller.Main.getCurrLevel();
 		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/tiles/" + currLevel + ".properties");
-		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/explosions/" + currLevel + ".properties");
 	}
 	
 	private Timeline timeline = new Timeline(); // class attribute so that it can be accessed by both startAnimation and update (for explosions)
@@ -58,7 +57,7 @@ public class SoftWall extends Item {
 		 * Soft wall explosion animation
 		 */
 		
-		String[] files = imageFiles.get("explosion").split("\\s+");
+		String[] files = imageFiles.get("swe").split("\\s+");
 		
 		for (int frame = 0; frame < files.length; frame++) {
 			final int framePlusOne = frame+1;
