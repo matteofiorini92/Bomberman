@@ -55,7 +55,7 @@ public class Bomb extends Item {
 		
 		for (int i = 0; i < files.length; i++) {
 			final int iPlusOne = i+1;
-			Image image = new Image("tiles-64x64/" + files[i]+ ".png");
+			Image image = new Image("tiles-/" + files[i]+ ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_TO_TRIGGER/files.length * iPlusOne), event -> {
 		    	this.getImageView().setImage(image);
 		    });
