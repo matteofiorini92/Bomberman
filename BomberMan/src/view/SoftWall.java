@@ -105,19 +105,16 @@ public class SoftWall extends Item {
 			int[] positionAbove = { y - 1, x };
 			model.Element cellAbove = modelBoard.getCell(positionAbove);
 			String desc = "e";
-			String file = "20";
 			if (cellAbove instanceof model.Wall && positionAbove[0] == 1) {
 				desc = "ebs";
-				file = "12"; // file shouldn't be set here
 			}
 			else if (cellAbove instanceof model.Wall && positionAbove[0] != 1) {
 				desc = "ews";
-				file = "12"; // file shouldn't be set here
 			}
 			else if (cellAbove instanceof model.SoftWall) {
 				desc = "esws";
-				file = "21";
 			}
+			String file = imageFiles.get(desc);
 			Image im = new Image("tiles-64x64/" + file + ".png");
 			this.getImageView().setImage(im);
 			viewBoard.setTile(new view.Tile(desc, im), softWallPosition);

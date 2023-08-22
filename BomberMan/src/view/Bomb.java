@@ -2,53 +2,33 @@ package view;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Observer;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import model.Direction;
-import model.Element;
 
+@SuppressWarnings("deprecation")
 public class Bomb extends Item {
 	
 	public static final long TIME_TO_TRIGGER = 3000;
 	public static final long TIME_FOR_EXPLOSION = 1500;
 	public static Map<String, String> imageFiles = new HashMap<>();
 	static {
-		imageFiles.put("ex", "01 02 03 04 05");
-		imageFiles.put("midUp", "11 12 13 14 15");
-		imageFiles.put("edgeUp", "16 17 18 19 20");
-		imageFiles.put("midDown", "11 12 13 14 15");
-		imageFiles.put("edgeDown", "21 22 23 24 25");
-		imageFiles.put("midLeft", "06 07 08 09 10");
-		imageFiles.put("edgeLeft", "31 32 33 34 35");
-		imageFiles.put("midRight", "06 07 08 09 10");
-		imageFiles.put("edgeRight", "26 27 28 29 30");
+		String currLevel = controller.Main.getCurrLevel();
+		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/explosions/" + currLevel + ".properties");
 	}
-	private String explosionSequence = "01 02 03 04 05";
-//	private ImageView imageView = new ImageView();
+	
 	private String sequence = "70 71 70 69 70 71 70 69";
-	private Image smallBomb = new Image("tiles-64x64/69.png");
-	private Image mediumBomb = new Image("tiles-64x64/70.png");
-	private Image bigBomb = new Image("tiles-64x64/71.png");
 	GridPane gridPane = new GridPane();
 	
 	public Bomb() {
 		super(new ImageView());
-//		imageView.setImage(mediumBomb);
-//		imageView.setFitHeight(64);
-//		imageView.setFitWidth(64);
         getChildren().add(gridPane);
 		
 	}
