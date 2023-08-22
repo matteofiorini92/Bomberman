@@ -22,16 +22,7 @@ public class Board implements Observer {
 	private static Map<String, String> imageFiles = new HashMap<>();
 	static {
 		String currLevel = controller.Main.getCurrLevel();
-		Properties tilesProperties = new Properties();
-        try (FileInputStream input = new FileInputStream("resources/tiles/" + currLevel + ".properties")) {
-            tilesProperties.load(input);
-            Set<Object> keys = tilesProperties.keySet();
-            for (Object key : keys) {
-            	imageFiles.put((String) key, (String)tilesProperties.get(key));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/tiles/" + currLevel + ".properties");
 	}
 	
 	private model.Board modelBoard = model.Board.getInstance();

@@ -21,21 +21,7 @@ public class Board extends Observable {
 	 */
 	private static Map<String, Class<? extends Element>> Elements = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
 	static {
-		Properties tilesProperties = new Properties();
-        try (FileInputStream input = new FileInputStream("resources/tiles/model.properties")) {
-            tilesProperties.load(input);
-            Set<Object> keys = tilesProperties.keySet();
-            for (Object key : keys) {
-            	String className = (String) tilesProperties.get(key);
-            	Class<? extends Element> c = (Class<? extends Element>) Class.forName(className);
-            	Elements.put((String) key, c);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		utilities.LoadProperties.loadStringClassProperties(Elements, "resources/tiles/model.properties");
 	}
 	
 	private Board() {}
