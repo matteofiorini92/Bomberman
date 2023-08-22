@@ -32,8 +32,6 @@ public abstract class Character extends Element {
 		prefixes.put(model.Bug.class, "bug");
 	}
 
-//	private ImageView imageView;
-	
 	public Character(int[] position, Image im1)
 	{
 		super(new ImageView(im1));

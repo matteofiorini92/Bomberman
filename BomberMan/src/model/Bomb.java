@@ -25,13 +25,16 @@ public class Bomb extends Item {
 
 	public int getRange() { return range; }
 	
+	@SuppressWarnings("deprecation")
 	public void trigger() {
+		Object[] args = { model.ChangeType.TRIGGER };
 		setChanged();
-		notifyObservers(model.ChangeType.TRIGGER);
+		notifyObservers(args);
 		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 		executor.schedule(this::explode, 3000, TimeUnit.MILLISECONDS);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void explode() {
 		Platform.runLater(() -> { // to have UI related operations all run on the JavaFX thread 				
 			System.out.println("BOOOOOM");
@@ -67,12 +70,10 @@ public class Bomb extends Item {
 			bm.setBombs(bm.getBombs()+1);
 			
 			
-			List<Object> options = new ArrayList();
-			options.add(model.ChangeType.EXPLODE);
 			String[][] simplifiedSurroundings = simplifySurroundings(surroundings);
-			options.add(simplifiedSurroundings);
+			Object[] args = { model.ChangeType.EXPLODE, simplifiedSurroundings };
 			setChanged();
-			notifyObservers(options);
+			notifyObservers(args);
 		});
 		
 	}
@@ -112,7 +113,7 @@ public class Bomb extends Item {
 	
 	private String[][] simplifySurroundings(Map<Direction, List<Element>> surroundings) {
 		String[][] result = new String[range*2+1][range*2+1];
-		int[] currPosition = this.getPosition();
+//		int[] currPosition = this.getPosition();
 		
 		result[range][range] = "ex"; //explosion is at the centre of the grid
 		
@@ -147,9 +148,6 @@ public class Bomb extends Item {
 		for (int i = 1; i <= elements.size(); i++) {
 			result[range][range + i] = i == range ? "edgeRight" : "midRight";
 		}
-		
-		
-		
 		
 		return result;
 	}

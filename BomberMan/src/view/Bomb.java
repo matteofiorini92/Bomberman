@@ -1,6 +1,5 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -24,25 +23,23 @@ public class Bomb extends Item {
 		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/explosions/" + currLevel + ".properties");
 	}
 	
-//	private String sequence = "70 71 70 69 70 71 70 69";
 	GridPane gridPane = new GridPane();
 	
 	public Bomb() {
 		super(new ImageView());
         getChildren().add(gridPane);
-		
 	}
 	
 	
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		if (arg.equals(model.ChangeType.TRIGGER)) {
+		Object[] args = (Object[]) arg;
+		if (args[0].equals(model.ChangeType.TRIGGER)) {
 			triggerBomb((model.Bomb)o);
 		}
-		if (arg.getClass().equals(new ArrayList<Object>().getClass()) && ((ArrayList<Object>) arg).get(0).equals(model.ChangeType.EXPLODE)) {
-			System.out.println("I'm exploding");
-			explode((model.Bomb)o, (ArrayList<Object>) arg);
+		else if (args[0].equals(model.ChangeType.EXPLODE)) {
+			explode((model.Bomb)o, (String[][]) args[1]);
 		}
 		
 	}
@@ -68,14 +65,10 @@ public class Bomb extends Item {
 		timeline.play();
 	}
 	
-	public void explode(model.Bomb bomb, ArrayList<Object> arg) {
+	public void explode(model.Bomb bomb, String[][] grid) {
 		
 		int range = bomb.getRange();
-		
 		int[] bombPosition = bomb.getPosition();
-		
-		String[][] grid = (String[][]) arg.get(1);
-		
 		Timeline timeline = new Timeline();
 		
 		for (int frame = 0; frame < 5; frame++) {
@@ -97,11 +90,8 @@ public class Bomb extends Item {
 						}
 					}
 				}
-
 				this.setLayoutX((bombPosition[1] - range) * 64);
 				this.setLayoutY((bombPosition[0] - range) * 64);
-				
-				
 			});
 			timeline.getKeyFrames().add(keyFrame);
 		}
