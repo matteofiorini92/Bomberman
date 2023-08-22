@@ -1,43 +1,37 @@
 package view;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Properties;
+import java.util.Set;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-//import model.Board;
 
+@SuppressWarnings("deprecation")
 public class Board implements Observer {
 	
 	private static view.Board board;
+	/**
+	 * Loading k:v pairs from resources/tiles/ currLevel .properties into imageFiles
+	 */
 	private static Map<String, String> imageFiles = new HashMap<>();
 	static {
-		imageFiles.put("tc", "01");				// top corner
-		imageFiles.put("st", "02");				// second top
-		imageFiles.put("stf", "02-flipped");	// second top flipped
-		imageFiles.put("t", "04");				// top
-		imageFiles.put("tcf", "01-flipped");	// top corner flipped
-		imageFiles.put("l", "09");				// left
-		imageFiles.put("sl", "10");				// second left
-		imageFiles.put("ebs", "12");			// empty with border shadow
-		imageFiles.put("ews", "12");			// empty with wall shadow
-		imageFiles.put("esws", "21");			// empty with soft wall shadow
-		imageFiles.put("e", "20");				// empty
-		imageFiles.put("w", "11");				// wall
-		imageFiles.put("slf", "10-flipped");	// second left flipped
-		imageFiles.put("lf", "09-flipped");		// left flipped
-		imageFiles.put("bc", "17");				// bottom corner
-		imageFiles.put("sbl", "18");			// second bottom left
-		imageFiles.put("b", "19");				// bottom
-		imageFiles.put("sblf", "18-flipped");	// second bottom left flipped
-		imageFiles.put("bcf", "17-flipped");	// bottom corner flipped
-		imageFiles.put("sw", "05 06 07 08");	// soft wall
-		imageFiles.put("sws", "13 14 15 16");	// soft wall with shadow
+		String currLevel = controller.Main.getCurrLevel();
+		Properties tilesProperties = new Properties();
+        try (FileInputStream input = new FileInputStream("resources/tiles/" + currLevel + ".properties")) {
+            tilesProperties.load(input);
+            Set<Object> keys = tilesProperties.keySet();
+            for (Object key : keys) {
+            	imageFiles.put((String) key, (String)tilesProperties.get(key));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	private model.Board modelBoard = model.Board.getInstance();
@@ -54,7 +48,6 @@ public class Board implements Observer {
 		return board;
 	}
 	
-	
 	public GridPane getGridPane() { return gridPane; }
 	public Item[][] getTiles() { return tiles; }
 
@@ -62,12 +55,6 @@ public class Board implements Observer {
 		gridPane.add(item, position[1], position[0]);
 		tiles[position[0]][position[1]] = item;
 	}
-	
-//	public void setTile(SoftWall sw, int[] position) {
-//		gridPane.add(sw, position[1], position[0]);
-//		tiles[position[0]][position[1]] = sw;
-//	}
-//	
 	
 	@Override
 	public void update(Observable o, Object arg)
@@ -90,7 +77,5 @@ public class Board implements Observer {
             	gridPane.add(item, j, i);
 			}
 		}
-		
 	}
-	
 }

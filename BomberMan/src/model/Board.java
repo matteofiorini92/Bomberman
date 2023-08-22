@@ -1,11 +1,14 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Properties;
+import java.util.Set;
 
 public class Board extends Observable {
 	
@@ -13,29 +16,26 @@ public class Board extends Observable {
 	public static final int WIDTH = 17;
 	public static final int HEIGHT = 13;
 	private Element[][] cells = new Element[HEIGHT][WIDTH];
+	/**
+	 * Loading k:v pairs from resources/tiles/model.properties into Elements
+	 */
 	private static Map<String, Class<? extends Element>> Elements = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
 	static {
-		Elements.put("tc", model.Wall.class);			// top corner
-		Elements.put("st", model.Wall.class);			// second top
-		Elements.put("stf", model.Wall.class);			// second top flipped
-		Elements.put("t", model.Wall.class);			// top
-		Elements.put("tcf", model.Wall.class);			// top corner flipped
-		Elements.put("l", model.Wall.class);			// left
-		Elements.put("sl", model.Wall.class);			// second left
-		Elements.put("ebs", model.EmptyTile.class);		// empty with border shadow
-		Elements.put("ews", model.EmptyTile.class);		// empty with wall shadow
-		Elements.put("esws", model.EmptyTile.class);	// empty with soft wall shadow
-		Elements.put("e", model.EmptyTile.class);		// empty
-		Elements.put("w", model.Wall.class);			// wall
-		Elements.put("slf", model.Wall.class);			// second left flipped
-		Elements.put("lf", model.Wall.class);			// left flipped
-		Elements.put("bc", model.Wall.class);			// bottom corner
-		Elements.put("sbl", model.Wall.class);			// second bottom left
-		Elements.put("b", model.Wall.class);			// bottom
-		Elements.put("sblf", model.Wall.class);			// second bottom left flipped
-		Elements.put("bcf", model.Wall.class);			// bottom corner flipped
-		Elements.put("sw", model.SoftWall.class);		// soft wall
-		Elements.put("sws", model.SoftWall.class);		// soft wall with shadow
+		Properties tilesProperties = new Properties();
+        try (FileInputStream input = new FileInputStream("resources/tiles/model.properties")) {
+            tilesProperties.load(input);
+            Set<Object> keys = tilesProperties.keySet();
+            for (Object key : keys) {
+            	String className = (String) tilesProperties.get(key);
+            	Class<? extends Element> c = (Class<? extends Element>) Class.forName(className);
+            	Elements.put((String) key, c);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private Board() {}

@@ -31,7 +31,8 @@ public class Main extends Application {
 	private model.Board modelBoard;
 	private view.Board viewBoard;
 	private Group root = new Group();
-	private int level;
+	private int level = 1;
+	private static String currLevel;
 	
 	private static Map<String, Class<? extends model.Enemy>> modelEnemies = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
 	static {
@@ -52,19 +53,13 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) throws Exception
 	{
-		String levelNumber = "";
-		Properties properties = new Properties();
+		Properties levelsProperties = new Properties();
         try (FileInputStream input = new FileInputStream("resources/levels.properties")) {
-            properties.load(input);
-            levelNumber = (String)properties.get("2");
-            System.out.println(levelNumber);
-
+            levelsProperties.load(input);
+            currLevel = (String)levelsProperties.get(Integer.toString(level));
         } catch (IOException e) {
             e.printStackTrace();
         }
-//		String levelNumber = "1-2";
-		
-		//Group root = new Group();
 		
 		
 		/**
@@ -74,7 +69,7 @@ public class Main extends Application {
 		modelBoard = model.Board.getInstance();
 		viewBoard = view.Board.getInstance();
 		modelBoard.addObserver(viewBoard);
-		modelBoard.fillEmptyBoard(levelNumber);
+		modelBoard.fillEmptyBoard(currLevel);
 		GridPane boardGridPane = viewBoard.getGridPane();
 		
 		model.Element[][] cells = modelBoard.getCells();
@@ -95,7 +90,7 @@ public class Main extends Application {
 		/**
 		 * initialise characters
 		 */
-		List<Object[]> characters = readCharactersFile(levelNumber);
+		List<Object[]> characters = readCharactersFile(currLevel);
 		List<model.Enemy> enemies = initialiseCharacters(characters, root);
 		
 
@@ -241,5 +236,10 @@ public class Main extends Application {
 	    if (keyHeld) {
 	    	Platform.runLater(() -> processKeyPress(event));
 	    }
+	}
+
+	public static String getCurrLevel()
+	{
+		return currLevel;
 	}
 }
