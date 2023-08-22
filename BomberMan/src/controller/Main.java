@@ -189,24 +189,24 @@ public class Main extends Application {
 	private void processKeyPress(KeyEvent event) {
 	    long currentTime = System.currentTimeMillis();
 
+	    if (event.getCode() == KeyCode.SPACE && modelBm.getBombs() > 0) {
+	    	int currBombs = modelBm.getBombs();
+	    	model.Bomb modelBomb = new model.Bomb(currBombs, modelBm.getPosition());
+	    	view.Bomb viewBomb = new view.Bomb();
+	    	modelBomb.addObserver(viewBomb);
+	    	modelBm.setBombs(--currBombs);
+	    	List<Node> nodes = root.getChildren();
+	    	// get viewBm stackPane index in order to add the bomb behind it !!!!!!!!!!!!!!!!!!!!!!
+	    	int viewBmStackPaneIndex = root.getChildren().indexOf(viewBoard.getGridPane());
+	    	
+	    	root.getChildren().add(viewBmStackPaneIndex + 1, viewBomb);
+	    	modelBomb.trigger();	        	
+	    } else {	        	
 	    if (currentTime - lastKeyPressTime >= THROTTLE_DELAY) {
 	        lastKeyPressTime = currentTime;
 	        
 	        
 	        
-	        if (event.getCode() == KeyCode.SPACE && modelBm.getBombs() > 0) {
-	        	int currBombs = modelBm.getBombs();
-	        	model.Bomb modelBomb = new model.Bomb(currBombs, modelBm.getPosition());
-	        	view.Bomb viewBomb = new view.Bomb();
-	        	modelBomb.addObserver(viewBomb);
-	        	modelBm.setBombs(--currBombs);
-	        	List<Node> nodes = root.getChildren();
-	        	// get viewBm stackPane index in order to add the bomb behind it !!!!!!!!!!!!!!!!!!!!!!
-	        	int viewBmStackPaneIndex = root.getChildren().indexOf(viewBoard.getGridPane());
-	        	
-	        	root.getChildren().add(viewBmStackPaneIndex + 1, viewBomb);
-	        	modelBomb.trigger();	        	
-	        } else {	        	
 	        	Direction direction = null;
 	        	try {	        	
 	        		switch (event.getCode()) {
