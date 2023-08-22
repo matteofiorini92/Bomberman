@@ -5,6 +5,7 @@ import java.util.Observer;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
+@SuppressWarnings("deprecation")
 public abstract class Element extends StackPane implements Observer { // SHOULD EACH ELEMENT BE A STACKPANE?? OR RATHER AN IMAGEVIEW?
 
 

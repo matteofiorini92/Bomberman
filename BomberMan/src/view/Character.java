@@ -8,11 +8,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import model.Direction;
-import model.Position;
 
+@SuppressWarnings("deprecation")
 public abstract class Character extends Element {
 	
 	public static final int CHARACTER_HEIGHT = 96;

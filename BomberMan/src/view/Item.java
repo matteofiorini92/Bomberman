@@ -1,9 +1,6 @@
 package view;
 
-import java.util.Observable;
-
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
 
 public abstract class Item extends Element {
 	
