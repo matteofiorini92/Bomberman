@@ -1,15 +1,13 @@
 package model;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Properties;
-import java.util.Set;
 
+@SuppressWarnings("deprecation")
 public class Board extends Observable {
 	
 	private static Board board;

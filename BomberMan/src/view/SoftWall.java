@@ -11,15 +11,16 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+@SuppressWarnings("deprecation")
 public class SoftWall extends Item {
 	
 	public static final long SOFT_WALL_ANIMATION = 500;
 	public static final long SOFT_WALL_EXPLOSION = 1500;
 	public static Map<String, String> imageFiles = new HashMap<>();
 	static {
-		imageFiles.put("sw", "05 06 07 08");	// soft wall
-		imageFiles.put("sws", "13 14 15 16");	// soft wall with shadow
-		imageFiles.put("explosion", "63 64 65 66 67 68");
+		String currLevel = controller.Main.getCurrLevel();
+		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/tiles/" + currLevel + ".properties");
+		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/explosions/" + currLevel + ".properties");
 	}
 	
 	private Timeline timeline = new Timeline(); // class attribute so that it can be accessed by both startAnimation and update (for explosions)

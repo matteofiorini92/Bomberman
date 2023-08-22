@@ -1,13 +1,9 @@
 package view;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Properties;
-import java.util.Set;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;

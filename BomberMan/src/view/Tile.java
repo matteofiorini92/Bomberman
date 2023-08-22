@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+@SuppressWarnings("deprecation")
 public class Tile extends Item {
 
     private String desc;
