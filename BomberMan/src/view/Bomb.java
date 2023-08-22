@@ -24,7 +24,7 @@ public class Bomb extends Item {
 		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/explosions/" + currLevel + ".properties");
 	}
 	
-	private String sequence = "70 71 70 69 70 71 70 69";
+//	private String sequence = "70 71 70 69 70 71 70 69";
 	GridPane gridPane = new GridPane();
 	
 	public Bomb() {
@@ -52,7 +52,7 @@ public class Bomb extends Item {
 		this.setLayoutX(position[1]*64);
 		this.setLayoutY(position[0]*64);
 
-		String[] files = sequence.split("\\s+");
+		String[] files = imageFiles.get("beforeEx").split("\\s+");
 		
 		Timeline timeline = new Timeline();
 		
