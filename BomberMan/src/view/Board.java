@@ -56,7 +56,7 @@ public class Board implements Observer {
             		item = new SoftWall(desc);
             	}        	
             	else {	            		
-            		Image image = new Image("tiles-/" + imageFiles.get(desc) + ".png");
+            		Image image = new Image("images/-tiles/" + imageFiles.get(desc) + ".png");
             		item = new Tile(desc, image);
             	}
             	

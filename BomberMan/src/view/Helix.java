@@ -17,7 +17,7 @@ public class Helix extends Character {
 	
 	public Helix(int[] position)
 	{
-		super(position, new Image("images-helix/" + imageFiles.get(Direction.INITIAL) + ".png"));
+		super(position, new Image("/images/-helix/" + imageFiles.get(Direction.INITIAL) + ".png"));
 	}
 	
 	@Override

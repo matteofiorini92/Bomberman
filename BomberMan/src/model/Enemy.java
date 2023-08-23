@@ -9,11 +9,12 @@ import java.util.concurrent.TimeUnit;
 
 import javafx.application.Platform;
 
-public abstract class Enemy extends Character {
+public abstract class Enemy extends Character implements HidePowerUp {
 	
 	private static Board board = Board.getInstance();
 	ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();	
 	private int points;
+	private model.PowerUp hiddenPowerUp = null;
 
 	public Enemy(int[] position, Double speed, int points, int lives)
 	{
@@ -22,7 +23,10 @@ public abstract class Enemy extends Character {
 		//startMoving();
 	}
 	public int getPoints() { return points;	}
-	public void setPoints(int points) { this.points = points; }
+//	public void setPoints(int points) { this.points = points; }
+	
+	public model.PowerUp getHiddenPowerUp()	{ return hiddenPowerUp; }
+	public void setHiddenPowerUp(model.PowerUp hiddenPowerUp) {	this.hiddenPowerUp = hiddenPowerUp; }
 	
 	@Override
 	public void die() {

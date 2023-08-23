@@ -4,9 +4,9 @@ public abstract class PowerUp extends Item {
 	
 	private int points;
 
-	public PowerUp(int[] position, int points)
+	public PowerUp(int points)
 	{
-		super(position);
+		super(null);
 		this.points = points;
 	}
 

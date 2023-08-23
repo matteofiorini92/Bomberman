@@ -4,16 +4,24 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import model.Direction;
+import model.HidePowerUp;
+import model.PowerUp;
+import model.SoftWall;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -50,6 +58,7 @@ public class Main extends Application {
 		launch(args);
 	}
 
+	@SuppressWarnings({ "deprecation", "deprecation" })
 	@Override
 	public void start(Stage stage) throws Exception
 	{
@@ -73,6 +82,18 @@ public class Main extends Application {
 		GridPane boardGridPane = viewBoard.getGridPane();
 		
 		model.Element[][] cells = modelBoard.getCells();
+		model.SoftWall[] softWalls;
+		
+		Stream<model.Element[]> streamOfArrays = Arrays.stream(cells);														// convert cells to a stream of arrays
+		Stream<model.Element> flattenedStream = streamOfArrays.flatMap(array -> Arrays.stream(array));						// flatten the stream (concatenate the arrays of the stream)
+		softWalls = flattenedStream.filter(element -> element instanceof model.SoftWall).toArray(model.SoftWall[]::new);	// filter the flattened stream looking only for softWalls
+		
+		// same thing, more chained functions, less readable?
+		
+//		softWalls = streamOfArrays.flatMap(array -> Arrays.stream(array)
+//										   .filter(element -> element instanceof model.SoftWall))
+//								  .toArray(model.SoftWall[]::new);
+		
 		view.Item[][] tiles = viewBoard.getTiles();
 		
 		for (int i = 0; i < 13; i++) {
@@ -92,13 +113,44 @@ public class Main extends Application {
 		 */
 		List<Object[]> characters = readCharactersFile(currLevel);
 		List<model.Enemy> enemies = initialiseCharacters(characters, root);
+
+		
+		/**
+		 * initialise list of Elements that can hide powerUps (enemies and softwalls)
+		 */
+		List<model.HidePowerUp> hidingElements;
+		
+		hidingElements = enemies.stream()							//convert Enemies to Elements
+				.map(enemy -> (model.HidePowerUp)enemy)
+				.collect(Collectors.toList());
+		
+		hidingElements.addAll(Arrays.stream(softWalls).toList());	//convert array of softwalls to list
+
+		
+		List<model.PowerUp> powerUps = readPowerUpsFile(currLevel);
+		
+		powerUps.stream().forEach(powerUp -> {
+			int max = hidingElements.size();
+			view.PowerUp viewPowerUp = new view.PowerUp(powerUp);
+			powerUp.addObserver(viewPowerUp);
+
+			Random r = new Random();
+			model.HidePowerUp hidingElement = hidingElements.get(r.nextInt(max));
+			hidingElement.setHiddenPowerUp(powerUp);
+			hidingElements.remove(hidingElement);
+		});
+		
+		
+//		int numberOfPowerUps = powerUps.size();
+		
 		
 
+		// key listeners
 		
 		Scene scene = new Scene(root, 1088, 832, Color.BLACK);
 		scene.setOnKeyPressed(this::handleKeyPressed);
 		scene.setOnKeyReleased(this::handleKeyReleased);
-		
+
 		/**
 		 * define window properties
 		 */
@@ -135,6 +187,27 @@ public class Main extends Application {
 	        }
 	        reader.close();
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	private List<model.PowerUp> readPowerUpsFile(String levelNumber) {
+		String levelFilePath = "src/levels/" + levelNumber + "-power-ups.txt";
+		String line;
+		List<model.PowerUp> result = new ArrayList<>();
+		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(levelFilePath));
+			line = reader.readLine();
+			while (line != null) {
+				Class<? extends model.PowerUp> powerUp = (Class<? extends PowerUp>) Class.forName("model."+line);		// get class from name of the class
+				model.PowerUp powerUpInstance = (model.PowerUp) powerUp.getDeclaredConstructor().newInstance();	// instantiate a new object of that class
+	            result.add(powerUpInstance);
+				line = reader.readLine();
+	        }
+	        reader.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;

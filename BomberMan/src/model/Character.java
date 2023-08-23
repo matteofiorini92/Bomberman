@@ -119,6 +119,10 @@ public abstract class Character extends Element {
 
 	public void die() {
 		board.setCell(new EmptyTile(getPosition()), getPosition());
+		if (this instanceof model.Enemy) {
+			Enemy e = (model.Enemy)this;
+			model.Player.getInstance().addPoints(e.getPoints());
+		}
 		Object[] args = { model.ChangeType.DIE, lives };
 		setChanged();
 		notifyObservers(args);

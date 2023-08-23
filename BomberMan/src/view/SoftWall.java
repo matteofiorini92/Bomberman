@@ -34,7 +34,7 @@ public class SoftWall extends Item {
 		String[] files = imageFiles.get(desc).split("\\s+");
 		for (int frame = 0; frame < files.length; frame++) {
 			final int framePlusOne = frame + 1;
-			Image image = new Image("tiles-/" + files[frame] + ".png");
+			Image image = new Image("images/-tiles/" + files[frame] + ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(SOFT_WALL_ANIMATION/files.length * framePlusOne), event -> {
 		    	this.getImageView().setImage(image);
 		    });
@@ -62,7 +62,7 @@ public class SoftWall extends Item {
 		for (int frame = 0; frame < files.length; frame++) {
 			final int framePlusOne = frame+1;
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(SOFT_WALL_EXPLOSION/(files.length+1) * framePlusOne), event -> {
-				Image im = new Image("tiles-/" + files[framePlusOne-1] + ".png");
+				Image im = new Image("images/-tiles/" + files[framePlusOne-1] + ".png");
 				this.getImageView().setImage(im);				
 			});
 			timeline.getKeyFrames().add(keyFrame);
@@ -87,7 +87,7 @@ public class SoftWall extends Item {
 			
 			if (cellBelow instanceof model.EmptyTile) {
 				String desc = "e";
-				Image im = new Image("tiles-/" + imageFiles.get(desc) + ".png");
+				Image im = new Image("images/-tiles/" + imageFiles.get(desc) + ".png");
 				Tile tileBelow = new Tile(desc, im);
 				cellBelow.addObserver(tileBelow);
 				viewBoard.setTile(tileBelow, positionBelow);
@@ -115,7 +115,7 @@ public class SoftWall extends Item {
 				desc = "esws";
 			}
 			String file = imageFiles.get(desc);
-			Image im = new Image("tiles-/" + file + ".png");
+			Image im = new Image("images/-tiles/" + file + ".png");
 			this.getImageView().setImage(im);
 			viewBoard.setTile(new view.Tile(desc, im), softWallPosition);
 		});
