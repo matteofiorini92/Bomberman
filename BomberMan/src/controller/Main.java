@@ -131,6 +131,7 @@ public class Main extends Application {
 		
 		powerUps.stream().forEach(powerUp -> {
 			int max = hidingElements.size();
+//			System.out.println(powerUp.getClass().toString());
 			view.PowerUp viewPowerUp = new view.PowerUp(powerUp);
 			powerUp.addObserver(viewPowerUp);
 
