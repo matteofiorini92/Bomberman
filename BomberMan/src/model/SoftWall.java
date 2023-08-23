@@ -18,10 +18,23 @@ public class SoftWall extends Tile implements HidePowerUp {
 	@SuppressWarnings("deprecation")
 	public void destroy() {
 		int[] position = this.getPosition();
-		
-		board.setCell(new EmptyTile(position), position);
+		if (isHidingSomething()) {
+			board.setCell(hiddenPowerUp, position);
+		} else {
+			board.setCell(new EmptyTile(position), position);
+		}
 		setChanged();
 		notifyObservers();
+	}
+
+	@Override
+	public boolean isHidingSomething() { return hiddenPowerUp != null; }
+
+	@Override
+	public void showHiddenPowerUp()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 

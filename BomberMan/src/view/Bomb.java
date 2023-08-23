@@ -46,8 +46,8 @@ public class Bomb extends Item {
 	
 	public void triggerBomb(model.Bomb bomb) {
 		int[] position = bomb.getPosition();
-		this.setLayoutX(position[1]*64);
-		this.setLayoutY(position[0]*64);
+		this.setLayoutX(position[1]*view.Item.ITEM_WIDTH);
+		this.setLayoutY(position[0]*view.Item.ITEM_HEIGHT);
 
 		String[] files = imageFiles.get("beforeEx").split("\\s+");
 		

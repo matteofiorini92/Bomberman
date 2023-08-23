@@ -20,20 +20,32 @@ public abstract class Enemy extends Character implements HidePowerUp {
 	{
 		super(position, speed, lives);
 		this.points = points;
-		//startMoving();
 	}
+	
 	public int getPoints() { return points;	}
-//	public void setPoints(int points) { this.points = points; }
 	
 	public model.PowerUp getHiddenPowerUp()	{ return hiddenPowerUp; }
 	public void setHiddenPowerUp(model.PowerUp hiddenPowerUp) {	this.hiddenPowerUp = hiddenPowerUp; }
 	
 	@Override
+	public boolean isHidingSomething() { return hiddenPowerUp != null; }
+	
+	@Override
+	public void showHiddenPowerUp()
+	{
+		// TODO Auto-generated method stub
+	}
+	
+	@Override
 	public void die() {
 		super.die();
-		if (this.getLives() == 0) {
-			executor.shutdownNow(); //stop moving when the enemy dies
+		if (isHidingSomething()) {
+			board.setCell(hiddenPowerUp, this.getPosition());
 		}
+		model.Player.getInstance().addPoints(this.getPoints());
+		executor.shutdownNow(); //stop moving when the enemy dies
+//		if (this.getLives() == 0) {
+//		}
 	}
 	
 	public void startMoving() {

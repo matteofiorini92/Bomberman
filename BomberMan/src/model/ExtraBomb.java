@@ -9,7 +9,8 @@ public class ExtraBomb extends PowerUp {
 		super(EXTRA_BOMB_POINTS);
 	}
 	
-	public void increaseBombs(BomberMan b) {
+	public void increaseBombs() {
+		model.BomberMan b = model.BomberMan.getInstance();
 		int currBombs = b.getBombs();
 		b.setBombs(++currBombs);
 	}

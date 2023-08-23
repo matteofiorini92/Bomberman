@@ -19,6 +19,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import model.Direction;
+import model.Element;
 import model.HidePowerUp;
 import model.PowerUp;
 import model.SoftWall;
@@ -102,11 +103,7 @@ public class Main extends Application {
 			}
 		}
 		
-		
-		
-		// boardGridPane.setGridLinesVisible(true);
 		root.getChildren().add(boardGridPane);
-		
 		
 		/**
 		 * initialise characters
@@ -115,9 +112,8 @@ public class Main extends Application {
 		List<model.Enemy> enemies = initialiseCharacters(characters, root);
 
 		
-		/**
-		 * initialise list of Elements that can hide powerUps (enemies and softwalls)
-		 */
+		// collect list of Elements that can hide powerUps (enemies and softwalls)
+		
 		List<model.HidePowerUp> hidingElements;
 		
 		hidingElements = enemies.stream()							//convert Enemies to Elements
@@ -131,21 +127,18 @@ public class Main extends Application {
 		
 		powerUps.stream().forEach(powerUp -> {
 			int max = hidingElements.size();
-//			System.out.println(powerUp.getClass().toString());
-			view.PowerUp viewPowerUp = new view.PowerUp(powerUp);
-			powerUp.addObserver(viewPowerUp);
+//			view.PowerUp viewPowerUp = new view.PowerUp(powerUp);
+//			powerUp.addObserver(viewPowerUp);
 
 			Random r = new Random();
 			model.HidePowerUp hidingElement = hidingElements.get(r.nextInt(max));
 			hidingElement.setHiddenPowerUp(powerUp);
+			System.out.println(((Element) hidingElement).getPosition()[0] + ", " + ((Element) hidingElement).getPosition()[1]);
+			powerUp.setPosition(((Element) hidingElement).getPosition());
 			hidingElements.remove(hidingElement);
 		});
-		
-		
-//		int numberOfPowerUps = powerUps.size();
-		
-		
 
+		
 		// key listeners
 		
 		Scene scene = new Scene(root, 1088, 832, Color.BLACK);

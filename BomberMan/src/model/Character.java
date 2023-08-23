@@ -85,6 +85,10 @@ public abstract class Character extends Element {
 			model.BomberMan.getInstance().loseLife();
 		}
 		
+		if (this instanceof model.BomberMan && newCell instanceof model.PowerUp) {
+			System.out.println("I'm walking on a PowerUp!");
+		}
+		
 		
 		
 		model.Element prevCell = board.getCell(prevPosition);
@@ -97,6 +101,7 @@ public abstract class Character extends Element {
 	}
 
 	
+	@SuppressWarnings("deprecation")
 	public void loseLife() {
 		lives--;
 		
@@ -117,12 +122,9 @@ public abstract class Character extends Element {
 		}		
 	}
 
+	@SuppressWarnings("deprecation")
 	public void die() {
 		board.setCell(new EmptyTile(getPosition()), getPosition());
-		if (this instanceof model.Enemy) {
-			Enemy e = (model.Enemy)this;
-			model.Player.getInstance().addPoints(e.getPoints());
-		}
 		Object[] args = { model.ChangeType.DIE, lives };
 		setChanged();
 		notifyObservers(args);
