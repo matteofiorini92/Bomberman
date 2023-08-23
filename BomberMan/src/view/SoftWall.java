@@ -29,7 +29,7 @@ public class SoftWall extends Item {
 	
 	public SoftWall(String desc)
 	{
-		super(new ImageView());
+		super(null);
 		startAnimation(desc);
 	}
 	
@@ -39,7 +39,7 @@ public class SoftWall extends Item {
 			final int framePlusOne = frame + 1;
 			Image image = new Image("images/-tiles/" + files[frame] + ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(SOFT_WALL_ANIMATION/files.length * framePlusOne), event -> {
-		    	this.getImageView().setImage(image);
+		    	this.setImage(image);
 		    });
 			timeline.getKeyFrames().add(keyFrame);
 		}
@@ -66,7 +66,7 @@ public class SoftWall extends Item {
 			final int framePlusOne = frame+1;
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(SOFT_WALL_EXPLOSION/(files.length+1) * framePlusOne), event -> {
 				Image im = new Image("images/-tiles/" + files[framePlusOne-1] + ".png");
-				this.getImageView().setImage(im);				
+				this.setImage(im);				
 			});
 			timeline.getKeyFrames().add(keyFrame);
 		}
@@ -123,7 +123,7 @@ public class SoftWall extends Item {
 				}
 				String file = imageFiles.get(desc);
 				Image im = new Image("images/-tiles/" + file + ".png");
-				this.getImageView().setImage(im);
+				this.setImage(im);
 				viewBoard.setTile(new view.Tile(desc, im), softWallPosition);
 			}
 			

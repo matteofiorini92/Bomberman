@@ -11,7 +11,7 @@ public class Tile extends Item {
     private String desc;
 
     public Tile(String desc, Image image) {
-    	super(new ImageView(image));
+    	super(image);
     	this.desc = desc;
     }
 

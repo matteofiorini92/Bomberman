@@ -26,8 +26,8 @@ public class Bomb extends Item {
 	private GridPane gridPane = new GridPane();
 	
 	public Bomb() {
-		super(new ImageView());
-        getChildren().add(gridPane);
+		super(null);
+        view.Board.getInstance().getItemsPane().getChildren().add(gridPane);
 	}
 	
 	
@@ -57,7 +57,7 @@ public class Bomb extends Item {
 			final int iPlusOne = i+1;
 			Image image = new Image("images/-tiles/" + files[i]+ ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_TO_TRIGGER/files.length * iPlusOne), event -> {
-		    	this.getImageView().setImage(image);
+		    	this.setImage(image);
 		    });
 			timeline.getKeyFrames().add(keyFrame);
 		}
@@ -71,6 +71,8 @@ public class Bomb extends Item {
 		int[] bombPosition = bomb.getPosition();
 		Timeline timeline = new Timeline();
 		
+
+
 		for (int frame = 0; frame < 5; frame++) {
 			final int framePlusOne = frame+1;
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_EXPLOSION/6 * framePlusOne), event -> {
@@ -90,13 +92,21 @@ public class Bomb extends Item {
 						}
 					}
 				}
-				this.setLayoutX((bombPosition[1] - range) * view.Item.ITEM_WIDTH);
-				this.setLayoutY((bombPosition[0] - range) * view.Item.ITEM_HEIGHT);
+//				this.setLayoutX((bombPosition[1] - range) * view.Item.ITEM_WIDTH);
+//				this.setLayoutY((bombPosition[0] - range) * view.Item.ITEM_HEIGHT);
+//				gridPane.setLayoutX((bombPosition[1] - range) * view.Item.ITEM_WIDTH);
+//				gridPane.setLayoutY((bombPosition[0] - range) * view.Item.ITEM_HEIGHT);
+//				gridPane.relocate(1000,1000);
+				view.Board.getInstance().getItemsPane().setLayoutX((bombPosition[1] - range) * view.Item.ITEM_WIDTH); // quite sure this ain't right
+				view.Board.getInstance().getItemsPane().setLayoutY((bombPosition[0] - range) * view.Item.ITEM_HEIGHT);
+				
 			});
 			timeline.getKeyFrames().add(keyFrame);
 		}
 		KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_EXPLOSION), event -> {
-			getChildren().clear();
+			setImage(null);
+			gridPane.getChildren().clear();
+			
 		});
 		timeline.getKeyFrames().add(keyFrame);
 		timeline.play();

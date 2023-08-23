@@ -26,7 +26,7 @@ public abstract class Character extends Element {
 	public static final int INVINCIBILITY_FRAMES = 20;
 	
 	public static long TIME_FOR_MOVEMENT = 375;
-	public static long TIME_FOR_DEATH = 3000;
+	public static long TIME_FOR_DEATH = 1500;
 	
 	
 	public static Map<Class<? extends model.Character>, String> prefixes = new HashMap<>();
@@ -38,7 +38,7 @@ public abstract class Character extends Element {
 
 	public Character(int[] position, Image im1)
 	{
-		super(new ImageView(im1));
+		super(im1);
 		
 		this.setLayoutY(position[0] * Item.ITEM_HEIGHT - HEIGHT_DIFFERENCE);
 		this.setLayoutX(position[1] * Item.ITEM_WIDTH);
@@ -79,7 +79,7 @@ public abstract class Character extends Element {
 			final int framePlusOne = frame+1;
 			Image image = new Image("images/-" + prefix + "/" + files[frame]+ ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_MOVEMENT/files.length * framePlusOne), event -> {
-		    	this.getImageView().setImage(image);
+		    	this.setImage(image);
 		    	this.setLayoutX(prevPosition[1] * Item.ITEM_WIDTH + xMove * Item.ITEM_WIDTH * framePlusOne / files.length);
 		    	this.setLayoutY(prevPosition[0] * Item.ITEM_HEIGHT + yMove * Item.ITEM_HEIGHT * framePlusOne / files.length - HEIGHT_DIFFERENCE);
 		    });
@@ -101,7 +101,7 @@ public abstract class Character extends Element {
 		for (int frame = 0; frame < INVINCIBILITY_FRAMES; frame++) {
 			final int framePlusOne = frame + 1;
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(model.Character.INVINCIBILITY_TIME/INVINCIBILITY_FRAMES * framePlusOne), event -> {
-				this.getImageView().setVisible(framePlusOne % 2 == 0);				
+				this.setVisible(framePlusOne % 2 == 0);				
 			});
 			timeline.getKeyFrames().add(keyFrame);
 		}
@@ -120,24 +120,28 @@ public abstract class Character extends Element {
 			final int framePlusOne = frame + 1;
 			Image image = new Image("images/-" + prefix + "/" + files[frame] + ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH/(files.length + 1) * framePlusOne), event -> {
-		    	this.getImageView().setImage(image);
+		    	this.setImage(image);
+		    	System.out.println(TIME_FOR_DEATH/(files.length + 1) * framePlusOne);
 		    });
 			timeline.getKeyFrames().add(keyFrame);
 		}
 		
 		KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH), event -> {
-	    	this.getImageView().setVisible(false);
+			this.setVisible(false);
+			if (character instanceof HidePowerUp && ((HidePowerUp) character).isHidingSomething()) {
+				new view.PowerUp(((model.HidePowerUp)character).getHiddenPowerUp());
+			}
 	    });
 		timeline.getKeyFrames().add(keyFrame);
 		timeline.play();
 		
-		if (character instanceof HidePowerUp && ((HidePowerUp) character).isHidingSomething()) {
-			ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-			executor.schedule(() -> {
-				new view.PowerUp(((model.HidePowerUp)character).getHiddenPowerUp());
-			}, TIME_FOR_DEATH, TimeUnit.MILLISECONDS);
-//			new view.PowerUp(((model.HidePowerUp)character).getHiddenPowerUp());
-		}
+//		if (character instanceof HidePowerUp && ((HidePowerUp) character).isHidingSomething()) {
+//			ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+//			executor.schedule(() -> {
+//				new view.PowerUp(((model.HidePowerUp)character).getHiddenPowerUp());
+//			}, TIME_FOR_DEATH, TimeUnit.MILLISECONDS);
+////			new view.PowerUp(((model.HidePowerUp)character).getHiddenPowerUp());
+//		}
 		
 	}
 	

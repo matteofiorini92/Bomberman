@@ -7,6 +7,7 @@ import java.util.Observer;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 
 @SuppressWarnings("deprecation")
 public class Board implements Observer {
@@ -26,6 +27,7 @@ public class Board implements Observer {
 	private int width = modelBoard.getWidth();
 	private Item[][] tiles = new Item[height][width];
 	private GridPane gridPane = new GridPane();
+	private StackPane itemsPane = new StackPane();
 	
 	private Board() {}
 	public static view.Board getInstance(){
@@ -36,6 +38,7 @@ public class Board implements Observer {
 	}
 	
 	public GridPane getGridPane() { return gridPane; }
+	public StackPane getItemsPane()	{ return itemsPane; }
 	public Item[][] getTiles() { return tiles; }
 
 	public void setTile(Item item, int[] position) { 
@@ -65,4 +68,5 @@ public class Board implements Observer {
 			}
 		}
 	}
+
 }

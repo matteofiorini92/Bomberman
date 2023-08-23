@@ -40,6 +40,7 @@ public abstract class Enemy extends Character implements HidePowerUp {
 	public void die() {
 		super.die();
 		if (isHidingSomething()) {
+			hiddenPowerUp.setPosition(getPosition()); // update the position of the power up to the enemy's current position
 			board.setCell(hiddenPowerUp, this.getPosition());
 		}
 		model.Player.getInstance().addPoints(this.getPoints());

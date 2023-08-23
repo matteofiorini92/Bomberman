@@ -20,7 +20,7 @@ public class PowerUp extends Item {
 	
 	public PowerUp(model.PowerUp modelPowerUp)
 	{		
-		super(new ImageView(new Image("images/-power-ups/" + imageFiles.get(modelPowerUp.getClass().getName()).split("\\s+")[0] + ".png")));
+		super(null);
 		startAnimation(modelPowerUp);
 		
 	}
@@ -41,7 +41,7 @@ public class PowerUp extends Item {
 			final int framePlusOne = frame + 1;
 			Image image = new Image("images/-power-ups/" + files[frame] + ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(POWER_UP_ANIMATION/files.length * framePlusOne), event -> {
-				this.getImageView().setImage(image);
+				this.setImage(image);
 		    });
 			timeline.getKeyFrames().add(keyFrame);
 		}

@@ -30,6 +30,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
 
@@ -81,6 +82,7 @@ public class Main extends Application {
 		modelBoard.addObserver(viewBoard);
 		modelBoard.fillEmptyBoard(currLevel);
 		GridPane boardGridPane = viewBoard.getGridPane();
+		StackPane boardItemsPane = viewBoard.getItemsPane();
 		
 		model.Element[][] cells = modelBoard.getCells();
 		model.SoftWall[] softWalls;
@@ -104,6 +106,7 @@ public class Main extends Application {
 		}
 		
 		root.getChildren().add(boardGridPane);
+		root.getChildren().add(boardItemsPane);
 		
 		/**
 		 * initialise characters
@@ -133,7 +136,6 @@ public class Main extends Application {
 			Random r = new Random();
 			model.HidePowerUp hidingElement = hidingElements.get(r.nextInt(max));
 			hidingElement.setHiddenPowerUp(powerUp);
-			System.out.println(((Element) hidingElement).getPosition()[0] + ", " + ((Element) hidingElement).getPosition()[1]);
 			powerUp.setPosition(((Element) hidingElement).getPosition());
 			hidingElements.remove(hidingElement);
 		});
