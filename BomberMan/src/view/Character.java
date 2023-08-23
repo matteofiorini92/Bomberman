@@ -3,14 +3,10 @@ package view;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import model.Direction;
 import model.HidePowerUp;
@@ -22,7 +18,6 @@ public abstract class Character extends Element {
 	public static final int CHARACTER_WIDTH = 64;
 	public static final int HEIGHT_DIFFERENCE = CHARACTER_HEIGHT - view.Item.ITEM_HEIGHT;
 
-//	public static final long INVULNERABILITY_TIME = 3000;
 	public static final int INVINCIBILITY_FRAMES = 20;
 	
 	public static long TIME_FOR_MOVEMENT = 375;
@@ -134,15 +129,7 @@ public abstract class Character extends Element {
 	    });
 		timeline.getKeyFrames().add(keyFrame);
 		timeline.play();
-		
-//		if (character instanceof HidePowerUp && ((HidePowerUp) character).isHidingSomething()) {
-//			ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-//			executor.schedule(() -> {
-//				new view.PowerUp(((model.HidePowerUp)character).getHiddenPowerUp());
-//			}, TIME_FOR_DEATH, TimeUnit.MILLISECONDS);
-////			new view.PowerUp(((model.HidePowerUp)character).getHiddenPowerUp());
-//		}
-		
+			
 	}
 	
 	
