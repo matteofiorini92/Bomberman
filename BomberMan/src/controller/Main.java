@@ -130,8 +130,6 @@ public class Main extends Application {
 		
 		powerUps.stream().forEach(powerUp -> {
 			int max = hidingElements.size();
-//			view.PowerUp viewPowerUp = new view.PowerUp(powerUp);
-//			powerUp.addObserver(viewPowerUp);
 
 			Random r = new Random();
 			model.HidePowerUp hidingElement = hidingElements.get(r.nextInt(max));
@@ -259,47 +257,49 @@ public class Main extends Application {
 	private void processKeyPress(KeyEvent event) {
 	    long currentTime = System.currentTimeMillis();
 
-	    if (event.getCode() == KeyCode.SPACE && modelBm.getBombs() > 0) {
-	    	int currBombs = modelBm.getBombs();
-	    	model.Bomb modelBomb = new model.Bomb(currBombs, modelBm.getPosition());
-	    	view.Bomb viewBomb = new view.Bomb();
-	    	modelBomb.addObserver(viewBomb);
-	    	modelBm.setBombs(--currBombs);
-	    	List<Node> nodes = root.getChildren();
-	    	// get viewBm stackPane index in order to add the bomb behind it !!!!!!!!!!!!!!!!!!!!!!
-	    	int viewBmStackPaneIndex = root.getChildren().indexOf(viewBoard.getGridPane());
-	    	
-	    	root.getChildren().add(viewBmStackPaneIndex + 1, viewBomb);
-	    	modelBomb.trigger();	        	
-	    } else {	        	
 	    if (currentTime - lastKeyPressTime >= THROTTLE_DELAY) {
-	        lastKeyPressTime = currentTime;
-	        
-	        
-	        
-	        	Direction direction = null;
-	        	try {	        	
-	        		switch (event.getCode()) {
-	        		case DOWN:
-	        			direction = Direction.DOWN;
-	        			break;
-	        		case RIGHT:
-	        			direction = Direction.RIGHT;
-	        			break;
-	        		case UP:
-	        			direction = Direction.UP;
-	        			break;
-	        		case LEFT:
-	        			direction = Direction.LEFT;
-	        			break;
-	        		default:
-	        			break;	
-	        		}
-	        		modelBm.move(direction);
-	        		
-	        	} catch (NullPointerException e) {
-	        		System.out.println("Invalid command");
-	        	}
+	    	lastKeyPressTime = currentTime;
+		    if (event.getCode() == KeyCode.SPACE && modelBm.getBombs() > 0) {
+		    	int currBombs = modelBm.getBombs();
+		    	model.Bomb modelBomb = new model.Bomb(currBombs, modelBm.getPosition());
+		    	view.Bomb viewBomb = new view.Bomb();
+		    	modelBomb.addObserver(viewBomb);
+		    	modelBm.decBombs();
+		    	System.out.println("you have "+ modelBm.getBombs() + " left");
+		    	List<Node> nodes = root.getChildren();
+		    	// get viewBm stackPane index in order to add the bomb behind it !!!!!!!!!!!!!!!!!!!!!!
+		    	int viewBmStackPaneIndex = root.getChildren().indexOf(viewBoard.getGridPane());
+		    	
+		    	root.getChildren().add(viewBmStackPaneIndex + 1, viewBomb);
+		    	modelBomb.trigger();	        	
+		    }
+		    else {	        	
+		        
+		        
+		        
+		        	Direction direction = null;
+		        	try {	        	
+		        		switch (event.getCode()) {
+		        		case DOWN:
+		        			direction = Direction.DOWN;
+		        			break;
+		        		case RIGHT:
+		        			direction = Direction.RIGHT;
+		        			break;
+		        		case UP:
+		        			direction = Direction.UP;
+		        			break;
+		        		case LEFT:
+		        			direction = Direction.LEFT;
+		        			break;
+		        		default:
+		        			break;	
+		        		}
+		        		modelBm.move(direction);
+		        		
+		        	} catch (NullPointerException e) {
+		        		System.out.println("Invalid command");
+		        	}
 	        }
 	    }
 
