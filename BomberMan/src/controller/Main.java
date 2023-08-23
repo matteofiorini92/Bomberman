@@ -167,6 +167,7 @@ public class Main extends Application {
 		
 		modelBoard.setCell(modelBm, modelBm.INITIAL_POSITION);
 		root.getChildren().add(viewBm);
+		modelBm.setInvincible(true);
 		return enemies;
 	}
 	

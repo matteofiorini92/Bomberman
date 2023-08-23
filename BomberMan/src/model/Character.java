@@ -1,17 +1,27 @@
 package model;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+import javafx.application.Platform;
+
 public abstract class Character extends Element {
+	
+	public static final int INVINCIBILITY_TIME = 3000;
 	
 	private static Board board = model.Board.getInstance();
 	private Double speed;
 	private Direction direction;
 	private int lives;
+	private boolean isInvincible;
 	
 	public Character(int[] position, Double speed, int lives)
 	{
 		super(position);
 		this.speed = speed;
 		this.lives = lives;
+		setInvincible(true);
 	}
 	
 	public Double getSpeed() { return speed; }
@@ -22,7 +32,16 @@ public abstract class Character extends Element {
 	
 	public int getLives() { return lives; }
 	public void setLives(int lives) { this.lives = lives; }
-
+	
+	public boolean isInvincible() {	return isInvincible; }
+	public void setInvincible(boolean isInvincible) { 
+		this.isInvincible = isInvincible;
+		if (isInvincible) {
+			Object[] args = { model.ChangeType.BECOME_INVINCIBLE, null };
+			setChanged();
+			notifyObservers(args);
+		}
+	}
 	
 	public boolean move(Direction direction) {
 		boolean hasMoved = true;
@@ -61,6 +80,13 @@ public abstract class Character extends Element {
 			newPosition = prevPosition;
 			hasMoved = false;
 		}
+		
+		if ((this instanceof model.BomberMan && newCell instanceof model.Enemy) || (this instanceof model.Enemy && newCell instanceof model.BomberMan)) {
+			model.BomberMan.getInstance().loseLife();
+		}
+		
+		
+		
 		model.Element prevCell = board.getCell(prevPosition);
 		prevCell = prevCell instanceof Bomb ? prevCell : new EmptyTile(prevPosition);// to prevent BM from setting an EmptyTile where he's just dropped a bomb
 		//board.setCell(new EmptyTile(prevPosition), prevPosition);
@@ -77,6 +103,14 @@ public abstract class Character extends Element {
 		if (lives == 0) {
 			die();
 		} else {
+			setInvincible(true);
+			ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+			Runnable becomeMortal = () -> {
+				Platform.runLater(() -> {
+					setInvincible(false);
+				});
+			};
+			executor.schedule(becomeMortal, INVINCIBILITY_TIME, TimeUnit.MILLISECONDS);
 			Object[] args = { model.ChangeType.LOSE_LIFE, lives };
 			setChanged();
 			notifyObservers(args);
@@ -90,5 +124,7 @@ public abstract class Character extends Element {
 		notifyObservers(args);
 		
 	}
+
+
 	
 }

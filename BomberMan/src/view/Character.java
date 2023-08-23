@@ -18,8 +18,8 @@ public abstract class Character extends Element {
 	public static final int CHARACTER_WIDTH = 64;
 	public static final int HEIGHT_DIFFERENCE = CHARACTER_HEIGHT - view.Item.ITEM_HEIGHT;
 
-	public static final long INVULNERABILITY_TIME = 3000;
-	public static final int INVULNERABILITY_FRAMES = 20;
+//	public static final long INVULNERABILITY_TIME = 3000;
+	public static final int INVINCIBILITY_FRAMES = 20;
 	
 	public static long TIME_FOR_MOVEMENT = 375;
 	public static long TIME_FOR_DEATH = 3000;
@@ -47,8 +47,8 @@ public abstract class Character extends Element {
 		if (args[0].equals(model.ChangeType.MOVE)) {			
 			move((model.Character)o, imageFiles, args[1]);
 		}
-		else if (args[0].equals(model.ChangeType.LOSE_LIFE)) {
-			loseLife();
+		else if (args[0].equals(model.ChangeType.LOSE_LIFE) || args[0].equals(model.ChangeType.BECOME_INVINCIBLE)) {
+			flash();
 		}
 		else if (args[0].equals(model.ChangeType.DIE)) {
 			die((model.Character)o, imageFiles);
@@ -91,12 +91,12 @@ public abstract class Character extends Element {
 	 * Flashing animation for when a character loses a life without dying
 	 */
 	
-	public void loseLife() {
+	public void flash() {
 		Timeline timeline = new Timeline();
 		
-		for (int frame = 0; frame < INVULNERABILITY_FRAMES; frame++) {
+		for (int frame = 0; frame < INVINCIBILITY_FRAMES; frame++) {
 			final int framePlusOne = frame + 1;
-			KeyFrame keyFrame = new KeyFrame(Duration.millis(INVULNERABILITY_TIME/INVULNERABILITY_FRAMES * framePlusOne), event -> {
+			KeyFrame keyFrame = new KeyFrame(Duration.millis(model.Character.INVINCIBILITY_TIME/INVINCIBILITY_FRAMES * framePlusOne), event -> {
 				this.getImageView().setVisible(framePlusOne % 2 == 0);				
 			});
 			timeline.getKeyFrames().add(keyFrame);
