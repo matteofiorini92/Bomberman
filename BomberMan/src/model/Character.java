@@ -34,6 +34,7 @@ public abstract class Character extends Element {
 	public void setLives(int lives) { this.lives = lives; }
 	
 	public boolean isInvincible() {	return isInvincible; }
+	@SuppressWarnings("deprecation")
 	public void setInvincible(boolean isInvincible) { 
 		this.isInvincible = isInvincible;
 		if (isInvincible) {
@@ -93,7 +94,6 @@ public abstract class Character extends Element {
 		
 		model.Element prevCell = board.getCell(prevPosition);
 		prevCell = prevCell instanceof Bomb ? prevCell : new EmptyTile(prevPosition);// to prevent BM from setting an EmptyTile where he's just dropped a bomb
-		//board.setCell(new EmptyTile(prevPosition), prevPosition);
 		board.setCell(prevCell, prevPosition);
 		board.setCell(this, newPosition);
 		this.setPosition(prevPosition, newPosition);
@@ -103,23 +103,24 @@ public abstract class Character extends Element {
 	
 	@SuppressWarnings("deprecation")
 	public void loseLife() {
-		lives--;
-		
-		if (lives == 0) {
-			die();
-		} else {
-			setInvincible(true);
-			ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-			Runnable becomeMortal = () -> {
-				Platform.runLater(() -> {
-					setInvincible(false);
-				});
-			};
-			executor.schedule(becomeMortal, INVINCIBILITY_TIME, TimeUnit.MILLISECONDS);
-			Object[] args = { model.ChangeType.LOSE_LIFE, lives };
-			setChanged();
-			notifyObservers(args);
-		}		
+		if (!isInvincible) {
+			lives--;
+			if (lives == 0) {
+				die();
+			} else {
+				setInvincible(true);
+				ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+				Runnable becomeMortal = () -> {
+					Platform.runLater(() -> {
+						setInvincible(false);
+					});
+				};
+				executor.schedule(becomeMortal, INVINCIBILITY_TIME, TimeUnit.MILLISECONDS);
+				Object[] args = { model.ChangeType.LOSE_LIFE, lives };
+				setChanged();
+				notifyObservers(args);
+			}		
+		}
 	}
 
 	@SuppressWarnings("deprecation")
