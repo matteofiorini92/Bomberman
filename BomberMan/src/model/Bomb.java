@@ -22,7 +22,7 @@ public class Bomb extends Item {
 	{
 		super(position);
 		board.setCell(this, position);
-		this.range = 3;		
+		this.range = model.BomberMan.getInstance().getRange();		
 	}
 
 	public int getRange() { return range; }
@@ -59,8 +59,6 @@ public class Bomb extends Item {
 			int[] bombPosition = this.getPosition();
 			board.setCell(new EmptyTile(bombPosition), bombPosition);
 			
-//			model.BomberMan bm = model.BomberMan.getInstance();
-//			bm.setBombs(bm.getBombs()+1);
 			model.BomberMan.getInstance().incBombs();
 			
 			String[][] simplifiedSurroundings = simplifySurroundings(surroundings);
