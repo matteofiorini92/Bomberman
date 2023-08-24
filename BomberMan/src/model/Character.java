@@ -21,7 +21,7 @@ public abstract class Character extends Element {
 		super(position);
 		this.speed = speed;
 		this.lives = lives;
-		setInvincible(true);
+		setInvincible(false);
 	}
 	
 	public Double getSpeed() { return speed; }
@@ -87,7 +87,8 @@ public abstract class Character extends Element {
 		}
 		
 		if (this instanceof model.BomberMan && newCell instanceof model.PowerUp) {
-			System.out.println("I'm walking on a PowerUp!");
+			((model.PowerUp)newCell).execute();
+			model.Board.getInstance().setCell(new model.EmptyTile(newPosition), newPosition);
 		}
 		
 		
@@ -99,7 +100,8 @@ public abstract class Character extends Element {
 		this.setPosition(prevPosition, newPosition);
 		return hasMoved;
 	}
-
+	
+ 
 	
 	@SuppressWarnings("deprecation")
 	public void loseLife() {
@@ -108,21 +110,25 @@ public abstract class Character extends Element {
 			if (lives == 0) {
 				die();
 			} else {
-				setInvincible(true);
-				ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-				Runnable becomeMortal = () -> {
-					Platform.runLater(() -> {
-						setInvincible(false);
-					});
-				};
-				executor.schedule(becomeMortal, INVINCIBILITY_TIME, TimeUnit.MILLISECONDS);
-				Object[] args = { model.ChangeType.LOSE_LIFE, lives };
-				setChanged();
-				notifyObservers(args);
+				becomeInvincible();
 			}		
 		}
 	}
 
+	public void becomeInvincible() {
+		setInvincible(true);
+		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+		Runnable becomeMortal = () -> {
+			Platform.runLater(() -> {
+				setInvincible(false);
+			});
+		};
+		executor.schedule(becomeMortal, INVINCIBILITY_TIME, TimeUnit.MILLISECONDS);
+		Object[] args = { model.ChangeType.LOSE_LIFE, lives };
+		setChanged();
+		notifyObservers(args);
+	}
+	
 	@SuppressWarnings("deprecation")
 	public void die() {
 		board.setCell(new EmptyTile(getPosition()), getPosition());

@@ -8,11 +8,13 @@ public class ExtraBomb extends PowerUp {
 	{
 		super(EXTRA_BOMB_POINTS);
 	}
-	
-	public void increaseBombs() {
-		model.BomberMan b = model.BomberMan.getInstance();
-		int currBombs = b.getBombs();
-		b.setBombs(++currBombs);
+
+	@Override
+	public void execute()
+	{
+		super.execute();
+		model.BomberMan.getInstance().incBombs();
+		model.Player.getInstance().addPoints(EXTRA_BOMB_POINTS);
 	}
 
 }

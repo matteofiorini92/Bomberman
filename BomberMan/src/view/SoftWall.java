@@ -105,28 +105,30 @@ public class SoftWall extends Item {
 			
 			// set tile where SoftWall was to either empty, empty with softWall shadow, empty with wall shadow or empty with border shadow
 			
-			if (((model.SoftWall)o).isHidingSomething()) {
-				new view.PowerUp(((model.SoftWall)o).getHiddenPowerUp());
-			} else {				
-				int[] positionAbove = { y - 1, x };
-				model.Element cellAbove = modelBoard.getCell(positionAbove);
-				
-				String desc = "e";
-				if (cellAbove instanceof model.Wall && positionAbove[0] == 1) {
-					desc = "ebs";
-				}
-				else if (cellAbove instanceof model.Wall && positionAbove[0] != 1) {
-					desc = "ews";
-				}
-				else if (cellAbove instanceof model.SoftWall) {
-					desc = "esws";
-				}
-				String file = imageFiles.get(desc);
-				Image im = new Image("images/-tiles/" + file + ".png");
-				this.setImage(im);
-				viewBoard.setTile(new view.Tile(desc, im), softWallPosition);
-			}
+			int[] positionAbove = { y - 1, x };
+			model.Element cellAbove = modelBoard.getCell(positionAbove);
 			
+			String desc = "e";
+			if (cellAbove instanceof model.Wall && positionAbove[0] == 1) {
+				desc = "ebs";
+			}
+			else if (cellAbove instanceof model.Wall && positionAbove[0] != 1) {
+				desc = "ews";
+			}
+			else if (cellAbove instanceof model.SoftWall) {
+				desc = "esws";
+			}
+			String file = imageFiles.get(desc);
+			Image im = new Image("images/-tiles/" + file + ".png");
+			this.setImage(im);
+			viewBoard.setTile(new view.Tile(desc, im), softWallPosition);
+			
+			if (((model.SoftWall)o).isHidingSomething()) {
+				model.PowerUp modelPowerUp = ((model.SoftWall)o).getHiddenPowerUp();
+				view.PowerUp viewPowerUp = new view.PowerUp(modelPowerUp);
+				modelPowerUp.addObserver(viewPowerUp);
+				
+			}
 			
 		});
 		

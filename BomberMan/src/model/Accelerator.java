@@ -9,10 +9,11 @@ public class Accelerator extends PowerUp {
 		super(ACCELERATOR_POINTS);
 	}
 	
-	public void accelerate() {
-		model.BomberMan b = model.BomberMan.getInstance();
-		Double currSpeed = b.getSpeed();
-		b.setSpeed(currSpeed+0.5);
+	@Override
+	public void execute() {
+		super.execute();
+		model.BomberMan.getInstance().incSpeed(0.5);
+		model.Player.getInstance().addPoints(ACCELERATOR_POINTS);
 	}
 
 }

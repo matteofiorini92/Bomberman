@@ -124,7 +124,9 @@ public abstract class Character extends Element {
 		KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH), event -> {
 			this.setVisible(false);
 			if (character instanceof HidePowerUp && ((HidePowerUp) character).isHidingSomething()) {
-				new view.PowerUp(((model.HidePowerUp)character).getHiddenPowerUp());
+				model.PowerUp modelPowerUp = ((model.HidePowerUp)character).getHiddenPowerUp();
+				view.PowerUp viewPowerUp = new view.PowerUp(modelPowerUp);
+				modelPowerUp.addObserver(viewPowerUp);				
 			}
 	    });
 		timeline.getKeyFrames().add(keyFrame);

@@ -8,10 +8,12 @@ public class ExplosionExpander extends PowerUp {
 	{
 		super(EXPLOSION_EXPANDER_POINTS);
 	}
-	
-	public void increaseRange() {
-		model.BomberMan b = model.BomberMan.getInstance();
-		int currRange = b.getRange();
-		b.setRange(++currRange);
+
+	@Override
+	public void execute()
+	{
+		super.execute();
+		model.BomberMan.getInstance().incRange();
+		model.Player.getInstance().addPoints(EXPLOSION_EXPANDER_POINTS);
 	}
 }

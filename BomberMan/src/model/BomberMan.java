@@ -1,9 +1,15 @@
 package model;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+import javafx.application.Platform;
+
 public class BomberMan extends Character {
 	public static BomberMan bomberman;
 	public static final int INITIAL_LIVES = 3;
-	public static final int INITIAL_BOMBS = 3;
+	public static final int INITIAL_BOMBS = 1;
 	public static final int INITIAL_RANGE = 1;
 	public static final int[] INITIAL_POSITION = {1, 2};
 	public static final double INITIAL_SPEED = 1.0;
@@ -13,6 +19,7 @@ public class BomberMan extends Character {
 	
 	private BomberMan() {
 		super(INITIAL_POSITION, INITIAL_SPEED, INITIAL_LIVES);
+		becomeInvincible();
 		bombs = INITIAL_BOMBS;
 		range = INITIAL_RANGE;
 	}
@@ -31,6 +38,18 @@ public class BomberMan extends Character {
 	public void decBombs() { bombs--; }
 	public int getRange() {	return range; }
 	public void setRange(int range)	{ this.range = range; }
+	public void incRange() { range++; }
+	public void decRange() { range--; }
+	
+	public void incSpeed(Double increase) { 
+		Double currSpeed = getSpeed();
+		setSpeed(currSpeed + increase);
+	}
+	
+	public void decSpeed(Double decrease) { 
+		Double currSpeed = getSpeed();
+		setSpeed(currSpeed - decrease);
+	}
 	
 
 
