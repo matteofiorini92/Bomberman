@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
@@ -17,6 +18,8 @@ public class Bomb extends Item {
 
 	private static Board board = model.Board.getInstance();
 	private int range;
+	private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+	private ScheduledFuture<?> future;
 	
 	public Bomb(int range, int[] position)
 	{
@@ -26,19 +29,20 @@ public class Bomb extends Item {
 	}
 
 	public int getRange() { return range; }
+	public ScheduledFuture<?> getScheduledFuture() { return future; }
 	
 	@SuppressWarnings("deprecation")
 	public void trigger() {
 		Object[] args = { model.ChangeType.TRIGGER };
 		setChanged();
 		notifyObservers(args);
-		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-		executor.schedule(this::explode, TIME_FOR_EXPLOSION, TimeUnit.MILLISECONDS);
+		future = executor.schedule(this::explode, TIME_FOR_EXPLOSION, TimeUnit.MILLISECONDS);
 	}
 	
 	@SuppressWarnings("deprecation")
 	public void explode() {
-		Platform.runLater(() -> { // to have UI related operations all run on the JavaFX thread 				
+		Platform.runLater(() -> { // to have UI related operations all run on the JavaFX thread
+			System.out.println("Bomb in position "+ getPosition()[1] + ", " + getPosition()[0] + " is exploding.");
 			Map<Direction, List<Element>> surroundings = checkSurroundings();
 			for(Map.Entry<Direction, List<Element>> surrounding : surroundings.entrySet()) {
 				List<Element> values = surrounding.getValue();
@@ -50,6 +54,7 @@ public class Bomb extends Item {
 						((Character) e).loseLife();
 					} 
 					if (e instanceof model.Bomb) {
+						((model.Bomb)e).getScheduledFuture().cancel(true);
 						((model.Bomb)e).explode();
 					}
 				}
@@ -57,7 +62,11 @@ public class Bomb extends Item {
 			
 			// simplistic. if the bomberman never leaves the cell, the cell shouldn't become empty.
 			int[] bombPosition = this.getPosition();
-			board.setCell(new EmptyTile(bombPosition), bombPosition);
+			
+			Platform.runLater(() -> {			
+				System.out.println("I'm setting Bomb in position "+ getPosition()[1] + ", " + getPosition()[0] + " to new cell.");
+				board.setCell(new EmptyTile(bombPosition), bombPosition);
+			});
 			
 			model.BomberMan.getInstance().incBombs();
 			
@@ -66,8 +75,9 @@ public class Bomb extends Item {
 			setChanged();
 			notifyObservers(args);
 		});
-		
 	}
+
+	
 	
 	private Map<Direction, List<Element>> checkSurroundings() {
 		int[] currPosition = this.getPosition();

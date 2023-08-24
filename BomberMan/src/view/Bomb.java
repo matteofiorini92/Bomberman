@@ -8,6 +8,7 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -24,10 +25,12 @@ public class Bomb extends Item {
 	}
 	
 	private GridPane gridPane = new GridPane();
+	private Pane pane = new Pane();					// have to use a pane for precise positioning
 	
 	public Bomb() {
 		super(null);
-        view.Board.getInstance().getItemsPane().getChildren().add(gridPane);
+		pane.getChildren().add(gridPane);
+        view.Board.getInstance().getItemsPane().getChildren().add(pane);
 	}
 	
 	
@@ -92,13 +95,8 @@ public class Bomb extends Item {
 						}
 					}
 				}
-//				this.setLayoutX((bombPosition[1] - range) * view.Item.ITEM_WIDTH);
-//				this.setLayoutY((bombPosition[0] - range) * view.Item.ITEM_HEIGHT);
-//				gridPane.setLayoutX((bombPosition[1] - range) * view.Item.ITEM_WIDTH);
-//				gridPane.setLayoutY((bombPosition[0] - range) * view.Item.ITEM_HEIGHT);
-//				gridPane.relocate(1000,1000);
-				view.Board.getInstance().getItemsPane().setLayoutX((bombPosition[1] - range) * view.Item.ITEM_WIDTH); // quite sure this ain't right
-				view.Board.getInstance().getItemsPane().setLayoutY((bombPosition[0] - range) * view.Item.ITEM_HEIGHT);
+				gridPane.setLayoutX((bombPosition[1] - range) * view.Item.ITEM_WIDTH);
+				gridPane.setLayoutY((bombPosition[0] - range) * view.Item.ITEM_HEIGHT);
 				
 			});
 			timeline.getKeyFrames().add(keyFrame);

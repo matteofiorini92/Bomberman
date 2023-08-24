@@ -8,6 +8,8 @@ import java.util.Observer;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 @SuppressWarnings("deprecation")
 public class Board implements Observer {
@@ -27,7 +29,8 @@ public class Board implements Observer {
 	private int width = modelBoard.getWidth();
 	private Item[][] tiles = new Item[height][width];
 	private GridPane gridPane = new GridPane();
-	private StackPane itemsPane = new StackPane();
+	private Rectangle rectangle = new Rectangle(view.Item.ITEM_WIDTH * model.Board.WIDTH,view.Item.ITEM_HEIGHT * model.Board.HEIGHT, Color.TRANSPARENT);
+	private StackPane itemsPane = new StackPane(rectangle);
 	
 	private Board() {}
 	public static view.Board getInstance(){
@@ -55,7 +58,7 @@ public class Board implements Observer {
 				String desc = ((model.Tile)cells[i][j]).getLabel();
             	Item item;
             	
-            	if (desc.equals("sw") || desc.equals("sws")) { // needs a separate assignement because of animation
+            	if (desc.equals("sw") || desc.equals("sws")) { // needs a separate assignment because of animation
             		item = new SoftWall(desc);
             	}        	
             	else {	            		

@@ -259,13 +259,12 @@ public class Main extends Application {
 
 	    if (currentTime - lastKeyPressTime >= THROTTLE_DELAY) {
 	    	lastKeyPressTime = currentTime;
-		    if (event.getCode() == KeyCode.SPACE && modelBm.getBombs() > 0) {
+		    if (event.getCode() == KeyCode.SPACE && modelBm.getBombs() > 0 && !(model.Board.getInstance().getCell(model.BomberMan.getInstance().getPosition()) instanceof model.Bomb)) {
 		    	int currBombs = modelBm.getBombs();
 		    	model.Bomb modelBomb = new model.Bomb(currBombs, modelBm.getPosition());
 		    	view.Bomb viewBomb = new view.Bomb();
 		    	modelBomb.addObserver(viewBomb);
 		    	modelBm.decBombs();
-		    	System.out.println("you have "+ modelBm.getBombs() + " left");
 		    	List<Node> nodes = root.getChildren();
 		    	// get viewBm stackPane index in order to add the bomb behind it !!!!!!!!!!!!!!!!!!!!!!
 		    	int viewBmStackPaneIndex = root.getChildren().indexOf(viewBoard.getGridPane());
