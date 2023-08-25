@@ -43,6 +43,8 @@ public abstract class Character extends Element {
 		
 	}
 	
+	public Double getTimeForMovement() { return timeForMovement; }
+	
 	public void update(Observable o, Object arg, Map<Direction, String> imageFiles) {
 		Object[] args = (Object[]) arg;
 		

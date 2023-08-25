@@ -61,7 +61,7 @@ public abstract class Enemy extends Character implements HidePowerUp {
 			});
 		};
 
-		executor.scheduleAtFixedRate(moveTask, 0, 375, TimeUnit.MILLISECONDS);
+		executor.scheduleAtFixedRate(moveTask, 0, (long)(INITIAL_TIME_FOR_MOVEMENT / this.getSpeed()), TimeUnit.MILLISECONDS);
 	}
 	
 	public static Direction getRandomDirection(Enemy enemy) { // public?
