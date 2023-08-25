@@ -14,8 +14,8 @@ import model.HidePowerUp;
 @SuppressWarnings("deprecation")
 public abstract class Character extends Element {
 	
-	public static final int CHARACTER_HEIGHT = 96;
-	public static final int CHARACTER_WIDTH = 64;
+	public static final int CHARACTER_HEIGHT = (int) (Item.ITEM_HEIGHT * 1.5);
+	public static final int CHARACTER_WIDTH = Item.ITEM_WIDTH;
 	public static final int HEIGHT_DIFFERENCE = CHARACTER_HEIGHT - view.Item.ITEM_HEIGHT;
 
 	public static final int INVINCIBILITY_FRAMES = 20;
