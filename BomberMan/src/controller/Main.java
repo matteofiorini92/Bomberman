@@ -40,6 +40,7 @@ public class Main extends Application {
 	private view.BomberMan viewBm;
 	private model.Board modelBoard;
 	private view.Board viewBoard;
+	
 	private Group root = new Group();
 	private int level = 2;
 	private static String currLevel;
@@ -141,7 +142,7 @@ public class Main extends Application {
 		
 		// key listeners
 		
-		Scene scene = new Scene(root, view.Item.ITEM_WIDTH * 17, view.Item.ITEM_HEIGHT * 13, Color.BLACK);
+		Scene scene = new Scene(root, view.Item.ITEM_WIDTH * 17, view.Item.ITEM_HEIGHT * 14.5, Color.BLACK);
 		scene.setOnKeyPressed(this::handleKeyPressed);
 		scene.setOnKeyReleased(this::handleKeyReleased);
 
