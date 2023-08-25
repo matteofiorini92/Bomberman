@@ -144,7 +144,7 @@ public abstract class Character extends Element {
 	
 	private void changeSpeed(Double newSpeed) {
 		this.speed = newSpeed;
-//		this.timeForMovement = model.Character.INITIAL_TIME_FOR_MOVEMENT / this.speed;
+		this.timeForMovement = model.Character.INITIAL_TIME_FOR_MOVEMENT / this.speed; // needed?
 	}
 	
 	

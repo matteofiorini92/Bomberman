@@ -41,6 +41,7 @@ public class BomberMan extends Character {
 	public void incRange() { range++; }
 	public void decRange() { range--; }
 	
+	@SuppressWarnings("deprecation")
 	public void incSpeed(Double increase) { 
 		Double newSpeed = getSpeed() + increase;
 		setSpeed(newSpeed);
@@ -49,6 +50,7 @@ public class BomberMan extends Character {
 		notifyObservers(args);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void decSpeed(Double decrease) { 
 		Double newSpeed = getSpeed() - decrease;
 		setSpeed(newSpeed);

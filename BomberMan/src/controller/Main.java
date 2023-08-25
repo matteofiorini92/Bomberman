@@ -239,7 +239,7 @@ public class Main extends Application {
 	}
 	
 	private long lastKeyPressTime = 0;
-	private static final Double THROTTLE_DELAY = model.BomberMan.INITIAL_TIME_FOR_MOVEMENT / model.BomberMan.getInstance().getSpeed(); // Milliseconds
+	private static final Double THROTTLE_DELAY = model.Character.INITIAL_TIME_FOR_MOVEMENT / model.BomberMan.getInstance().getSpeed(); // Milliseconds
 	private boolean keyHeld = false;
 
 	private void handleKeyPressed(KeyEvent event) {

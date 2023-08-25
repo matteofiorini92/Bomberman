@@ -45,6 +45,7 @@ public abstract class Character extends Element {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public boolean move(Direction direction) {
 		boolean hasMoved = true;
 		int[] prevPosition = this.getPosition();
@@ -98,10 +99,12 @@ public abstract class Character extends Element {
 		prevCell = prevCell instanceof Bomb ? prevCell : new EmptyTile(prevPosition);// to prevent BM from setting an EmptyTile where he's just dropped a bomb
 		board.setCell(prevCell, prevPosition);
 		board.setCell(this, newPosition);
-		this.setPosition(prevPosition, newPosition);
+		this.setPosition(newPosition);
+		Object[] args = { model.ChangeType.MOVE, prevPosition };
+		setChanged();
+		notifyObservers(args);
 		return hasMoved;
 	}
-	
  
 	
 	public void loseLife() {

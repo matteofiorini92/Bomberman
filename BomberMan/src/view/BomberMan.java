@@ -11,7 +11,7 @@ import model.Direction;
 public class BomberMan extends Character {
 	
 	public static final int[] INITIAL_POSITION = {1, 2};
-	public static final Double INITIAL_SPEED = 1.0;
+	public static final Double INITIAL_SPEED = model.BomberMan.INITIAL_SPEED;
 	public static Map<Direction, String> imageFiles = new HashMap<>();
 	static {
 		utilities.LoadProperties.loadDirectionStringProperties(imageFiles, "resources/characters/bomberMan.properties");
