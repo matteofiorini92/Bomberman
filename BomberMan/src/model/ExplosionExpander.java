@@ -3,6 +3,7 @@ package model;
 public class ExplosionExpander extends PowerUp {
 	
 	public static final int EXPLOSION_EXPANDER_POINTS = 200;
+	public static final int MAX_RANGE = 10;
 
 	public ExplosionExpander()
 	{
@@ -13,7 +14,8 @@ public class ExplosionExpander extends PowerUp {
 	public void execute()
 	{
 		super.execute();
-		model.BomberMan.getInstance().incRange();
-		model.Player.getInstance().addPoints(EXPLOSION_EXPANDER_POINTS);
+		Player.getInstance().addPoints(EXPLOSION_EXPANDER_POINTS);
+		BomberMan bomberMan = BomberMan.getInstance();
+		if (bomberMan.getRange() < MAX_RANGE) { model.BomberMan.getInstance().incRange(); }
 	}
 }
