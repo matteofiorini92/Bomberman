@@ -7,6 +7,6 @@ public enum ChangeType {
 	MOVE,
 	LOSE_LIFE,
 	DIE,
-	BECOME_INVINCIBLE
-	
+	BECOME_INVINCIBLE,
+	CHANGE_SPEED
 }

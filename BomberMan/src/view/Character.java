@@ -19,10 +19,12 @@ public abstract class Character extends Element {
 	public static final int HEIGHT_DIFFERENCE = CHARACTER_HEIGHT - view.Item.ITEM_HEIGHT;
 
 	public static final int INVINCIBILITY_FRAMES = 20;
+	public static int TIME_FOR_DEATH = 1500;
 	
-	public static long TIME_FOR_MOVEMENT = 375;
-	public static long TIME_FOR_DEATH = 1500;
+//	public static int TIME_FOR_MOVEMENT = model.Character.INITIAL_TIME_FOR_MOVEMENT ;
 	
+	private Double speed;
+	private Double timeForMovement;
 	
 	public static Map<Class<? extends model.Character>, String> prefixes = new HashMap<>();
 	static {
@@ -31,10 +33,11 @@ public abstract class Character extends Element {
 		prefixes.put(model.Bug.class, "bug");
 	}
 
-	public Character(int[] position, Image im1)
+	public Character(int[] position, Image image, Double speed)
 	{
-		super(im1);
-		
+		super(image);
+		this.speed = speed;
+		this.timeForMovement = model.Character.INITIAL_TIME_FOR_MOVEMENT / this.speed;
 		this.setLayoutY(position[0] * Item.ITEM_HEIGHT - HEIGHT_DIFFERENCE);
 		this.setLayoutX(position[1] * Item.ITEM_WIDTH);
 		
@@ -51,6 +54,9 @@ public abstract class Character extends Element {
 		}
 		else if (args[0].equals(model.ChangeType.DIE)) {
 			die((model.Character)o, imageFiles);
+		}
+		else if (args[0].equals(model.ChangeType.CHANGE_SPEED)) {
+			changeSpeed((Double)args[1]);
 		}
 	}
 
@@ -73,7 +79,7 @@ public abstract class Character extends Element {
 		for (int frame = 0; frame < files.length; frame++) {
 			final int framePlusOne = frame+1;
 			Image image = new Image("images/-" + prefix + "/" + files[frame]+ ".png");
-			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_MOVEMENT/files.length * framePlusOne), event -> {
+			KeyFrame keyFrame = new KeyFrame(Duration.millis(timeForMovement/files.length * framePlusOne), event -> {
 		    	this.setImage(image);
 		    	this.setLayoutX(prevPosition[1] * Item.ITEM_WIDTH + xMove * Item.ITEM_WIDTH * framePlusOne / files.length);
 		    	this.setLayoutY(prevPosition[0] * Item.ITEM_HEIGHT + yMove * Item.ITEM_HEIGHT * framePlusOne / files.length - HEIGHT_DIFFERENCE);
@@ -134,7 +140,10 @@ public abstract class Character extends Element {
 			
 	}
 	
-	
+	private void changeSpeed(Double newSpeed) {
+		this.speed = newSpeed;
+//		this.timeForMovement = model.Character.INITIAL_TIME_FOR_MOVEMENT / this.speed;
+	}
 	
 	
 	

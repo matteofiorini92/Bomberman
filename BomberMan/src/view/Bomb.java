@@ -16,8 +16,8 @@ import javafx.util.Duration;
 @SuppressWarnings("deprecation")
 public class Bomb extends Item {
 	
-	public static final long TIME_TO_TRIGGER = 3000;
-	public static final long TIME_FOR_EXPLOSION = 1500;
+	public static final int TIME_TO_TRIGGER = 3000;
+	public static final int TIME_FOR_EXPLOSION = 1500;
 	public static Map<String, String> imageFiles = new HashMap<>();
 	static {
 		String currLevel = controller.Main.getCurrLevel();

@@ -17,8 +17,8 @@ import javafx.scene.image.ImageView;
 @SuppressWarnings("deprecation")
 public class SoftWall extends Item {
 	
-	public static final long SOFT_WALL_ANIMATION = 500;
-	public static final long SOFT_WALL_EXPLOSION = 1500;
+	public static final int SOFT_WALL_ANIMATION = 500;
+	public static final int SOFT_WALL_EXPLOSION = 1500;
 	public static Map<String, String> imageFiles = new HashMap<>();
 	static {
 		String currLevel = controller.Main.getCurrLevel();

@@ -9,6 +9,7 @@ import javafx.application.Platform;
 public abstract class Character extends Element {
 	
 	public static final int INVINCIBILITY_TIME = 3000;
+	public static final int INITIAL_TIME_FOR_MOVEMENT = 375;
 	
 	private static Board board = model.Board.getInstance();
 	private Double speed;
@@ -103,7 +104,6 @@ public abstract class Character extends Element {
 	
  
 	
-	@SuppressWarnings("deprecation")
 	public void loseLife() {
 		if (!isInvincible) {
 			lives--;
@@ -115,6 +115,7 @@ public abstract class Character extends Element {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void becomeInvincible() {
 		setInvincible(true);
 		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();

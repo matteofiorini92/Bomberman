@@ -42,13 +42,19 @@ public class BomberMan extends Character {
 	public void decRange() { range--; }
 	
 	public void incSpeed(Double increase) { 
-		Double currSpeed = getSpeed();
-		setSpeed(currSpeed + increase);
+		Double newSpeed = getSpeed() + increase;
+		setSpeed(newSpeed);
+		Object[] args = { model.ChangeType.CHANGE_SPEED, newSpeed };
+		setChanged();
+		notifyObservers(args);
 	}
 	
 	public void decSpeed(Double decrease) { 
-		Double currSpeed = getSpeed();
-		setSpeed(currSpeed - decrease);
+		Double newSpeed = getSpeed() - decrease;
+		setSpeed(newSpeed);
+		Object[] args = { model.ChangeType.CHANGE_SPEED, newSpeed };
+		setChanged();
+		notifyObservers(args);
 	}
 	
 

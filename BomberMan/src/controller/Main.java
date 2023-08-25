@@ -41,7 +41,7 @@ public class Main extends Application {
 	private model.Board modelBoard;
 	private view.Board viewBoard;
 	private Group root = new Group();
-	private int level = 1;
+	private int level = 2;
 	private static String currLevel;
 	
 	private static Map<String, Class<? extends model.Enemy>> modelEnemies = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
@@ -239,7 +239,7 @@ public class Main extends Application {
 	}
 	
 	private long lastKeyPressTime = 0;
-	private static final long THROTTLE_DELAY = 375; // Milliseconds
+	private static final Double THROTTLE_DELAY = model.BomberMan.INITIAL_TIME_FOR_MOVEMENT / model.BomberMan.getInstance().getSpeed(); // Milliseconds
 	private boolean keyHeld = false;
 
 	private void handleKeyPressed(KeyEvent event) {

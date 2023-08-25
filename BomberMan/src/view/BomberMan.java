@@ -11,6 +11,7 @@ import model.Direction;
 public class BomberMan extends Character {
 	
 	public static final int[] INITIAL_POSITION = {1, 2};
+	public static final Double INITIAL_SPEED = 1.0;
 	public static Map<Direction, String> imageFiles = new HashMap<>();
 	static {
 		utilities.LoadProperties.loadDirectionStringProperties(imageFiles, "resources/characters/bomberMan.properties");
@@ -18,7 +19,7 @@ public class BomberMan extends Character {
 
 	public BomberMan()
 	{
-		super(INITIAL_POSITION, new Image("images/-bm/" + imageFiles.get(Direction.INITIAL) + ".png"));
+		super(INITIAL_POSITION, new Image("images/-bm/" + imageFiles.get(Direction.INITIAL) + ".png"), INITIAL_SPEED);
 	}
 	
 	@Override
