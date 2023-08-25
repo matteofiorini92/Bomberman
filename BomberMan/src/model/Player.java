@@ -3,7 +3,7 @@ package model;
 public class Player {
 	private static Player player;
 	public static final int INITIAL_SCORE = 0;
-	private String name;
+	private String nickname;
 	private int score;
 	
 	private Player() {
@@ -17,8 +17,8 @@ public class Player {
 		return player;
 	}
 
-	public String getName() { return name; }
-	public void setName(String name) { this.name = name; }
+	public String getName() { return nickname; }
+	public void setName(String name) { this.nickname = name; }
 
 	public int getScore() {	return score; }
 	public void setScore(int score) { this.score = score; }

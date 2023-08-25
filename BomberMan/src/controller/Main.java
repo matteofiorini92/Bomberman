@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import model.Direction;
 import model.Element;
@@ -42,6 +43,7 @@ public class Main extends Application {
 	private view.Board viewBoard;
 	
 	private Group root = new Group();
+	private Scene scene = new Scene(root, view.Item.ITEM_WIDTH * 17, view.Item.ITEM_HEIGHT * 14.5, Color.BLACK);
 	private int level = 2;
 	private static String currLevel;
 	
@@ -60,18 +62,49 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	public Scene getScene() { return scene; }
 
 	@SuppressWarnings({ "deprecation", "deprecation" })
 	@Override
 	public void start(Stage stage) throws Exception
 	{
+		/**
+		 * define window properties
+		 */
+		
+		Image icon = new Image("bm_icon.png");
+		stage.getIcons().add(icon);
+		stage.setTitle("BomberMan");
+		stage.setResizable(false);
+		
+		stage.setScene(scene);
+		stage.show();
+		
+		
+		view.WelcomeBoard wBoard = new view.WelcomeBoard();
+		wBoard.setPrefSize(scene.getWidth(), scene.getHeight());
+		wBoard.greet();
+		root.getChildren().add(wBoard);
+		
+		
+		
+		
+//		loadLevel();
+		
+		
+		
+		
+	}
+	
+	private void loadLevel() {
 		Properties levelsProperties = new Properties();
-        try (FileInputStream input = new FileInputStream("resources/levels.properties")) {
-            levelsProperties.load(input);
-            currLevel = (String)levelsProperties.get(Integer.toString(level));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		try (FileInputStream input = new FileInputStream("resources/levels.properties")) {
+			levelsProperties.load(input);
+			currLevel = (String)levelsProperties.get(Integer.toString(level));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		
 		/**
@@ -114,7 +147,7 @@ public class Main extends Application {
 		 */
 		List<Object[]> characters = readCharactersFile(currLevel);
 		List<model.Enemy> enemies = initialiseCharacters(characters, root);
-
+		
 		
 		// collect list of Elements that can hide powerUps (enemies and softwalls)
 		
@@ -125,42 +158,33 @@ public class Main extends Application {
 				.collect(Collectors.toList());
 		
 		hidingElements.addAll(Arrays.stream(softWalls).toList());	//convert array of softwalls to list
-
+		
 		
 		List<model.PowerUp> powerUps = readPowerUpsFile(currLevel);
 		
 		powerUps.stream().forEach(powerUp -> {
 			int max = hidingElements.size();
-
+			
 			Random r = new Random();
 			model.HidePowerUp hidingElement = hidingElements.get(r.nextInt(max));
 			hidingElement.setHiddenPowerUp(powerUp);
 			powerUp.setPosition(((Element) hidingElement).getPosition());
 			hidingElements.remove(hidingElement);
 		});
-
+		
 		
 		// key listeners
 		
-		Scene scene = new Scene(root, view.Item.ITEM_WIDTH * 17, view.Item.ITEM_HEIGHT * 14.5, Color.BLACK);
 		scene.setOnKeyPressed(this::handleKeyPressed);
 		scene.setOnKeyReleased(this::handleKeyReleased);
-
-		/**
-		 * define window properties
-		 */
 		
-		Image icon = new Image("bm_icon.png");
-		stage.getIcons().add(icon);
-		stage.setTitle("BomberMan");
-		stage.setResizable(false);
-		
-		stage.setScene(scene);
-		stage.show();
 		for (model.Enemy enemy : enemies) {
 			enemy.startMoving();
 		}
+		
 	}
+	
+	
 	
 	private List<Object[]> readCharactersFile(String levelNumber) {
 		String levelFilePath = "src/levels/" + levelNumber + "-characters.txt";
