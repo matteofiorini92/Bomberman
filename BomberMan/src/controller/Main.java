@@ -1,10 +1,13 @@
 package controller;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,18 +20,13 @@ import java.util.stream.Stream;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import model.Direction;
 import model.Element;
-import model.HidePowerUp;
-import model.PowerUp;
-import model.SoftWall;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBase;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -67,7 +65,6 @@ public class Main extends Application {
 	
 	public static Scene getScene() { return scene; }
 
-	@SuppressWarnings({ "deprecation", "deprecation" })
 	@Override
 	public void start(Stage stage) throws Exception
 	{
@@ -88,20 +85,17 @@ public class Main extends Application {
 		root.getChildren().add(wBoard);
 		
 		Button newPlayerButton = (Button)scene.lookup("#NEW_PLAYER");
-		newPlayerButton.setOnAction(event -> {
+		newPlayerButton.setOnMouseClicked(event -> {
 			loadNewPlayerScreen(wBoard);
 		});
 		
 		Button existingPlayerButton = (Button)scene.lookup("#EXISTING_PLAYER");
 		if (existingPlayerButton != null) {		
-			existingPlayerButton.setOnAction(event -> {
+			existingPlayerButton.setOnMouseClicked(event -> {
 				root.getChildren().remove(wBoard);
 				// TODO existing player lookup
 			});
 		}
-		
-		
-//		loadLevel();
 		
 
 	}
@@ -113,21 +107,72 @@ public class Main extends Application {
 		root.getChildren().add(newProfileBoard);
 		
 		Button saveProfile = (Button)scene.lookup("#SAVE_PROFILE");
+		saveProfile.setOnMouseClicked(event -> {
+			saveNewProfile(newProfileBoard);
+		});
+		
 		Button newGame = (Button)scene.lookup("#NEW_GAME");
-		newGame.setOnAction(event -> {
+		newGame.setOnMouseClicked(event -> {
 			loadLevel(newProfileBoard, 1);
 		});
 		
-		
 	}
 	
 	
-	private void saveProfile() {
+	private void saveNewProfile(view.BoardNewProfile newProfileBoard) {
 		
+		// get nickname from newProfileBoard
+		String nickname = ((TextField) scene.lookup("#NICKNAME")).getText().toLowerCase();
+		
+		if (!nickname.equals("")) {
+			Object[] alreadyExisting = {};
+
+			// check existing files and filter by nickname selected by user
+			try (Stream<Path> stream = Files.list(Path.of("resources/playerProfiles"))) {
+				alreadyExisting = stream
+						.filter(file -> file.getFileName().toString().equals(nickname + ".txt"))
+						.toArray();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+			// if nickname already exists >> ERROR
+			if (alreadyExisting.length > 0) {
+				scene.lookup("#ERR_NICKNAME_TAKEN").setVisible(true);
+			}
+			
+			// else create new player instance and new playerProfile file and activate new game button
+			else {
+				scene.lookup("#ERR_NICKNAME_TAKEN").setVisible(false);
+				scene.lookup("#NEW_GAME").setDisable(false);
+				model.Player player = model.Player.getInstance();
+				player.setName(nickname);
+				player.setAvatar(newProfileBoard.getSelectedAvatar());
+				
+				
+				
+				File playerProfile = new File("resources/playerProfiles/" + nickname + ".txt");
+				try {
+					playerProfile.createNewFile();
+					FileWriter fileWriter = new FileWriter(playerProfile);
+					fileWriter.write(
+							player.getAvatar() + " " +
+									player.getWins() + " " +
+									player.getLosses() + " " +
+									player.getScore()
+							);
+					fileWriter.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	
 	
+	@SuppressWarnings("deprecation")
 	private void loadLevel(view.BoardNewProfile newProfileBoard, int level) {
 		
 		root.getChildren().remove(newProfileBoard);
@@ -155,15 +200,17 @@ public class Main extends Application {
 		model.Element[][] cells = modelBoard.getCells();
 		model.SoftWall[] softWalls;
 		
-		Stream<model.Element[]> streamOfArrays = Arrays.stream(cells);														// convert cells to a stream of arrays
-		Stream<model.Element> flattenedStream = streamOfArrays.flatMap(array -> Arrays.stream(array));						// flatten the stream (concatenate the arrays of the stream)
-		softWalls = flattenedStream.filter(element -> element instanceof model.SoftWall).toArray(model.SoftWall[]::new);	// filter the flattened stream looking only for softWalls
+		Stream<model.Element[]> streamOfArrays = Arrays.stream(cells);										// convert cells to a stream of arrays
+//		Stream<model.Element> flattenedStream = streamOfArrays.flatMap(array -> Arrays.stream(array));		// flatten the stream (concatenate the arrays of the stream)
+//		softWalls = flattenedStream
+//				.filter(element -> element instanceof model.SoftWall)										// filter the flattened stream looking only for softWalls
+//				.toArray(model.SoftWall[]::new);	
 		
 		// same thing, more chained functions, less readable?
 		
-//		softWalls = streamOfArrays.flatMap(array -> Arrays.stream(array)
-//										   .filter(element -> element instanceof model.SoftWall))
-//								  .toArray(model.SoftWall[]::new);
+		softWalls = streamOfArrays.flatMap(array -> Arrays.stream(array)					// flatten the stream (concatenate the arrays of the stream)
+								  .filter(element -> element instanceof model.SoftWall))	// filter the flattened stream looking only for softWalls
+								  .toArray(model.SoftWall[]::new);
 		
 		view.Item[][] tiles = viewBoard.getTiles();
 		
@@ -254,8 +301,8 @@ public class Main extends Application {
 			BufferedReader reader = new BufferedReader(new FileReader(levelFilePath));
 			line = reader.readLine();
 			while (line != null) {
-				Class<? extends model.PowerUp> powerUp = (Class<? extends PowerUp>) Class.forName("model."+line);		// get class from name of the class
-				model.PowerUp powerUpInstance = (model.PowerUp) powerUp.getDeclaredConstructor().newInstance();	// instantiate a new object of that class
+				Class<? extends model.PowerUp> powerUp = (Class<? extends model.PowerUp>) Class.forName("model."+line);		// get class from name of the class
+				model.PowerUp powerUpInstance = (model.PowerUp) powerUp.getDeclaredConstructor().newInstance();			// instantiate a new object of that class
 	            result.add(powerUpInstance);
 				line = reader.readLine();
 	        }
@@ -266,6 +313,7 @@ public class Main extends Application {
 		return result;
 	}
 	
+	@SuppressWarnings("deprecation")
 	private List<model.Enemy> initialiseCharacters(List<Object[]> characters, Group root) {
 		List<model.Enemy> enemies = new ArrayList<model.Enemy>();
 		for (Object[] character : characters) {
@@ -291,7 +339,7 @@ public class Main extends Application {
 		viewBm = new view.BomberMan();
 		modelBm.addObserver(viewBm);
 		
-		modelBoard.setCell(modelBm, modelBm.INITIAL_POSITION);
+		modelBoard.setCell(modelBm, model.BomberMan.INITIAL_POSITION);
 		root.getChildren().add(viewBm);
 		modelBm.setInvincible(true);
 		return enemies;
@@ -313,6 +361,7 @@ public class Main extends Application {
 	    keyHeld = false;
 	}
 
+	@SuppressWarnings("deprecation")
 	private void processKeyPress(KeyEvent event) {
 	    long currentTime = System.currentTimeMillis();
 
@@ -324,7 +373,6 @@ public class Main extends Application {
 		    	view.Bomb viewBomb = new view.Bomb();
 		    	modelBomb.addObserver(viewBomb);
 		    	modelBm.decBombs();
-		    	List<Node> nodes = root.getChildren();
 		    	// get viewBm stackPane index in order to add the bomb behind it !!!!!!!!!!!!!!!!!!!!!!
 		    	int viewBmStackPaneIndex = root.getChildren().indexOf(viewBoard.getGridPane());
 		    	
@@ -332,9 +380,6 @@ public class Main extends Application {
 		    	modelBomb.trigger();	        	
 		    }
 		    else {	        	
-		        
-		        
-		        
 		        	Direction direction = null;
 		        	try {	        	
 		        		switch (event.getCode()) {
