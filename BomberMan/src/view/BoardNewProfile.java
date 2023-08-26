@@ -25,7 +25,7 @@ public class BoardNewProfile extends StackPane {
 	private model.Avatar selectedAvatar = model.Avatar.WHITE;
 	
 	
-	public BoardNewProfile(int played, int wins, int losses, int totalScore) {
+	public BoardNewProfile(int wins, int losses, int totalScore) {
 		
 		Scene scene = controller.Main.getScene();
 		this.setPrefHeight(scene.getHeight());

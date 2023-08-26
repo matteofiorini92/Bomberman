@@ -23,6 +23,7 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import model.Direction;
 import model.Element;
+import view.BoardProfileLookUp;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -85,25 +86,91 @@ public class Main extends Application {
 		root.getChildren().add(wBoard);
 		
 		Button newPlayerButton = (Button)scene.lookup("#NEW_PLAYER");
-		newPlayerButton.setOnMouseClicked(event -> {
-			loadNewPlayerScreen(wBoard);
-		});
+		newPlayerButton.setOnMouseClicked(event -> loadNewPlayerScreen(wBoard));
 		
 		Button existingPlayerButton = (Button)scene.lookup("#EXISTING_PLAYER");
 		if (existingPlayerButton != null) {		
-			existingPlayerButton.setOnMouseClicked(event -> {
-				root.getChildren().remove(wBoard);
-				// TODO existing player lookup
-			});
+			existingPlayerButton.setOnMouseClicked(event -> loadSearchPlayerScreen(wBoard));
 		}
 		
 
 	}
 	
+	private void loadSearchPlayerScreen(view.BoardWelcome wBoard) {
+		root.getChildren().remove(wBoard);
+		view.BoardProfileLookUp profileLookUpBoard = new view.BoardProfileLookUp();
+		root.getChildren().add(profileLookUpBoard);
+		
+		scene.lookup("#SEARCH").setOnMouseClicked(event -> loadExistingPlayerScreen(profileLookUpBoard));
+		
+		
+	}
 	
+	
+	private void loadExistingPlayerScreen(BoardProfileLookUp profileLookUpBoard)
+	{
+		// get nickname from profileLookUpBoard
+		String nickname = ((TextField) scene.lookup("#NICKNAME_LOOKUP")).getText().toLowerCase();
+		if (!nickname.equals("")) {
+			Path[] existing = {};
+
+			// check existing files and filter by nickname selected by user
+			try (Stream<Path> stream = Files.list(Path.of("resources/playerProfiles"))) {
+				existing = stream
+						.filter(file -> file.getFileName().toString().equals(nickname + ".txt"))
+						.toArray(Path[]::new);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			// if nickname doesn't exist >> ERROR
+			if (existing.length == 0) {
+				scene.lookup("#ERR_NICKNAME_DOES_NOT_EXIST").setVisible(true);
+			}
+			
+			// else load player's information
+			else {
+				try {
+					scene.lookup("#ERR_NICKNAME_DOES_NOT_EXIST").setVisible(false);
+					String[] playerStats = Files.readString(existing[0]).split("\\s+");
+					// 0 > avatar color
+					// 1 > wins
+					// 2 > losses
+					// 3 > total score
+					loadPlayerScreen(profileLookUpBoard, nickname, playerStats);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	private void loadPlayerScreen(view.BoardProfileLookUp profileLookUpBoard, String nickname, String[] args) {
+		root.getChildren().remove(profileLookUpBoard);
+		view.BoardNewProfile newProfileBoard = new view.BoardNewProfile(
+				Integer.parseInt(args[1]),
+				Integer.parseInt(args[2]),
+				Integer.parseInt(args[3])
+				);
+		root.getChildren().add(newProfileBoard);
+		TextField nicknameTextField = (TextField) scene.lookup("#NICKNAME");
+		nicknameTextField.setText(nickname);
+		nicknameTextField.setDisable(true);
+		
+		
+		scene.lookup("#WHITE").setOpacity(0.5);
+		scene.lookup("#"+args[0]).setOpacity(1);
+		
+		scene.lookup("#NEW_GAME").setDisable(false);
+		
+		// TODO add effects to buttons!!!!!!
+		
+		
+	}
+
 	private void loadNewPlayerScreen(view.BoardWelcome wBoard) {
 		root.getChildren().remove(wBoard);
-		view.BoardNewProfile newProfileBoard = new view.BoardNewProfile(0,0,0,0);
+		view.BoardNewProfile newProfileBoard = new view.BoardNewProfile(0,0,0);
 		root.getChildren().add(newProfileBoard);
 		
 		Button saveProfile = (Button)scene.lookup("#SAVE_PROFILE");
@@ -112,9 +179,7 @@ public class Main extends Application {
 		});
 		
 		Button newGame = (Button)scene.lookup("#NEW_GAME");
-		newGame.setOnMouseClicked(event -> {
-			loadLevel(newProfileBoard, 1);
-		});
+		newGame.setOnMouseClicked(event -> loadLevel(newProfileBoard, 1));
 		
 	}
 	
