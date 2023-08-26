@@ -7,13 +7,15 @@ import java.util.stream.Stream;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class WelcomeBoard extends StackPane {
+public class BoardWelcome extends StackPane {
+	
     private static Text welcomeText = new Text();
     public static final Path PLAYER_PROFILE_FOLDER = Path.of("resources/playerProfiles");
     public static final Double PROFILE_BUTTON_HEIGHT = 50.0;
@@ -21,31 +23,33 @@ public class WelcomeBoard extends StackPane {
     
     
 
-    public WelcomeBoard() {
+    public BoardWelcome() {
     	
         Font.loadFont(getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf"), 50);
         Font welcomeFont = Font.font("Press Start 2P", 50);
         welcomeText.setFont(welcomeFont);
         welcomeText.setFill(Color.WHITE);
         
-    }
-    
-    public void fillWelcomeBoard() {
-    	
-    	Double prefHeight = this.getPrefHeight();
+		Scene scene = controller.Main.getScene();
+		this.setPrefHeight(scene.getHeight());
+		this.setPrefWidth(scene.getWidth());
+		Double prefHeight = this.getPrefHeight();
+		Double prefWidth = this.getPrefWidth();
+		
     	this.setAlignment(Pos.TOP_CENTER);
     	
     	welcomeText.setText("Welcome!");
-    	WelcomeBoard.setMargin(welcomeText, new Insets(prefHeight * 0.25, 0, 0, 0));
-    	this.getChildren().add(welcomeText);    
-    	
+    	BoardWelcome.setMargin(welcomeText, new Insets(prefHeight * 0.25, 0, 0, 0));
+    	this.getChildren().add(welcomeText); 
+		
     	createProfileButton(prefHeight, "New Player", 0.0);
 
     	if (!isEmpty()) { 
     		createProfileButton(prefHeight, "Existing Player", 1.5);
     	}
-
+        
     }
+    
     
 	private void createProfileButton(Double prefHeight, String text, Double spacing) {
     	Button profileButton = new Button();
@@ -57,7 +61,7 @@ public class WelcomeBoard extends StackPane {
         profileButton.setFont(profileFont);
     	profileButton.setText(text);
     	
-    	WelcomeBoard.setMargin(profileButton, new Insets(prefHeight * 0.6 + PROFILE_BUTTON_HEIGHT * spacing, 0, 0, 0));  
+    	BoardWelcome.setMargin(profileButton, new Insets(prefHeight * 0.6 + PROFILE_BUTTON_HEIGHT * spacing, 0, 0, 0));  
     	this.getChildren().add(profileButton);
 	}
     

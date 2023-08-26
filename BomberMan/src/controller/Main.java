@@ -42,8 +42,8 @@ public class Main extends Application {
 	private model.Board modelBoard;
 	private view.Board viewBoard;
 	
-	private Group root = new Group();
-	private Scene scene = new Scene(root, view.Item.ITEM_WIDTH * 17, view.Item.ITEM_HEIGHT * 14.5, Color.BLACK);
+	private static Group root = new Group();
+	private static Scene scene = new Scene(root, view.Item.ITEM_WIDTH * 17, view.Item.ITEM_HEIGHT * 14.5, Color.BLACK);
 	private int level = 2;
 	private static String currLevel;
 	
@@ -63,7 +63,7 @@ public class Main extends Application {
 		launch(args);
 	}
 	
-	public Scene getScene() { return scene; }
+	public static Scene getScene() { return scene; }
 
 	@SuppressWarnings({ "deprecation", "deprecation" })
 	@Override
@@ -82,11 +82,11 @@ public class Main extends Application {
 		stage.show();
 		
 		
-		view.WelcomeBoard wBoard = new view.WelcomeBoard();
-		wBoard.setPrefSize(scene.getWidth(), scene.getHeight());
-		wBoard.fillWelcomeBoard();
-		root.getChildren().add(wBoard);
+//		view.BoardWelcome wBoard = new view.BoardWelcome();
+//		root.getChildren().add(wBoard);
 		
+		view.BoardNewProfile newProfileBoard = new view.BoardNewProfile();
+		root.getChildren().add(newProfileBoard);
 		
 		
 		
