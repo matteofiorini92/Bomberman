@@ -18,7 +18,7 @@ public class Player {
 	}
 
 	public String getName() { return nickname; }
-	public void setName(String name) { this.nickname = name; }
+	public void setName(String nickname) { this.nickname = nickname; }
 
 	public int getScore() {	return score; }
 	public void setScore(int score) { this.score = score; }

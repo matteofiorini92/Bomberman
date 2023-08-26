@@ -84,7 +84,7 @@ public class Main extends Application {
 		
 		view.WelcomeBoard wBoard = new view.WelcomeBoard();
 		wBoard.setPrefSize(scene.getWidth(), scene.getHeight());
-		wBoard.greet();
+		wBoard.fillWelcomeBoard();
 		root.getChildren().add(wBoard);
 		
 		
