@@ -18,8 +18,8 @@ public class BoardWelcome extends StackPane {
 	
     private static Text welcomeText = new Text();
     public static final Path PLAYER_PROFILE_FOLDER = Path.of("resources/playerProfiles");
-    public static final Double PROFILE_BUTTON_HEIGHT = 50.0;
-    public static final Double PROFILE_BUTTON_WIDTH = 300.0;
+    public static final double PROFILE_BUTTON_HEIGHT = 50.0;
+    public static final double PROFILE_BUTTON_WIDTH = 300.0;
     
     
 

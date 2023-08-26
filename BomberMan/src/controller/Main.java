@@ -85,7 +85,7 @@ public class Main extends Application {
 //		view.BoardWelcome wBoard = new view.BoardWelcome();
 //		root.getChildren().add(wBoard);
 		
-		view.BoardNewProfile newProfileBoard = new view.BoardNewProfile();
+		view.BoardNewProfile newProfileBoard = new view.BoardNewProfile(0,0,0,0);
 		root.getChildren().add(newProfileBoard);
 		
 		

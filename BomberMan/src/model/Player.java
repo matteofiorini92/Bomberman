@@ -4,7 +4,10 @@ public class Player {
 	private static Player player;
 	public static final int INITIAL_SCORE = 0;
 	private String nickname;
-	private int score;
+	private int totalScore;
+	private int wins;
+	private int losses;
+	private Avatar avatar;
 	
 	private Player() {
 		setScore(INITIAL_SCORE);
@@ -20,10 +23,10 @@ public class Player {
 	public String getName() { return nickname; }
 	public void setName(String nickname) { this.nickname = nickname; }
 
-	public int getScore() {	return score; }
-	public void setScore(int score) { this.score = score; }
+	public int getScore() {	return totalScore; }
+	public void setScore(int totalScore) { this.totalScore = totalScore; }
 
-	public void addPoints(int points) { score += points; }
-	public void losePoints(int points) { score -= points; }
+	public void addPoints(int points) { totalScore += points; }
+	public void losePoints(int points) { totalScore -= points; }
 	
 }
