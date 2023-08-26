@@ -42,16 +42,16 @@ public class BoardWelcome extends StackPane {
     	BoardWelcome.setMargin(welcomeText, new Insets(prefHeight * 0.25, 0, 0, 0));
     	this.getChildren().add(welcomeText); 
 		
-    	createProfileButton(prefHeight, "New Player", 0.0);
+    	createProfileButton(prefHeight, "New Player", 0.0, "NEW_PLAYER");
 
     	if (!isEmpty()) { 
-    		createProfileButton(prefHeight, "Existing Player", 1.5);
+    		createProfileButton(prefHeight, "Existing Player", 1.5, "EXISTING_PLAYER");
     	}
         
     }
     
     
-	private void createProfileButton(Double prefHeight, String text, Double spacing) {
+	private void createProfileButton(Double prefHeight, String text, Double spacing, String id) {
     	Button profileButton = new Button();
     	profileButton.setPrefWidth(PROFILE_BUTTON_WIDTH);
     	profileButton.setPrefHeight(PROFILE_BUTTON_HEIGHT);
@@ -60,6 +60,8 @@ public class BoardWelcome extends StackPane {
         Font profileFont = Font.font("Press Start 2P", 15);
         profileButton.setFont(profileFont);
     	profileButton.setText(text);
+    	
+    	profileButton.setId(id);
     	
     	BoardWelcome.setMargin(profileButton, new Insets(prefHeight * 0.6 + PROFILE_BUTTON_HEIGHT * spacing, 0, 0, 0));  
     	this.getChildren().add(profileButton);

@@ -27,6 +27,8 @@ import model.SoftWall;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBase;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -44,7 +46,7 @@ public class Main extends Application {
 	
 	private static Group root = new Group();
 	private static Scene scene = new Scene(root, view.Item.ITEM_WIDTH * 17, view.Item.ITEM_HEIGHT * 14.5, Color.BLACK);
-	private int level = 2;
+//	private int level = 2;
 	private static String currLevel;
 	
 	private static Map<String, Class<? extends model.Enemy>> modelEnemies = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
@@ -82,22 +84,54 @@ public class Main extends Application {
 		stage.show();
 		
 		
-//		view.BoardWelcome wBoard = new view.BoardWelcome();
-//		root.getChildren().add(wBoard);
+		view.BoardWelcome wBoard = new view.BoardWelcome();
+		root.getChildren().add(wBoard);
 		
-		view.BoardNewProfile newProfileBoard = new view.BoardNewProfile(0,0,0,0);
-		root.getChildren().add(newProfileBoard);
+		Button newPlayerButton = (Button)scene.lookup("#NEW_PLAYER");
+		newPlayerButton.setOnAction(event -> {
+			loadNewPlayerScreen(wBoard);
+		});
 		
+		Button existingPlayerButton = (Button)scene.lookup("#EXISTING_PLAYER");
+		if (existingPlayerButton != null) {		
+			existingPlayerButton.setOnAction(event -> {
+				root.getChildren().remove(wBoard);
+				// TODO existing player lookup
+			});
+		}
 		
 		
 //		loadLevel();
 		
+
+	}
+	
+	
+	private void loadNewPlayerScreen(view.BoardWelcome wBoard) {
+		root.getChildren().remove(wBoard);
+		view.BoardNewProfile newProfileBoard = new view.BoardNewProfile(0,0,0,0);
+		root.getChildren().add(newProfileBoard);
 		
+		Button saveProfile = (Button)scene.lookup("#SAVE_PROFILE");
+		Button newGame = (Button)scene.lookup("#NEW_GAME");
+		newGame.setOnAction(event -> {
+			loadLevel(newProfileBoard, 1);
+		});
 		
 		
 	}
 	
-	private void loadLevel() {
+	
+	private void saveProfile() {
+		
+	}
+	
+	
+	
+	private void loadLevel(view.BoardNewProfile newProfileBoard, int level) {
+		
+		root.getChildren().remove(newProfileBoard);
+		
 		Properties levelsProperties = new Properties();
 		try (FileInputStream input = new FileInputStream("resources/levels.properties")) {
 			levelsProperties.load(input);

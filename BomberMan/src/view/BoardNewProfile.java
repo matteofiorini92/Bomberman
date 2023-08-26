@@ -76,8 +76,8 @@ public class BoardNewProfile extends StackPane {
 	}
 	
 	private void createButtons() {
-		createProfileButton("Save", 0);
-		createProfileButton("Start New Game", 1.5);
+		createProfileButton("Save", 0, "SAVE_PROFILE");
+		createProfileButton("Start New Game", 1.5, "NEW_GAME");
 	}
 	
 	private void createText(String content, Insets insets, double size, Color color) {
@@ -100,7 +100,7 @@ public class BoardNewProfile extends StackPane {
 		this.getChildren().add(button);		
 	}
  	
-	private void createProfileButton(String text, double spacing) {
+	private void createProfileButton(String text, double spacing, String id) {
     	Button profileButton = new Button();
     	profileButton.setPrefWidth(PROFILE_BUTTON_WIDTH);
     	profileButton.setPrefHeight(PROFILE_BUTTON_HEIGHT);
@@ -109,6 +109,7 @@ public class BoardNewProfile extends StackPane {
         Font profileFont = Font.font("Press Start 2P", 15);
         profileButton.setFont(profileFont);
     	profileButton.setText(text);
+    	profileButton.setId(id);
     	
     	BoardNewProfile.setMargin(profileButton, new Insets(prefHeight * 0.8, 0, 0, prefWidth * 0.1 + PROFILE_BUTTON_WIDTH * spacing));  
     	this.getChildren().add(profileButton);
