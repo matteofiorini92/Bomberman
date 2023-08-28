@@ -30,7 +30,7 @@ public class PowerUp extends Item {
 	private void startAnimation(model.PowerUp modelPowerUp) {
 		
 		int[] modelPowerUpPosition = modelPowerUp.getPosition();
-		view.BoardGame.getInstance().setTile(this, modelPowerUpPosition);
+		view.GameBody.getInstance().setTile(this, modelPowerUpPosition);
 
 		this.setLayoutX(modelPowerUpPosition[1]*view.Item.ITEM_WIDTH);
 		this.setLayoutY(modelPowerUpPosition[0]*view.Item.ITEM_HEIGHT);

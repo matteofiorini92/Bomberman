@@ -47,7 +47,7 @@ public class SoftWall extends Item {
 	public void update(Observable o, Object arg)
 	{
 		
-		view.BoardGame viewBoard = view.BoardGame.getInstance();
+		view.GameBody viewBoard = view.GameBody.getInstance();
 		model.BoardGame modelBoard = model.BoardGame.getInstance();
 		timeline.getKeyFrames().clear();
 		timeline = new Timeline();

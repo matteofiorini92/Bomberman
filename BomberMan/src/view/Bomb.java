@@ -5,10 +5,12 @@ import java.util.Map;
 import java.util.Observable;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -30,7 +32,7 @@ public class Bomb extends Item {
 	public Bomb() {
 		super(null);
 		pane.getChildren().add(gridPane);
-        view.BoardGame.getInstance().getItemsPane().getChildren().add(pane);
+        view.GameBody.getInstance().getItemsPane().getChildren().add(pane);
 	}
 	
 	
@@ -49,8 +51,7 @@ public class Bomb extends Item {
 	
 	public void triggerBomb(model.Bomb bomb) {
 		int[] position = bomb.getPosition();
-		this.setLayoutX(position[1]*view.Item.ITEM_WIDTH);
-		this.setLayoutY(position[0]*view.Item.ITEM_HEIGHT);
+		StackPane.setMargin(this, new Insets(position[0]*view.Item.ITEM_HEIGHT, 0,0,position[1]*view.Item.ITEM_WIDTH));
 
 		String[] files = imageFiles.get("beforeEx").split("\\s+");
 		

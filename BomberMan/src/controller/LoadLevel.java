@@ -27,7 +27,7 @@ public class LoadLevel {
 	private model.BomberMan modelBm;
 	private view.BomberMan viewBm;
 	private model.BoardGame modelBoard;
-	private view.BoardGame viewBoard;
+	private view.GameBody viewBoard;
 	private static String level;
 	
 	private static Map<String, Class<? extends model.Enemy>> modelEnemies = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
@@ -42,20 +42,26 @@ public class LoadLevel {
 		viewCharacters.put("bug", view.Bug.class);
 	}
 
+	@SuppressWarnings("deprecation")
 	public LoadLevel(String level) {
 		
 		/**
 		 * initialise board
 		 */
-		this.level = level;
+		LoadLevel.level = level;
 		view.BaseScene baseScene = view.BaseScene.getInstance();
 		view.BaseGroup baseGroup = view.BaseGroup.getInstance();
+		
+		
+//		view.GameBoard.getInstance();
+		baseGroup.getChildren().add(view.GameBoard.getInstance());
+		
 		modelBoard = model.BoardGame.getInstance();
-		viewBoard = view.BoardGame.getInstance();
+		viewBoard = view.GameBody.getInstance();
 		modelBoard.addObserver(viewBoard);
 		modelBoard.fillEmptyBoard(level);
-		GridPane boardGridPane = viewBoard.getGridPane();
-		StackPane boardItemsPane = viewBoard.getItemsPane();
+//		GridPane boardGridPane = viewBoard.getGridPane();
+//		StackPane boardItemsPane = viewBoard.getItemsPane();
 		
 		model.Element[][] cells = modelBoard.getCells();
 		model.SoftWall[] softWalls;
@@ -74,14 +80,12 @@ public class LoadLevel {
 			}
 		}
 		
-		baseGroup.getChildren().add(boardGridPane);
-		baseGroup.getChildren().add(boardItemsPane);
 		
 		/**
 		 * initialise characters
 		 */
 		List<Object[]> characters = readCharactersFile(level);
-		List<model.Enemy> enemies = initialiseCharacters(characters, baseGroup);
+		List<model.Enemy> enemies = initialiseCharacters(characters);
 		
 		
 		// collect list of Elements that can hide powerUps (enemies and softwalls)
@@ -166,7 +170,8 @@ public class LoadLevel {
 	}
 	
 	@SuppressWarnings("deprecation")
-	private List<model.Enemy> initialiseCharacters(List<Object[]> characters, Group root) {
+	private List<model.Enemy> initialiseCharacters(List<Object[]> characters) {
+		StackPane itemsPane = view.GameBody.getInstance().getItemsPane();
 		List<model.Enemy> enemies = new ArrayList<model.Enemy>();
 		for (Object[] character : characters) {
 			Class<? extends model.Character> modelCharacterClass = modelEnemies.get(character[0]);
@@ -182,7 +187,7 @@ public class LoadLevel {
 				modelCharacter.addObserver(viewCharacter);
 				enemies.add((model.Enemy)modelCharacter);
 				modelBoard.setCell(modelCharacter, position);
-				root.getChildren().add(viewCharacter);
+				itemsPane.getChildren().add(viewCharacter);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -192,7 +197,7 @@ public class LoadLevel {
 		modelBm.addObserver(viewBm);
 		
 		modelBoard.setCell(modelBm, model.BomberMan.INITIAL_POSITION);
-		root.getChildren().add(viewBm);
+		itemsPane.getChildren().add(viewBm);
 		modelBm.setInvincible(true);
 		return enemies;
 	}
@@ -235,7 +240,7 @@ public class LoadLevel {
 		    	// get viewBm stackPane index in order to add the bomb behind it
 		    	int viewBmStackPaneIndex = baseGroup.getChildren().indexOf(viewBoard.getGridPane());
 		    	
-		    	baseGroup.getChildren().add(viewBmStackPaneIndex + 1, viewBomb);
+		    	view.GameBody.getInstance().getItemsPane().getChildren().add(viewBmStackPaneIndex + 1, viewBomb);
 		    	modelBomb.trigger();	        	
 		    }
 		    else {	        	

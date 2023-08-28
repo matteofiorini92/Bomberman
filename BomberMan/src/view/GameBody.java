@@ -5,6 +5,9 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -12,9 +15,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 @SuppressWarnings("deprecation")
-public class BoardGame implements Observer {
+public class GameBody extends StackPane implements Observer {
 	
-	private static view.BoardGame board;
+	private static view.GameBody gameBody;
 	/**
 	 * Loading k:v pairs from resources/tiles/ currLevel .properties into imageFiles
 	 */
@@ -32,12 +35,24 @@ public class BoardGame implements Observer {
 	private Rectangle rectangle = new Rectangle(view.Item.ITEM_WIDTH * model.BoardGame.WIDTH,view.Item.ITEM_HEIGHT * model.BoardGame.HEIGHT, Color.TRANSPARENT);
 	private StackPane itemsPane = new StackPane(rectangle);
 	
-	private BoardGame() {}
-	public static view.BoardGame getInstance(){
-		if (board == null) {
-			board = new view.BoardGame();
+	
+	
+	
+	private GameBody() {
+		this.setPrefHeight(view.Item.ITEM_HEIGHT * model.BoardGame.HEIGHT);
+//		this.setPrefWidth(view.Item.ITEM_WIDTH * model.BoardGame.WIDTH);
+		itemsPane.setPrefHeight(this.getPrefHeight());
+		itemsPane.setAlignment(Pos.TOP_LEFT);
+//		itemsPane.setPrefWidth(this.getPrefWidth());
+		this.getChildren().add(gridPane);
+		this.getChildren().add(itemsPane);		
+	}
+	
+	public static view.GameBody getInstance(){
+		if (gameBody == null) {
+			gameBody = new view.GameBody();
 		}
-		return board;
+		return gameBody;
 	}
 	
 	public GridPane getGridPane() { return gridPane; }

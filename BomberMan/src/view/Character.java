@@ -6,7 +6,9 @@ import java.util.Observable;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import model.Direction;
 import model.HidePowerUp;
@@ -36,8 +38,7 @@ public abstract class Character extends Element {
 		super(image);
 		this.speed = speed;
 		this.timeForMovement = model.Character.INITIAL_TIME_FOR_MOVEMENT / this.speed;
-		this.setLayoutY(position[0] * Item.ITEM_HEIGHT - HEIGHT_DIFFERENCE);
-		this.setLayoutX(position[1] * Item.ITEM_WIDTH);
+		StackPane.setMargin(this, new Insets(position[0] * Item.ITEM_HEIGHT - HEIGHT_DIFFERENCE, 0, 0, position[1] * Item.ITEM_WIDTH));
 		
 	}
 	
@@ -81,8 +82,13 @@ public abstract class Character extends Element {
 			Image image = new Image("images/-" + prefix + "/" + files[frame]+ ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(timeForMovement/files.length * framePlusOne), event -> {
 		    	this.setImage(image);
-		    	this.setLayoutX(prevPosition[1] * Item.ITEM_WIDTH + xMove * Item.ITEM_WIDTH * framePlusOne / files.length);
-		    	this.setLayoutY(prevPosition[0] * Item.ITEM_HEIGHT + yMove * Item.ITEM_HEIGHT * framePlusOne / files.length - HEIGHT_DIFFERENCE);
+		    	Insets insets = new Insets(
+		    			prevPosition[0] * Item.ITEM_HEIGHT + yMove * Item.ITEM_HEIGHT * framePlusOne / files.length - HEIGHT_DIFFERENCE,
+		    			0,
+		    			0,
+		    			prevPosition[1] * Item.ITEM_WIDTH + xMove * Item.ITEM_WIDTH * framePlusOne / files.length
+		    			);
+		    	StackPane.setMargin(this, insets);
 		    });
 			timeline.getKeyFrames().add(keyFrame);
 		}
@@ -122,7 +128,6 @@ public abstract class Character extends Element {
 			Image image = new Image("images/-" + prefix + "/" + files[frame] + ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH/(files.length + 1) * framePlusOne), event -> {
 		    	this.setImage(image);
-		    	System.out.println(TIME_FOR_DEATH/(files.length + 1) * framePlusOne);
 		    });
 			timeline.getKeyFrames().add(keyFrame);
 		}

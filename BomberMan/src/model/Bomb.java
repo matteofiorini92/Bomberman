@@ -42,7 +42,6 @@ public class Bomb extends Item {
 	@SuppressWarnings("deprecation")
 	public void explode() {
 		Platform.runLater(() -> { // to have UI related operations all run on the JavaFX thread
-			System.out.println("Bomb in position "+ getPosition()[1] + ", " + getPosition()[0] + " is exploding.");
 			Map<Direction, List<Element>> surroundings = checkSurroundings();
 			for(Map.Entry<Direction, List<Element>> surrounding : surroundings.entrySet()) {
 				List<Element> values = surrounding.getValue();
@@ -64,7 +63,6 @@ public class Bomb extends Item {
 			int[] bombPosition = this.getPosition();
 			
 			Platform.runLater(() -> {			
-				System.out.println("I'm setting Bomb in position "+ getPosition()[1] + ", " + getPosition()[0] + " to new cell.");
 				board.setCell(new EmptyTile(bombPosition), bombPosition);
 			});
 			
