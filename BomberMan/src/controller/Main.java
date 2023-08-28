@@ -43,9 +43,8 @@ public class Main extends Application {
 	private model.Board modelBoard;
 	private view.Board viewBoard;
 	
-	private static Group root = new Group();
-	private static Scene scene = new Scene(root, view.Item.ITEM_WIDTH * 17, view.Item.ITEM_HEIGHT * 14.5, Color.BLACK);
-//	private int level = 2;
+	private Group root = view.BaseGroup.getInstance();
+	private Scene scene = view.BaseScene.getInstance();
 	private static String currLevel;
 	
 	private static Map<String, Class<? extends model.Enemy>> modelEnemies = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
@@ -64,8 +63,6 @@ public class Main extends Application {
 		launch(args);
 	}
 	
-	public static Scene getScene() { return scene; }
-
 	@Override
 	public void start(Stage stage) throws Exception
 	{
@@ -85,69 +82,69 @@ public class Main extends Application {
 		view.BoardWelcome wBoard = new view.BoardWelcome();
 		root.getChildren().add(wBoard);
 		
-		Button newPlayerButton = (Button)scene.lookup("#NEW_PLAYER");
-		newPlayerButton.setOnMouseClicked(event -> loadNewPlayerScreen(wBoard));
-		
-		Button existingPlayerButton = (Button)scene.lookup("#EXISTING_PLAYER");
-		if (existingPlayerButton != null) {		
-			existingPlayerButton.setOnMouseClicked(event -> loadSearchPlayerScreen(wBoard));
-		}
+//		Button newPlayerButton = (Button)scene.lookup("#NEW_PLAYER");
+//		newPlayerButton.setOnMouseClicked(event -> loadNewPlayerScreen(wBoard));
+//		
+//		Button existingPlayerButton = (Button)scene.lookup("#EXISTING_PLAYER");
+//		if (existingPlayerButton != null) {		
+//			existingPlayerButton.setOnMouseClicked(event -> loadSearchPlayerScreen(wBoard));
+//		}
 		
 
 	}
 	
-	private void loadSearchPlayerScreen(view.BoardWelcome wBoard) {
-		root.getChildren().remove(wBoard);
-		view.BoardProfileLookUp profileLookUpBoard = new view.BoardProfileLookUp();
-		root.getChildren().add(profileLookUpBoard);
-		
-		scene.lookup("#SEARCH").setOnMouseClicked(event -> loadExistingPlayerScreen(profileLookUpBoard));
-		
-		
-	}
+//	private void loadSearchPlayerScreen(view.BoardWelcome wBoard) {
+//		root.getChildren().remove(wBoard);
+//		view.BoardProfileLookUp profileLookUpBoard = new view.BoardProfileLookUp();
+//		root.getChildren().add(profileLookUpBoard);
+//		
+//		scene.lookup("#SEARCH").setOnMouseClicked(event -> loadExistingPlayerScreen(profileLookUpBoard));
+//		
+//		
+//	}
 	
 	
-	private void loadExistingPlayerScreen(BoardProfileLookUp profileLookUpBoard)
-	{
-		// get nickname from profileLookUpBoard
-		String nickname = ((TextField) scene.lookup("#NICKNAME_LOOKUP")).getText().toLowerCase();
-		if (!nickname.equals("")) {
-			Path[] existing = {};
-
-			// check existing files and filter by nickname selected by user
-			try (Stream<Path> stream = Files.list(Path.of("resources/playerProfiles"))) {
-				existing = stream
-						.filter(file -> file.getFileName().toString().equals(nickname + ".txt"))
-						.toArray(Path[]::new);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			// if nickname doesn't exist >> ERROR
-			if (existing.length == 0) {
-				scene.lookup("#ERR_NICKNAME_DOES_NOT_EXIST").setVisible(true);
-			}
-			
-			// else load player's information
-			else {
-				try {
-					scene.lookup("#ERR_NICKNAME_DOES_NOT_EXIST").setVisible(false);
-					String[] playerStats = Files.readString(existing[0]).split("\\s+");
-					// 0 > avatar color
-					// 1 > wins
-					// 2 > losses
-					// 3 > total score
-					loadPlayerScreen(profileLookUpBoard, nickname, playerStats);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+//	private void loadExistingPlayerScreen(BoardProfileLookUp profileLookUpBoard)
+//	{
+//		// get nickname from profileLookUpBoard
+//		String nickname = ((TextField) scene.lookup("#NICKNAME_LOOKUP")).getText().toLowerCase();
+//		if (!nickname.equals("")) {
+//			Path[] existing = {};
+//
+//			// check existing files and filter by nickname selected by user
+//			try (Stream<Path> stream = Files.list(Path.of("resources/playerProfiles"))) {
+//				existing = stream
+//						.filter(file -> file.getFileName().toString().equals(nickname + ".txt"))
+//						.toArray(Path[]::new);
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			
+//			// if nickname doesn't exist >> ERROR
+//			if (existing.length == 0) {
+//				scene.lookup("#ERR_NICKNAME_DOES_NOT_EXIST").setVisible(true);
+//			}
+//			
+//			// else load player's information
+//			else {
+//				try {
+//					scene.lookup("#ERR_NICKNAME_DOES_NOT_EXIST").setVisible(false);
+//					String[] playerStats = Files.readString(existing[0]).split("\\s+");
+//					// 0 > avatar color
+//					// 1 > wins
+//					// 2 > losses
+//					// 3 > total score
+//					loadPlayerScreen(profileLookUpBoard, nickname, playerStats);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//	}
 	
 	private void loadPlayerScreen(view.BoardProfileLookUp profileLookUpBoard, String nickname, String[] args) {
 		root.getChildren().remove(profileLookUpBoard);
-		view.BoardNewProfile newProfileBoard = new view.BoardNewProfile(
+		view.BoardExistingProfile newProfileBoard = new view.BoardExistingProfile(
 				Integer.parseInt(args[1]),
 				Integer.parseInt(args[2]),
 				Integer.parseInt(args[3])
@@ -168,20 +165,20 @@ public class Main extends Application {
 		
 	}
 
-	private void loadNewPlayerScreen(view.BoardWelcome wBoard) {
-		root.getChildren().remove(wBoard);
-		view.BoardNewProfile newProfileBoard = new view.BoardNewProfile(0,0,0);
-		root.getChildren().add(newProfileBoard);
-		
-		Button saveProfile = (Button)scene.lookup("#SAVE_PROFILE");
-		saveProfile.setOnMouseClicked(event -> {
-			saveNewProfile(newProfileBoard);
-		});
-		
-		Button newGame = (Button)scene.lookup("#NEW_GAME");
-		newGame.setOnMouseClicked(event -> loadLevel(newProfileBoard, 1));
-		
-	}
+//	private void loadNewPlayerScreen(view.BoardWelcome wBoard) {
+//		root.getChildren().remove(wBoard);
+//		view.BoardNewProfile newProfileBoard = new view.BoardNewProfile();
+//		root.getChildren().add(newProfileBoard);
+//		
+//		Button saveProfile = (Button)scene.lookup("#SAVE_PROFILE");
+//		saveProfile.setOnMouseClicked(event -> {
+//			saveNewProfile(newProfileBoard);
+//		});
+//		
+//		Button newGame = (Button)scene.lookup("#NEW_GAME");
+//		newGame.setOnMouseClicked(event -> loadLevel(newProfileBoard, 1));
+//		
+//	}
 	
 	
 	private void saveNewProfile(view.BoardNewProfile newProfileBoard) {
@@ -367,7 +364,7 @@ public class Main extends Application {
 			line = reader.readLine();
 			while (line != null) {
 				Class<? extends model.PowerUp> powerUp = (Class<? extends model.PowerUp>) Class.forName("model."+line);		// get class from name of the class
-				model.PowerUp powerUpInstance = (model.PowerUp) powerUp.getDeclaredConstructor().newInstance();			// instantiate a new object of that class
+				model.PowerUp powerUpInstance = (model.PowerUp) powerUp.getDeclaredConstructor().newInstance();				// instantiate a new object of that class
 	            result.add(powerUpInstance);
 				line = reader.readLine();
 	        }
@@ -411,7 +408,7 @@ public class Main extends Application {
 	}
 	
 	private long lastKeyPressTime = 0;
-	private static final Double THROTTLE_DELAY = model.Character.INITIAL_TIME_FOR_MOVEMENT / model.BomberMan.getInstance().getSpeed(); // Milliseconds
+	private static final Double THROTTLE_DELAY = model.Character.INITIAL_TIME_FOR_MOVEMENT / model.BomberMan.getInstance().getSpeed();
 	private boolean keyHeld = false;
 
 	private void handleKeyPressed(KeyEvent event) {
@@ -438,7 +435,7 @@ public class Main extends Application {
 		    	view.Bomb viewBomb = new view.Bomb();
 		    	modelBomb.addObserver(viewBomb);
 		    	modelBm.decBombs();
-		    	// get viewBm stackPane index in order to add the bomb behind it !!!!!!!!!!!!!!!!!!!!!!
+		    	// get viewBm stackPane index in order to add the bomb behind it
 		    	int viewBmStackPaneIndex = root.getChildren().indexOf(viewBoard.getGridPane());
 		    	
 		    	root.getChildren().add(viewBmStackPaneIndex + 1, viewBomb);

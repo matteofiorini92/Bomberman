@@ -21,7 +21,7 @@ public class BoardProfileLookUp extends StackPane  {
 	
 	public BoardProfileLookUp() {
 
-		Scene scene = controller.Main.getScene();
+		Scene scene = BaseScene.getInstance();
 		this.setPrefHeight(scene.getHeight());
 		this.setPrefWidth(scene.getWidth());
 		prefHeight = this.getPrefHeight();
@@ -74,6 +74,8 @@ public class BoardProfileLookUp extends StackPane  {
     	searchButton.setId("SEARCH");
     	BoardProfileLookUp.setMargin(searchButton, new Insets(prefHeight * 0.2, 0, 0, prefWidth * 0.7));  
     	this.getChildren().add(searchButton);
+    	
+    	searchButton.setOnMouseClicked(event -> new controller.LoadExistingPlayerScreen(nicknameTextField.getText().toLowerCase()));
 		
 	}
 

@@ -3,8 +3,10 @@ package view;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -30,7 +32,7 @@ public class BoardWelcome extends StackPane {
         welcomeText.setFont(welcomeFont);
         welcomeText.setFill(Color.WHITE);
         
-		Scene scene = controller.Main.getScene();
+		Scene scene = BaseScene.getInstance();
 		this.setPrefHeight(scene.getHeight());
 		this.setPrefWidth(scene.getWidth());
 		Double prefHeight = this.getPrefHeight();
@@ -42,16 +44,16 @@ public class BoardWelcome extends StackPane {
     	BoardWelcome.setMargin(welcomeText, new Insets(prefHeight * 0.25, 0, 0, 0));
     	this.getChildren().add(welcomeText); 
 		
-    	createProfileButton(prefHeight, "New Player", 0.0, "NEW_PLAYER");
+    	createProfileButton(prefHeight, "New Player", 0.0, "NEW_PLAYER", controller.LoadNewPlayerScreen::new);
 
-    	if (!isEmpty()) { 
-    		createProfileButton(prefHeight, "Existing Player", 1.5, "EXISTING_PLAYER");
+    	if (existingPlayers()) { 
+    		createProfileButton(prefHeight, "Existing Player", 1.5, "EXISTING_PLAYER", controller.LoadPlayerLookUpScreen::new);
     	}
         
     }
     
     
-	private void createProfileButton(Double prefHeight, String text, Double spacing, String id) {
+	private void createProfileButton(Double prefHeight, String text, Double spacing, String id, Runnable runnable) {
     	Button profileButton = new Button();
     	profileButton.setPrefWidth(PROFILE_BUTTON_WIDTH);
     	profileButton.setPrefHeight(PROFILE_BUTTON_HEIGHT);
@@ -65,6 +67,8 @@ public class BoardWelcome extends StackPane {
     	
     	BoardWelcome.setMargin(profileButton, new Insets(prefHeight * 0.6 + PROFILE_BUTTON_HEIGHT * spacing, 0, 0, 0));  
     	this.getChildren().add(profileButton);
+    	
+    	profileButton.setOnMouseClicked(event -> runnable.run());
 	}
     
 
@@ -72,12 +76,12 @@ public class BoardWelcome extends StackPane {
 	 * Checks if there are existing player profiles
 	 * @return true if there are no player profiles, false otherwise
 	 */
-	private boolean isEmpty() {
+	private boolean existingPlayers() {
 		try (Stream<Path> entries = Files.list(PLAYER_PROFILE_FOLDER)) {
-			return !entries.findFirst().isPresent();
+			return entries.findFirst().isPresent();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return true;
 	}
 }
