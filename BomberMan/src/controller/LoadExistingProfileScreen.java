@@ -7,8 +7,8 @@ import java.util.stream.Stream;
 
 import view.BaseGroup;
 
-public class LoadExistingPlayerScreen {
-	public LoadExistingPlayerScreen(String nickname) {
+public class LoadExistingProfileScreen {
+	public LoadExistingProfileScreen(String nickname) {
 		
 		BaseGroup baseGroup = view.BaseGroup.getInstance();
 		
@@ -32,7 +32,7 @@ public class LoadExistingPlayerScreen {
 			// else load player's information
 			else {
 				try {
-					baseGroup.lookup("#ERR_NICKNAME_DOES_NOT_EXIST").setVisible(false);
+//					baseGroup.lookup("#ERR_NICKNAME_DOES_NOT_EXIST").setVisible(false);
 					baseGroup.getChildren().removeAll(baseGroup.getChildren());
 					String[] playerStats = Files.readString(existing[0]).split("\\s+");
 					// 0 > avatar color
@@ -43,19 +43,14 @@ public class LoadExistingPlayerScreen {
 							Integer.parseInt(playerStats[1]),
 							Integer.parseInt(playerStats[2]),
 							Integer.parseInt(playerStats[3]),
-							nickname
+							nickname,
+							model.Avatar.valueOf(playerStats[0])
 							);
 					baseGroup.getChildren().add(newProfileBoard);
-//					loadPlayerScreen(profileLookUpBoard, nickname, playerStats);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		}
-		
-		
-		
-
-
 	}
 }

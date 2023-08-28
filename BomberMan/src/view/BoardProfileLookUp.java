@@ -75,7 +75,7 @@ public class BoardProfileLookUp extends StackPane  {
     	BoardProfileLookUp.setMargin(searchButton, new Insets(prefHeight * 0.2, 0, 0, prefWidth * 0.7));  
     	this.getChildren().add(searchButton);
     	
-    	searchButton.setOnMouseClicked(event -> new controller.LoadExistingPlayerScreen(nicknameTextField.getText().toLowerCase()));
+    	searchButton.setOnMouseClicked(event -> new controller.LoadExistingProfileScreen(nicknameTextField.getText().toLowerCase()));
 		
 	}
 

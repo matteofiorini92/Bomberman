@@ -36,7 +36,7 @@ public class BoardWelcome extends StackPane {
 		this.setPrefHeight(scene.getHeight());
 		this.setPrefWidth(scene.getWidth());
 		Double prefHeight = this.getPrefHeight();
-		Double prefWidth = this.getPrefWidth();
+//		Double prefWidth = this.getPrefWidth();
 		
     	this.setAlignment(Pos.TOP_CENTER);
     	
@@ -44,10 +44,10 @@ public class BoardWelcome extends StackPane {
     	BoardWelcome.setMargin(welcomeText, new Insets(prefHeight * 0.25, 0, 0, 0));
     	this.getChildren().add(welcomeText); 
 		
-    	createProfileButton(prefHeight, "New Player", 0.0, "NEW_PLAYER", controller.LoadNewPlayerScreen::new);
+    	createProfileButton(prefHeight, "New Player", 0.0, "NEW_PLAYER", controller.LoadNewProfileScreen::new);
 
     	if (existingPlayers()) { 
-    		createProfileButton(prefHeight, "Existing Player", 1.5, "EXISTING_PLAYER", controller.LoadPlayerLookUpScreen::new);
+    		createProfileButton(prefHeight, "Existing Player", 1.5, "EXISTING_PLAYER", controller.LoadProfileLookUpScreen::new);
     	}
         
     }

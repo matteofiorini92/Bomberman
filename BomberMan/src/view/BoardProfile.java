@@ -19,13 +19,13 @@ public class BoardProfile extends StackPane {
 	public static final double TEXT_FIELD_HEIGHT = 50.0;
     public static final double PROFILE_BUTTON_HEIGHT = 50.0;
     public static final double PROFILE_BUTTON_WIDTH = 250.0;
-	
+    
 	private Double prefHeight;
 	private Double prefWidth;
-	private model.Avatar selectedAvatar = model.Avatar.WHITE;
+//	private model.Avatar selectedAvatar = model.Avatar.WHITE;
 	
 	
-	public BoardProfile(int wins, int losses, int totalScore, String nickname) {
+	public BoardProfile(int wins, int losses, int totalScore, String nickname, model.Avatar avatar) {
 		
 		Scene scene = BaseScene.getInstance();
 		this.setPrefHeight(scene.getHeight());
@@ -37,7 +37,7 @@ public class BoardProfile extends StackPane {
 		
 		
 		createProfileTexts(wins, losses, totalScore);
-		createAvatar();
+		createAvatar(avatar);
 		createButtons();
 
 		
@@ -55,7 +55,7 @@ public class BoardProfile extends StackPane {
 		
 	}
 	
-	public model.Avatar getSelectedAvatar() { return selectedAvatar; }
+//	public model.Avatar getSelectedAvatar() { return selectedAvatar; }
 	
 	
 	private void createProfileTexts(int wins, int losses, int totalScore) {
@@ -76,18 +76,16 @@ public class BoardProfile extends StackPane {
 		errorMessage.setId("ERR_NICKNAME_TAKEN");
 	}
 	
-	private void createAvatar() {
-		Button whiteAvatar = createButtonWithImageBackground("white", new Insets(prefHeight * 0.2, 0 , 0, prefWidth * 0.6), "WHITE");
-		createButtonWithImageBackground("blue", new Insets(prefHeight * 0.2, 0, 0, prefWidth * 0.6 + AVATAR_SIZE * 1.5), "BLUE");
-		createButtonWithImageBackground("red", new Insets(prefHeight * 0.2 + AVATAR_SIZE * 1.5, 0, 0, prefWidth * 0.6), "RED");
-		createButtonWithImageBackground("black", new Insets(prefHeight * 0.2 + AVATAR_SIZE * 1.5, 0, 0, prefWidth * 0.6 + AVATAR_SIZE * 1.5), "BLACK");
-		whiteAvatar.setOpacity(1);
+	private void createAvatar(model.Avatar avatar) {
+		createButtonWithImageBackground("white", new Insets(prefHeight * 0.2, 0 , 0, prefWidth * 0.6), "WHITE", avatar);
+		createButtonWithImageBackground("blue", new Insets(prefHeight * 0.2, 0, 0, prefWidth * 0.6 + AVATAR_SIZE * 1.5), "BLUE", avatar);
+		createButtonWithImageBackground("red", new Insets(prefHeight * 0.2 + AVATAR_SIZE * 1.5, 0, 0, prefWidth * 0.6), "RED", avatar);
+		createButtonWithImageBackground("black", new Insets(prefHeight * 0.2 + AVATAR_SIZE * 1.5, 0, 0, prefWidth * 0.6 + AVATAR_SIZE * 1.5), "BLACK", avatar);
 	}
 	
 	private void createButtons() {
-		createProfileButton("Save", 0, "SAVE_PROFILE");
-		Button newGameButton = createProfileButton("Start New Game", 1.5, "NEW_GAME");
-		newGameButton.setDisable(true);
+		createProfileButton("Save", 0, "SAVE_PROFILE", null); // Runnable click event set by subclasses
+		createProfileButton("Start New Game", 1.5, "NEW_GAME", controller.LoadNewGame::new);
 	}
 	
 	private Text createText(String content, Insets insets, double size, Color color) {
@@ -101,13 +99,16 @@ public class BoardProfile extends StackPane {
 		return text;
 	}
 	
-	private Button createButtonWithImageBackground(String name, Insets insets, String id) { 
+	private void createButtonWithImageBackground(String name, Insets insets, String id, model.Avatar modelAvatar) { 
 		Button button = new Button();
 		Image avatar = new Image("images/-avatars/" + name + ".png");
 		ImageView imageView = new ImageView(avatar);
 		button.setGraphic(imageView);
 		button.setOpacity(0.5);
-		button.setId(id);
+		if (modelAvatar.toString().toLowerCase().equals(name)) {
+			button.setOpacity(1);
+		}
+		button.setId("SELECTED_AVATAR");
 		BoardNewProfile.setMargin(button, insets);
 		this.getChildren().add(button);
 		
@@ -118,14 +119,12 @@ public class BoardProfile extends StackPane {
 				.filter(bttn -> ((Button) bttn).getId().matches("BLACK|BLUE|RED|WHITE"))
 				.forEach(avatarButton -> avatarButton.setOpacity(0.5));
 			button.setOpacity(1);
-			selectedAvatar = model.Avatar.valueOf(id);
+//			selectedAvatar = model.Avatar.valueOf(id);
 		});
-		
-		return button;
 		
 	}
  	
-	private Button createProfileButton(String text, double spacing, String id) {
+	private void createProfileButton(String text, double spacing, String id, Runnable runnable) {
     	Button profileButton = new Button();
     	profileButton.setPrefWidth(PROFILE_BUTTON_WIDTH);
     	profileButton.setPrefHeight(PROFILE_BUTTON_HEIGHT);
@@ -138,7 +137,9 @@ public class BoardProfile extends StackPane {
     	
     	BoardNewProfile.setMargin(profileButton, new Insets(prefHeight * 0.8, 0, 0, prefWidth * 0.1 + PROFILE_BUTTON_WIDTH * spacing));  
     	this.getChildren().add(profileButton);
-    	return profileButton;
+    	
+    	profileButton.setOnMouseClicked(event -> runnable.run());
+    	
 	}
 
 }

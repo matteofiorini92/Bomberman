@@ -142,28 +142,30 @@ public class Main extends Application {
 //		}
 //	}
 	
-	private void loadPlayerScreen(view.BoardProfileLookUp profileLookUpBoard, String nickname, String[] args) {
-		root.getChildren().remove(profileLookUpBoard);
-		view.BoardExistingProfile newProfileBoard = new view.BoardExistingProfile(
-				Integer.parseInt(args[1]),
-				Integer.parseInt(args[2]),
-				Integer.parseInt(args[3])
-				);
-		root.getChildren().add(newProfileBoard);
-		TextField nicknameTextField = (TextField) scene.lookup("#NICKNAME");
-		nicknameTextField.setText(nickname);
-		nicknameTextField.setDisable(true);
-		
-		
-		scene.lookup("#WHITE").setOpacity(0.5);
-		scene.lookup("#"+args[0]).setOpacity(1);
-		
-		scene.lookup("#NEW_GAME").setDisable(false);
-		
-		// TODO add effects to buttons!!!!!!
-		
-		
-	}
+//	private void loadPlayerScreen(view.BoardProfileLookUp profileLookUpBoard, String nickname, String[] args) {
+//		root.getChildren().remove(profileLookUpBoard);
+//		view.BoardExistingProfile newProfileBoard = new view.BoardExistingProfile(
+//				Integer.parseInt(args[1]),
+//				Integer.parseInt(args[2]),
+//				Integer.parseInt(args[3]),
+//				nickname,
+//				model.Avatar.valueOf(args[0])
+//				);
+//		root.getChildren().add(newProfileBoard);
+//		TextField nicknameTextField = (TextField) scene.lookup("#NICKNAME");
+//		nicknameTextField.setText(nickname);
+//		nicknameTextField.setDisable(true);
+//		
+//		
+//		scene.lookup("#WHITE").setOpacity(0.5);
+//		scene.lookup("#"+args[0]).setOpacity(1);
+//		
+//		scene.lookup("#NEW_GAME").setDisable(false);
+//		
+//		// TODO add effects to buttons!!!!!!
+//		
+//		
+//	}
 
 //	private void loadNewPlayerScreen(view.BoardWelcome wBoard) {
 //		root.getChildren().remove(wBoard);
@@ -181,56 +183,56 @@ public class Main extends Application {
 //	}
 	
 	
-	private void saveNewProfile(view.BoardNewProfile newProfileBoard) {
-		
-		// get nickname from newProfileBoard
-		String nickname = ((TextField) scene.lookup("#NICKNAME")).getText().toLowerCase();
-		
-		if (!nickname.equals("")) {
-			Object[] alreadyExisting = {};
-
-			// check existing files and filter by nickname selected by user
-			try (Stream<Path> stream = Files.list(Path.of("resources/playerProfiles"))) {
-				alreadyExisting = stream
-						.filter(file -> file.getFileName().toString().equals(nickname + ".txt"))
-						.toArray();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			
-			// if nickname already exists >> ERROR
-			if (alreadyExisting.length > 0) {
-				scene.lookup("#ERR_NICKNAME_TAKEN").setVisible(true);
-			}
-			
-			// else create new player instance and new playerProfile file and activate new game button
-			else {
-				scene.lookup("#ERR_NICKNAME_TAKEN").setVisible(false);
-				scene.lookup("#NEW_GAME").setDisable(false);
-				model.Player player = model.Player.getInstance();
-				player.setName(nickname);
-				player.setAvatar(newProfileBoard.getSelectedAvatar());
-				
-				
-				
-				File playerProfile = new File("resources/playerProfiles/" + nickname + ".txt");
-				try {
-					playerProfile.createNewFile();
-					FileWriter fileWriter = new FileWriter(playerProfile);
-					fileWriter.write(
-							player.getAvatar() + " " +
-									player.getWins() + " " +
-									player.getLosses() + " " +
-									player.getScore()
-							);
-					fileWriter.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+//	private void saveNewProfile(view.BoardNewProfile newProfileBoard) {
+//		
+//		// get nickname from newProfileBoard
+//		String nickname = ((TextField) scene.lookup("#NICKNAME")).getText().toLowerCase();
+//		
+//		if (!nickname.equals("")) {
+//			Object[] alreadyExisting = {};
+//
+//			// check existing files and filter by nickname selected by user
+//			try (Stream<Path> stream = Files.list(Path.of("resources/playerProfiles"))) {
+//				alreadyExisting = stream
+//						.filter(file -> file.getFileName().toString().equals(nickname + ".txt"))
+//						.toArray();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			
+//			
+//			// if nickname already exists >> ERROR
+//			if (alreadyExisting.length > 0) {
+//				scene.lookup("#ERR_NICKNAME_TAKEN").setVisible(true);
+//			}
+//			
+//			// else create new player instance and new playerProfile file and activate new game button
+//			else {
+//				scene.lookup("#ERR_NICKNAME_TAKEN").setVisible(false);
+//				scene.lookup("#NEW_GAME").setDisable(false);
+//				model.Player player = model.Player.getInstance();
+//				player.setName(nickname);
+//				player.setAvatar(newProfileBoard.getSelectedAvatar());
+//				
+//				
+//				
+//				File playerProfile = new File("resources/playerProfiles/" + nickname + ".txt");
+//				try {
+//					playerProfile.createNewFile();
+//					FileWriter fileWriter = new FileWriter(playerProfile);
+//					fileWriter.write(
+//							player.getAvatar() + " " +
+//									player.getWins() + " " +
+//									player.getLosses() + " " +
+//									player.getScore()
+//							);
+//					fileWriter.close();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//	}
 	
 	
 	
