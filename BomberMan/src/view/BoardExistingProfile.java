@@ -1,6 +1,5 @@
 package view;
 
-import javafx.scene.Node;
 
 public class BoardExistingProfile extends BoardProfile {
 

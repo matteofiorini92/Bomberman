@@ -7,9 +7,9 @@ import java.util.Observable;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+@SuppressWarnings("deprecation")
 public class PowerUp extends Item {
 	public static final int POWER_UP_ANIMATION = 100;
 	public static Map<String, String> imageFiles = new HashMap<>();

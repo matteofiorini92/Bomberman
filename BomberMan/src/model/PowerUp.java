@@ -11,6 +11,8 @@ public abstract class PowerUp extends Item {
 	}
 
 	public int getPoints() { return points; }
+	
+	@SuppressWarnings("deprecation")
 	public void execute() {
 		setChanged();
 		notifyObservers();

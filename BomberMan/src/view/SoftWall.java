@@ -5,14 +5,10 @@ import javafx.util.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 @SuppressWarnings("deprecation")
 public class SoftWall extends Item {
