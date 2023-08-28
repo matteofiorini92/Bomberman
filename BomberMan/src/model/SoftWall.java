@@ -3,7 +3,7 @@ package model;
 public class SoftWall extends Tile implements HidePowerUp {
 	
 	public static final TileType SOFT_WALL = TileType.SOFT_WALL;
-	public static Board board = model.Board.getInstance();
+	public static BoardGame board = model.BoardGame.getInstance();
 	
 	private model.PowerUp hiddenPowerUp = null;
 	

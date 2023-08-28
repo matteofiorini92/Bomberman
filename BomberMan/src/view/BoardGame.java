@@ -12,30 +12,30 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 @SuppressWarnings("deprecation")
-public class Board implements Observer {
+public class BoardGame implements Observer {
 	
-	private static view.Board board;
+	private static view.BoardGame board;
 	/**
 	 * Loading k:v pairs from resources/tiles/ currLevel .properties into imageFiles
 	 */
 	private static Map<String, String> imageFiles = new HashMap<>();
 	static {
-		String currLevel = controller.Main.getCurrLevel();
+		String currLevel = controller.LoadLevel.getCurrLevel();
 		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/tiles/" + currLevel + ".properties");
 	}
 	
-	private model.Board modelBoard = model.Board.getInstance();
+	private model.BoardGame modelBoard = model.BoardGame.getInstance();
 	private int height = modelBoard.getHeight();
 	private int width = modelBoard.getWidth();
 	private Item[][] tiles = new Item[height][width];
 	private GridPane gridPane = new GridPane();
-	private Rectangle rectangle = new Rectangle(view.Item.ITEM_WIDTH * model.Board.WIDTH,view.Item.ITEM_HEIGHT * model.Board.HEIGHT, Color.TRANSPARENT);
+	private Rectangle rectangle = new Rectangle(view.Item.ITEM_WIDTH * model.BoardGame.WIDTH,view.Item.ITEM_HEIGHT * model.BoardGame.HEIGHT, Color.TRANSPARENT);
 	private StackPane itemsPane = new StackPane(rectangle);
 	
-	private Board() {}
-	public static view.Board getInstance(){
+	private BoardGame() {}
+	public static view.BoardGame getInstance(){
 		if (board == null) {
-			board = new view.Board();
+			board = new view.BoardGame();
 		}
 		return board;
 	}
@@ -52,7 +52,7 @@ public class Board implements Observer {
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		model.Element[][] cells = ((model.Board) o).getCells();
+		model.Element[][] cells = ((model.BoardGame) o).getCells();
 		for (int i=0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				String desc = ((model.Tile)cells[i][j]).getLabel();

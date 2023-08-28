@@ -20,7 +20,6 @@ public class LoadExistingProfileScreen {
 			
 			File existingProfile = new File("resources/playerProfiles/" + nickname.toLowerCase() + ".txt");
 			try {
-				baseGroup.getChildren().removeAll(baseGroup.getChildren());
 				
 				String[] playerStats = Files.readString(existingProfile.toPath()).split("\\s+");
 				// 0 > avatar color
@@ -28,6 +27,7 @@ public class LoadExistingProfileScreen {
 				// 2 > losses
 				// 3 > total score
 				
+				baseGroup.getChildren().removeAll(baseGroup.getChildren());
 				model.Player player = model.Player.getInstance();
 				player.setName(nickname);
 				player.setAvatar(model.Avatar.valueOf(playerStats[0]));
@@ -49,11 +49,9 @@ public class LoadExistingProfileScreen {
 				Node saveProfile = baseGroup.lookup("#SAVE_PROFILE");
 				saveProfile.setOnMouseClicked(event -> new controller.SaveExistingProfile());
 				
-			} catch (FileNotFoundException e1) {
-				baseGroup.lookup("#ERR_NICKNAME_DOES_NOT_EXIST").setVisible(true);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				baseGroup.lookup("#ERR_NICKNAME_DOES_NOT_EXIST").setVisible(true);
 			}
 		}
 	}

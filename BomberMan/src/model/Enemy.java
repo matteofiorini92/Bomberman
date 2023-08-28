@@ -11,7 +11,7 @@ import javafx.application.Platform;
 
 public abstract class Enemy extends Character implements HidePowerUp {
 	
-	private static Board board = Board.getInstance();
+	private static BoardGame board = BoardGame.getInstance();
 	ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();	
 	private int points;
 	private model.PowerUp hiddenPowerUp = null;

@@ -20,7 +20,7 @@ public class Bomb extends Item {
 	public static final int TIME_FOR_EXPLOSION = 1500;
 	public static Map<String, String> imageFiles = new HashMap<>();
 	static {
-		String currLevel = controller.Main.getCurrLevel();
+		String currLevel = controller.LoadLevel.getCurrLevel();
 		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/explosions/" + currLevel + ".properties");
 	}
 	
@@ -30,7 +30,7 @@ public class Bomb extends Item {
 	public Bomb() {
 		super(null);
 		pane.getChildren().add(gridPane);
-        view.Board.getInstance().getItemsPane().getChildren().add(pane);
+        view.BoardGame.getInstance().getItemsPane().getChildren().add(pane);
 	}
 	
 	

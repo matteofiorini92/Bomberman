@@ -8,9 +8,9 @@ import java.util.Map;
 import java.util.Observable;
 
 @SuppressWarnings("deprecation")
-public class Board extends Observable {
+public class BoardGame extends Observable {
 	
-	private static Board board;
+	private static BoardGame board;
 	public static final int WIDTH = 17;
 	public static final int HEIGHT = 13;
 	private Element[][] cells = new Element[HEIGHT][WIDTH];
@@ -22,16 +22,16 @@ public class Board extends Observable {
 		utilities.LoadProperties.loadStringClassProperties(Elements, "resources/tiles/model.properties");
 	}
 	
-	private Board() {}
+	private BoardGame() {}
 	
 	
 	/**
 	 * Singleton pattern
 	 * @return only existing instance of board (creates one if it doesn't already exist)
 	 */
-	public static Board getInstance(){
+	public static BoardGame getInstance(){
 		if (board == null) {
-			board = new Board();
+			board = new BoardGame();
 		}
 		return board;
 	}

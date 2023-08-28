@@ -15,7 +15,7 @@ public class Accelerator extends PowerUp {
 		super.execute();
 		Player.getInstance().addPoints(ACCELERATOR_POINTS);
 		BomberMan bomberMan = BomberMan.getInstance();
-		if (bomberMan.getSpeed() < MAX_SPEED) {	model.BomberMan.getInstance().incSpeed(0.5); }
+		if (bomberMan.getSpeed() < MAX_SPEED) { bomberMan.incSpeed(0.5); }
 	}
 
 }

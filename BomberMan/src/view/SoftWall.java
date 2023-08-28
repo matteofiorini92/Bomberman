@@ -21,7 +21,7 @@ public class SoftWall extends Item {
 	public static final int SOFT_WALL_EXPLOSION = 1500;
 	public static Map<String, String> imageFiles = new HashMap<>();
 	static {
-		String currLevel = controller.Main.getCurrLevel();
+		String currLevel = controller.LoadLevel.getCurrLevel();
 		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/tiles/" + currLevel + ".properties");
 	}
 	
@@ -51,8 +51,8 @@ public class SoftWall extends Item {
 	public void update(Observable o, Object arg)
 	{
 		
-		view.Board viewBoard = view.Board.getInstance();
-		model.Board modelBoard = model.Board.getInstance();
+		view.BoardGame viewBoard = view.BoardGame.getInstance();
+		model.BoardGame modelBoard = model.BoardGame.getInstance();
 		timeline.getKeyFrames().clear();
 		timeline = new Timeline();
 		

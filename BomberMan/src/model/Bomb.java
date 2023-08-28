@@ -16,7 +16,7 @@ public class Bomb extends Item {
 	
 	public static final int TIME_FOR_EXPLOSION = 3000;
 
-	private static Board board = model.Board.getInstance();
+	private static BoardGame board = model.BoardGame.getInstance();
 	private int range;
 	private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 	private ScheduledFuture<?> future;

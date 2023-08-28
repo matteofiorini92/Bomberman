@@ -11,7 +11,7 @@ public abstract class Character extends Element {
 	public static final int INVINCIBILITY_TIME = 3000;
 	public static final int INITIAL_TIME_FOR_MOVEMENT = 375;
 	
-	private static Board board = model.Board.getInstance();
+	private static BoardGame board = model.BoardGame.getInstance();
 	private Double speed;
 	private Direction direction;
 	private int lives;
@@ -90,7 +90,7 @@ public abstract class Character extends Element {
 		
 		if (this instanceof model.BomberMan && newCell instanceof model.PowerUp) {
 			((model.PowerUp)newCell).execute();
-			model.Board.getInstance().setCell(new model.EmptyTile(newPosition), newPosition);
+			model.BoardGame.getInstance().setCell(new model.EmptyTile(newPosition), newPosition);
 		}
 		
 		
