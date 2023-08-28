@@ -74,6 +74,9 @@ public class BoardProfile extends StackPane {
 		Text errorMessage = createText("This nickname is taken. Please choose a different one", new Insets(prefHeight * 0.3, 0, 0, prefWidth * 0.05), 7, Color.PALEVIOLETRED);
 		errorMessage.setVisible(false);
 		errorMessage.setId("ERR_NICKNAME_TAKEN");
+		
+		
+		
 	}
 	
 	private void createAvatar(model.Avatar avatar) {
@@ -99,26 +102,32 @@ public class BoardProfile extends StackPane {
 		return text;
 	}
 	
-	private void createButtonWithImageBackground(String name, Insets insets, String id, model.Avatar modelAvatar) { 
+	private void createButtonWithImageBackground(String name, Insets insets, String userData, model.Avatar modelAvatar) { 
 		Button button = new Button();
 		Image avatar = new Image("images/-avatars/" + name + ".png");
 		ImageView imageView = new ImageView(avatar);
 		button.setGraphic(imageView);
 		button.setOpacity(0.5);
-		if (modelAvatar.toString().toLowerCase().equals(name)) {
+		button.setUserData(userData);
+		if (modelAvatar.toString().equals(userData)) {
 			button.setOpacity(1);
+			button.setId("SELECTED_AVATAR");
 		}
-		button.setId("SELECTED_AVATAR");
 		BoardNewProfile.setMargin(button, insets);
-		this.getChildren().add(button);
 		
+		this.getChildren().add(button);
 		
 		button.setOnMouseClicked(event -> {
 			this.getChildren().stream()
 				.filter(node -> node instanceof Button)
-				.filter(bttn -> ((Button) bttn).getId().matches("BLACK|BLUE|RED|WHITE"))
-				.forEach(avatarButton -> avatarButton.setOpacity(0.5));
+				.filter(bttn -> ((Button) bttn).getUserData() != null)
+				.filter(bttn -> ((Button) bttn).getUserData().toString().matches("BLACK|BLUE|RED|WHITE"))
+				.forEach(avatarButton -> {
+					avatarButton.setOpacity(0.5);
+					avatarButton.setId(null);
+				});
 			button.setOpacity(1);
+			button.setId("SELECTED_AVATAR");
 //			selectedAvatar = model.Avatar.valueOf(id);
 		});
 		

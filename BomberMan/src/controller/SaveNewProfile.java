@@ -15,6 +15,7 @@ public class SaveNewProfile {
 	
 	
 	public SaveNewProfile() {
+		
 		view.BaseGroup baseGroup = view.BaseGroup.getInstance();
 		
 		// get nickname from newProfileBoard
@@ -44,8 +45,8 @@ public class SaveNewProfile {
 				baseGroup.lookup("#NEW_GAME").setDisable(false);
 				model.Player player = model.Player.getInstance();
 				player.setName(nickname);
-				Button selectedAvatar = (Button) baseGroup.lookup("SELECTED_AVATAR");
-				String selectedAvatarText = selectedAvatar.getText().toUpperCase();
+				Button selectedAvatar = (Button) baseGroup.lookup("#SELECTED_AVATAR");
+				String selectedAvatarText = selectedAvatar.getUserData().toString().toUpperCase();
 				player.setAvatar(model.Avatar.valueOf(selectedAvatarText));
 				
 				
@@ -61,6 +62,11 @@ public class SaveNewProfile {
 									player.getScore()
 							);
 					fileWriter.close();
+					
+					// SHOULD BECOME AN EXISTING PROFILE ENTITY AT THIS POINT
+					baseGroup.lookup("#SAVE_PROFILE").setOnMouseClicked(event -> new controller.SaveExistingProfile());
+					
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
