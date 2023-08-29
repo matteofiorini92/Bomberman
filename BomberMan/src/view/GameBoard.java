@@ -14,7 +14,7 @@ public class GameBoard extends StackPane {
 		
 		this.getChildren().add(GameHeader.getInstance());
 		this.getChildren().add(GameBody.getInstance());
-		GameBoard.setMargin(GameBody.getInstance(), new Insets(view.Item.ITEM_HEIGHT * 1.5, 0, 0, 0));
+		GameBoard.setMargin(GameBody.getInstance(), new Insets(view.Item.ITEM_HEIGHT * 2, 0, 0, 0));
 	}
 	
 	public static GameBoard getInstance() {

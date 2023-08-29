@@ -9,7 +9,7 @@ public class BaseScene extends Scene {
 
 	private BaseScene()
 	{
-		super(BaseGroup.getInstance(), view.Item.ITEM_WIDTH * 17, view.Item.ITEM_HEIGHT * 14.5, Color.BLACK);
+		super(BaseGroup.getInstance(), view.Item.ITEM_WIDTH * 17, view.Item.ITEM_HEIGHT * 15, Color.BLACK);
 	}
 	
 	public static BaseScene getInstance() {

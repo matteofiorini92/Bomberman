@@ -10,7 +10,7 @@ public class GameHeader extends StackPane {
 	
 	private GameHeader() {
 		Scene scene = BaseScene.getInstance();
-		this.setPrefHeight(view.Item.ITEM_HEIGHT * 1.5);
+		this.setPrefHeight(view.Item.ITEM_HEIGHT * 2);
 		this.setPrefWidth(scene.getWidth());
 	}
 	
