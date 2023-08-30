@@ -53,15 +53,12 @@ public class LoadLevel {
 		view.BaseGroup baseGroup = view.BaseGroup.getInstance();
 		
 		
-//		view.GameBoard.getInstance();
 		baseGroup.getChildren().add(view.GameBoard.getInstance());
 		
 		modelBoard = model.BoardGame.getInstance();
 		viewBoard = view.GameBody.getInstance();
 		modelBoard.addObserver(viewBoard);
 		modelBoard.fillEmptyBoard(level);
-//		GridPane boardGridPane = viewBoard.getGridPane();
-//		StackPane boardItemsPane = viewBoard.getItemsPane();
 		
 		model.Element[][] cells = modelBoard.getCells();
 		model.SoftWall[] softWalls;
@@ -195,6 +192,7 @@ public class LoadLevel {
 		modelBm = model.BomberMan.getInstance();
 		viewBm = new view.BomberMan();
 		modelBm.addObserver(viewBm);
+		modelBm.addObserver(view.GameHeader.getInstance());
 		
 		modelBoard.setCell(modelBm, model.BomberMan.INITIAL_POSITION);
 		itemsPane.getChildren().add(viewBm);

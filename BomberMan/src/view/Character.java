@@ -50,7 +50,7 @@ public abstract class Character extends Element {
 		if (args[0].equals(model.ChangeType.MOVE)) {			
 			move((model.Character)o, imageFiles, args[1]);
 		}
-		else if (args[0].equals(model.ChangeType.LOSE_LIFE) || args[0].equals(model.ChangeType.BECOME_INVINCIBLE)) {
+		else if (args[0].equals(model.ChangeType.BECOME_INVINCIBLE)) {
 			flash();
 		}
 		else if (args[0].equals(model.ChangeType.DIE)) {

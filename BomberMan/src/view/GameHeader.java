@@ -1,5 +1,8 @@
 package view;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -7,10 +10,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
-public class GameHeader extends StackPane {
+@SuppressWarnings("deprecation")
+public class GameHeader extends StackPane implements Observer {
 	
 	public static GameHeader gameHeader;
-	public static final int INITIAL_LIVES = 5;
 	
 	private ImageView baseHeader = new ImageView(new Image("images/-board-header/header-start.png"));
 	private ImageView lives = new ImageView();
@@ -24,9 +27,9 @@ public class GameHeader extends StackPane {
 		
 		// set initial lives
 		
-		setLives(INITIAL_LIVES);
-		GameHeader.setMargin(lives, new Insets(27,0,0,110));
+		setLives(model.BomberMan.INITIAL_LIVES);
 		this.getChildren().add(lives);
+		GameHeader.setMargin(lives, new Insets(27,0,0,110));
 		
 		
 	}
@@ -39,7 +42,17 @@ public class GameHeader extends StackPane {
 	}
 
 	public void setLives(int lives) {
-		ImageView iv = new ImageView(new Image("images/-board-header/-numbers/" + lives + ".png"));
-		this.lives = iv;
+		this.lives.setImage(new Image("images/-board-header/-numbers/" + lives + ".png"));
+	}
+
+	@Override
+	public void update(Observable o, Object arg)
+	{
+		Object[] args = (Object[]) arg;
+		
+		if (args[0].equals(model.ChangeType.LOSE_LIFE) && o instanceof model.BomberMan) {
+			setLives(((model.BomberMan) o).getLives());
+		}
+		
 	}
 }

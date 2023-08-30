@@ -35,6 +35,7 @@ public abstract class Character extends Element {
 	public void setLives(int lives) { this.lives = lives; }
 	
 	public boolean isInvincible() {	return isInvincible; }
+	
 	@SuppressWarnings("deprecation")
 	public void setInvincible(boolean isInvincible) { 
 		this.isInvincible = isInvincible;
@@ -110,6 +111,9 @@ public abstract class Character extends Element {
 	public void loseLife() {
 		if (!isInvincible) {
 			lives--;
+			Object[] args = { model.ChangeType.LOSE_LIFE, lives };
+			setChanged();
+			notifyObservers(args);
 			if (lives == 0) {
 				die();
 			} else {
@@ -128,9 +132,9 @@ public abstract class Character extends Element {
 			});
 		};
 		executor.schedule(becomeMortal, INVINCIBILITY_TIME, TimeUnit.MILLISECONDS);
-		Object[] args = { model.ChangeType.LOSE_LIFE, lives };
-		setChanged();
-		notifyObservers(args);
+//		Object[] args = { model.ChangeType.LOSE_LIFE, lives };
+//		setChanged();
+//		notifyObservers(args);
 	}
 	
 	@SuppressWarnings("deprecation")

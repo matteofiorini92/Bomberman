@@ -8,15 +8,18 @@ public class BomberMan extends Character {
 	public static final int INITIAL_RANGE = 1;
 	public static final int[] INITIAL_POSITION = {1, 2};
 	public static final double INITIAL_SPEED = 1.0;
+	public static final int INITIAL_SCORE = 0;
 	
 	private int bombs;
 	private int range;
+	private int score;
 	
 	private BomberMan() {
 		super(INITIAL_POSITION, INITIAL_SPEED, INITIAL_LIVES);
 		becomeInvincible();
 		bombs = INITIAL_BOMBS;
 		range = INITIAL_RANGE;
+		score = INITIAL_SCORE;
 	}
 	
 	public static BomberMan getInstance(){
@@ -52,6 +55,12 @@ public class BomberMan extends Character {
 		Object[] args = { model.ChangeType.CHANGE_SPEED, newSpeed };
 		setChanged();
 		notifyObservers(args);
+	}
+
+	public void addPoints(int points) { score += points; }
+	public void losePoints(int points) {
+		int partial = score - points;
+		points = partial > 0 ? partial : 0;
 	}
 	
 
