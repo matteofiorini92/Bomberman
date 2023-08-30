@@ -33,10 +33,16 @@ public class Bomb extends Item {
 	
 	@SuppressWarnings("deprecation")
 	public void trigger() {
+		Runnable explode = () -> {
+			Platform.runLater(() -> { // to have UI related operations all run on the JavaFX thread 				
+				explode();
+			});
+		};
+		
+		future = executor.schedule(explode, TIME_FOR_EXPLOSION, TimeUnit.MILLISECONDS);
 		Object[] args = { model.ChangeType.TRIGGER };
 		setChanged();
 		notifyObservers(args);
-		future = executor.schedule(this::explode, TIME_FOR_EXPLOSION, TimeUnit.MILLISECONDS);
 	}
 	
 	@SuppressWarnings("deprecation")

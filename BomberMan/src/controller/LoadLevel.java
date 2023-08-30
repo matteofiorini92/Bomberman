@@ -58,6 +58,11 @@ public class LoadLevel {
 		modelBoard = model.BoardGame.getInstance();
 		viewBoard = view.GameBody.getInstance();
 		modelBoard.addObserver(viewBoard);
+		
+		model.Timer modelTimer = model.Timer.getInstance();
+		view.Timer viewTimer = view.Timer.getInstance();
+		modelTimer.addObserver(viewTimer);
+		
 		modelBoard.fillEmptyBoard(level);
 		
 		model.Element[][] cells = modelBoard.getCells();
@@ -117,6 +122,7 @@ public class LoadLevel {
 		for (model.Enemy enemy : enemies) {
 			enemy.startMoving();
 		}
+		modelTimer.start();
 		
 	}
 	
