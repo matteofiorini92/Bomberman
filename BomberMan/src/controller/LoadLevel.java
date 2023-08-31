@@ -20,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import model.BomberMan;
 import model.Direction;
 import model.Element;
 import view.BaseGroup;
@@ -27,11 +28,13 @@ import view.BaseGroup;
 @SuppressWarnings("deprecation")
 public class LoadLevel implements Observer {
 	
+	private static String level;
+
 	private model.BomberMan modelBm;
 	private view.BomberMan viewBm;
 	private model.BoardGame modelBoard;
 	private view.GameBody viewBoard;
-	private static String level;
+	private List<model.Enemy> enemies;
 	
 	private static Map<String, Class<? extends model.Enemy>> modelEnemies = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
 	static {
@@ -90,7 +93,7 @@ public class LoadLevel implements Observer {
 		 * initialise characters
 		 */
 		List<Object[]> characters = readCharactersFile(level);
-		List<model.Enemy> enemies = initialiseCharacters(characters);
+		enemies = initialiseCharacters(characters);
 		
 		
 		// collect list of Elements that can hide powerUps (enemies and softwalls)
@@ -230,15 +233,14 @@ public class LoadLevel implements Observer {
 	}
 	
 
-	public static String getCurrLevel()
-	{
-		return level;
-	}
+	public static String getCurrLevel()	{ return level; }
 
 	@Override
 	public void update(Observable o, Object arg)
 	{
 		ObservableList<Node> baseGroupChildren = BaseGroup.getInstance().getChildren();
 		baseGroupChildren.removeAll(baseGroupChildren);
+		modelBm.setPosition(BomberMan.INITIAL_POSITION);
+		new LoadLevel("1-2");
 	}
 }

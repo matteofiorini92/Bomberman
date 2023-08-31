@@ -92,7 +92,6 @@ public abstract class Character extends Element {
 
 
 		newCell = board.getCell(newPosition);
-//		if (this instanceof BomberMan) { System.out.println(newCell.getClass());}
 		
 		if (
 			newCell instanceof Bomb || 
@@ -107,7 +106,6 @@ public abstract class Character extends Element {
 		
 		if ((this instanceof BomberMan && newCell instanceof model.Enemy) || (this instanceof Enemy && newCell instanceof BomberMan)) {
 			model.BomberMan.getInstance().loseLife();
-			System.out.println("I'm here");
 		}
 		
 		if (this instanceof BomberMan && newCell instanceof PowerUp) {

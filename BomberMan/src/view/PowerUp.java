@@ -59,7 +59,6 @@ public class PowerUp extends Item {
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		System.out.println("I'm here!!");
 		this.setVisible(false);
 	}
 

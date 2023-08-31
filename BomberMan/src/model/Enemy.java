@@ -47,8 +47,6 @@ public abstract class Enemy extends Character implements HidePowerUp {
 		}
 		model.Player.getInstance().addPoints(this.getPoints());
 		executor.shutdownNow(); //stop moving when the enemy dies
-//		if (this.getLives() == 0) {
-//		}
 	}
 	
 	public void startMoving() {
