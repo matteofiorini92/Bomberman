@@ -37,22 +37,29 @@ public class PowerUp extends Item {
 
 		String[] files = imageFiles.get(modelPowerUp.getClass().getName()).split("\\s+");
 		
-		for (int frame = 0; frame < files.length; frame++) {
-			final int framePlusOne = frame + 1;
-			Image image = new Image("images/-power-ups/" + files[frame] + ".png");
-			KeyFrame keyFrame = new KeyFrame(Duration.millis(POWER_UP_ANIMATION/files.length * framePlusOne), event -> {
-				this.setImage(image);
-		    });
-			timeline.getKeyFrames().add(keyFrame);
+		if (modelPowerUp instanceof model.Exit) {
+			Image image = new Image("images/-power-ups/" + files[0] + ".png");
+			this.setImage(image);
 		}
-		timeline.setCycleCount(Timeline.INDEFINITE);
-		timeline.play();
+		else {
+			for (int frame = 0; frame < files.length; frame++) {
+				final int framePlusOne = frame + 1;
+				Image image = new Image("images/-power-ups/" + files[frame] + ".png");
+				KeyFrame keyFrame = new KeyFrame(Duration.millis(POWER_UP_ANIMATION/files.length * framePlusOne), event -> {
+					this.setImage(image);
+				});
+				timeline.getKeyFrames().add(keyFrame);
+			}
+			timeline.setCycleCount(Timeline.INDEFINITE);
+			timeline.play();
+		}
 	}
 	
 	
 	@Override
 	public void update(Observable o, Object arg)
 	{
+		System.out.println("I'm here!!");
 		this.setVisible(false);
 	}
 

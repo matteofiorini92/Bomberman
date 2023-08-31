@@ -14,7 +14,6 @@ public class ExtraBomb extends PowerUp {
 	public void execute()
 	{
 		super.execute();
-		Player.getInstance().addPoints(EXTRA_BOMB_POINTS);
 		BomberMan bomberMan = BomberMan.getInstance();
 		if (bomberMan.getBombs() < MAX_BOMBS) { bomberMan.incBombs(); }
 	}

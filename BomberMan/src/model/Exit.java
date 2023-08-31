@@ -1,17 +1,20 @@
 package model;
 
 public class Exit extends PowerUp { // extends PowerUp because can be hidden by softwalls
+	
+	public static final int POINTS = 0;
 
-	public Exit(int points)
+	public Exit()
 	{
-		super(points);
-		// TODO Auto-generated constructor stub
+		super(POINTS);
 	}
 
 	@Override
-	public void execute()
-	{
-		// TODO Auto-generated method stub
+	public void execute() {
+//		if () // check if there are enemies alive
+		
+		super.execute();
+		
 		
 	}
 

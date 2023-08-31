@@ -21,7 +21,7 @@ public abstract class Character extends Element {
 	public static final int HEIGHT_DIFFERENCE = CHARACTER_HEIGHT - view.Item.ITEM_HEIGHT;
 
 	public static final int INVINCIBILITY_FRAMES = 20;
-	public static int TIME_FOR_DEATH = 1500;
+	public static int TIME_FOR_DEATH = 1000;
 	
 	private Double speed;
 	private Double timeForMovement;

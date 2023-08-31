@@ -14,6 +14,8 @@ public abstract class PowerUp extends Item {
 	
 	@SuppressWarnings("deprecation")
 	public void execute() {
+		BomberMan bomberMan = BomberMan.getInstance();
+		bomberMan.addPoints(points);
 		setChanged();
 		notifyObservers();
 	};

@@ -96,6 +96,7 @@ public class LoadLevel {
 		
 		hidingElements = enemies.stream()							//convert Enemies to Elements
 				.map(enemy -> (model.HidePowerUp)enemy)
+//				.toList();
 				.collect(Collectors.toList());
 		
 		hidingElements.addAll(Arrays.stream(softWalls).toList());	//convert array of softwalls to list
@@ -112,6 +113,22 @@ public class LoadLevel {
 			powerUp.setPosition(((Element) hidingElement).getPosition());
 			hidingElements.remove(hidingElement);
 		});
+		
+		// hide exit
+		
+		List<model.SoftWall> remaniningSoftWalls = hidingElements
+			.stream()
+			.filter(hidingElement -> hidingElement instanceof model.SoftWall)
+			.map(hidingElement -> (model.SoftWall)hidingElement)
+			.toList();
+		
+		model.Exit exit = new model.Exit();
+		
+		int max = remaniningSoftWalls.size();
+		Random r = new Random();
+		model.HidePowerUp sotWall = remaniningSoftWalls.get(r.nextInt(max));
+		sotWall.setHiddenPowerUp(exit);
+		exit.setPosition(((model.SoftWall) sotWall).getPosition());
 		
 		
 		// key listeners
@@ -175,6 +192,13 @@ public class LoadLevel {
 	@SuppressWarnings("deprecation")
 	private List<model.Enemy> initialiseCharacters(List<Object[]> characters) {
 		StackPane itemsPane = view.GameBody.getInstance().getItemsPane();
+		modelBm = model.BomberMan.getInstance();
+		viewBm = new view.BomberMan();
+		modelBm.addObserver(viewBm);
+		modelBm.addObserver(view.GameHeader.getInstance());
+		
+		modelBoard.setCell(modelBm, model.BomberMan.INITIAL_POSITION);
+		itemsPane.getChildren().add(viewBm);
 		List<model.Enemy> enemies = new ArrayList<model.Enemy>();
 		for (Object[] character : characters) {
 			Class<? extends model.Character> modelCharacterClass = modelEnemies.get(character[0]);
@@ -195,13 +219,6 @@ public class LoadLevel {
 				ex.printStackTrace();
 			}
 		}
-		modelBm = model.BomberMan.getInstance();
-		viewBm = new view.BomberMan();
-		modelBm.addObserver(viewBm);
-		modelBm.addObserver(view.GameHeader.getInstance());
-		
-		modelBoard.setCell(modelBm, model.BomberMan.INITIAL_POSITION);
-		itemsPane.getChildren().add(viewBm);
 		modelBm.setInvincible(true);
 		return enemies;
 	}

@@ -5,7 +5,9 @@ import java.util.Map;
 import java.util.Observable;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -19,7 +21,7 @@ import javafx.util.Duration;
 public class Bomb extends Item {
 	
 	public static final int TIME_TO_TRIGGER = 3000;
-	public static final int TIME_FOR_EXPLOSION = 1500;
+	public static final int TIME_FOR_EXPLOSION = 1000;
 	public static Map<String, String> imageFiles = new HashMap<>();
 	static {
 		String currLevel = controller.LoadLevel.getCurrLevel();
@@ -32,7 +34,9 @@ public class Bomb extends Item {
 	public Bomb() {
 		super(null);
 		pane.getChildren().add(gridPane);
-        view.GameBody.getInstance().getItemsPane().getChildren().add(pane);
+		ObservableList<Node> gameBodyChildren = GameBody.getInstance().getItemsPane().getChildren(); 
+		int bombStackPaneIndex = gameBodyChildren.indexOf(this);
+		gameBodyChildren.add(bombStackPaneIndex + 1, this.pane);
 	}
 	
 	
