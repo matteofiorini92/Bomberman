@@ -8,21 +8,24 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javafx.application.Platform;
-import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import model.Direction;
 import model.Element;
+import view.BaseGroup;
 
-public class LoadLevel {
+@SuppressWarnings("deprecation")
+public class LoadLevel implements Observer {
 	
 	private model.BomberMan modelBm;
 	private view.BomberMan viewBm;
@@ -42,7 +45,6 @@ public class LoadLevel {
 		viewCharacters.put("bug", view.Bug.class);
 	}
 
-	@SuppressWarnings("deprecation")
 	public LoadLevel(String level) {
 		
 		/**
@@ -62,6 +64,7 @@ public class LoadLevel {
 		model.Timer modelTimer = model.Timer.getInstance();
 		view.Timer viewTimer = view.Timer.getInstance();
 		modelTimer.addObserver(viewTimer);
+		modelTimer.reset();
 		
 		modelBoard.fillEmptyBoard(level);
 		
@@ -123,6 +126,8 @@ public class LoadLevel {
 			.toList();
 		
 		model.Exit exit = new model.Exit();
+		exit.addObserver(this);
+		
 		
 		int max = remaniningSoftWalls.size();
 		Random r = new Random();
@@ -133,8 +138,10 @@ public class LoadLevel {
 		
 		// key listeners
 		
-		baseScene.setOnKeyPressed(this::handleKeyPressed);
-		baseScene.setOnKeyReleased(this::handleKeyReleased);
+		LoadKeyListeners keyListeners = new LoadKeyListeners();
+		
+		baseScene.setOnKeyPressed(keyListeners::handleKeyPressed);
+		baseScene.setOnKeyReleased(keyListeners::handleKeyReleased);
 		
 		for (model.Enemy enemy : enemies) {
 			enemy.startMoving();
@@ -189,7 +196,6 @@ public class LoadLevel {
 		return result;
 	}
 	
-	@SuppressWarnings("deprecation")
 	private List<model.Enemy> initialiseCharacters(List<Object[]> characters) {
 		StackPane itemsPane = view.GameBody.getInstance().getItemsPane();
 		modelBm = model.BomberMan.getInstance();
@@ -223,86 +229,16 @@ public class LoadLevel {
 		return enemies;
 	}
 	
-	private long lastKeyPressTime = 0;
-	private static Double throttleDelay = model.Character.INITIAL_TIME_FOR_MOVEMENT / model.BomberMan.getInstance().getSpeed();
-	private boolean keyHeld = false;
-	
-	public static void updateThrottleDelay() {
-		throttleDelay = model.Character.INITIAL_TIME_FOR_MOVEMENT / model.BomberMan.getInstance().getSpeed();
-	}
-
-	private void handleKeyPressed(KeyEvent event) {
-	    if (!keyHeld) {
-	        keyHeld = true;
-	        processKeyPress(event);
-	    }
-
-    }
-
-	private void handleKeyReleased(KeyEvent event) {
-	    keyHeld = false;
-	}
-
-	@SuppressWarnings("deprecation")
-	private void processKeyPress(KeyEvent event) {
-		
-		
-		view.BaseGroup baseGroup = view.BaseGroup.getInstance();
-	    long currentTime = System.currentTimeMillis();
-
-	    if (currentTime - lastKeyPressTime >= throttleDelay) {
-	    	lastKeyPressTime = currentTime;
-		    if (event.getCode() == KeyCode.SPACE && modelBm.getBombs() > 0 && !(model.BoardGame.getInstance().getCell(model.BomberMan.getInstance().getPosition()) instanceof model.Bomb)) {
-		    	int currBombs = modelBm.getBombs();
-		    	model.Bomb modelBomb = new model.Bomb(currBombs, modelBm.getPosition());
-		    	view.Bomb viewBomb = new view.Bomb();
-		    	modelBomb.addObserver(viewBomb);
-		    	modelBm.decBombs();
-		    	modelBm.setTempStorage(modelBomb);
-		    	// get viewBm stackPane index in order to add the bomb behind it
-		    	int viewBmStackPaneIndex = baseGroup.getChildren().indexOf(viewBoard.getGridPane());
-		    	
-		    	view.GameBody.getInstance().getItemsPane().getChildren().add(viewBmStackPaneIndex + 1, viewBomb);
-		    	modelBomb.trigger();	        	
-		    } else if (event.getCode() == KeyCode.P) {
-		    	model.BoardGame.getInstance().print();
-		    } else if (event.getCode() == KeyCode.F) {
-		    	model.BoardGame.getInstance().printExt();
-		    }
-		    else {	        	
-		        	Direction direction = null;
-		        	try {	        	
-		        		switch (event.getCode()) {
-		        		case DOWN:
-		        			direction = Direction.DOWN;
-		        			break;
-		        		case RIGHT:
-		        			direction = Direction.RIGHT;
-		        			break;
-		        		case UP:
-		        			direction = Direction.UP;
-		        			break;
-		        		case LEFT:
-		        			direction = Direction.LEFT;
-		        			break;
-		        		default:
-		        			break;	
-		        		}
-		        		modelBm.move(direction);
-		        		
-		        	} catch (NullPointerException e) {
-		        		System.out.println("Invalid command");
-		        	}
-	        }
-	    }
-
-	    if (keyHeld) {
-	    	Platform.runLater(() -> processKeyPress(event));
-	    }
-	}
 
 	public static String getCurrLevel()
 	{
 		return level;
+	}
+
+	@Override
+	public void update(Observable o, Object arg)
+	{
+		ObservableList<Node> baseGroupChildren = BaseGroup.getInstance().getChildren();
+		baseGroupChildren.removeAll(baseGroupChildren);
 	}
 }

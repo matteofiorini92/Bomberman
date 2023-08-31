@@ -79,6 +79,10 @@ public class BoardGame extends Observable {
 	public Element getCell(int[] coordinates) { return cells[coordinates[0]][coordinates[1]]; }
 	public void setCell(Element e, int[] coordinates) { this.cells[coordinates[0]][coordinates[1]] = e; }
 	
+	
+	
+	// debugging purposes only
+	
 	public void print() {
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < WIDTH; j++) {

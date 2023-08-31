@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.application.Platform;
 
 public abstract class Enemy extends Character implements HidePowerUp {
-	private static List<Enemy> enemiesAlive = new ArrayList<Enemy>();
+	private static List<Enemy> aliveEnemies = new ArrayList<Enemy>();
 	private static BoardGame board = BoardGame.getInstance();
 	ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();	
 	private int points;
@@ -20,7 +20,7 @@ public abstract class Enemy extends Character implements HidePowerUp {
 	{
 		super(position, speed, lives);
 		this.points = points;
-		enemiesAlive.add(this);
+		aliveEnemies.add(this);
 	}
 	
 	public int getPoints() { return points;	}
@@ -40,7 +40,7 @@ public abstract class Enemy extends Character implements HidePowerUp {
 	@Override
 	public void die() {
 		super.die();
-		enemiesAlive.remove(this);
+		aliveEnemies.remove(this);
 		if (isHidingSomething()) {
 			hiddenPowerUp.setPosition(getPosition()); // update the position of the power up to the enemy's current position
 			board.setCell(hiddenPowerUp, this.getPosition());
@@ -101,6 +101,6 @@ public abstract class Enemy extends Character implements HidePowerUp {
 		return availableDirection;
 	}
 	
-	public static List<Enemy> getEnemiesAlive() { return enemiesAlive;	}
+	public static List<Enemy> getAliveEnemies() { return aliveEnemies;	}
 	
 }
