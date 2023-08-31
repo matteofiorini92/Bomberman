@@ -16,6 +16,7 @@ public abstract class Character extends Element {
 	private Direction direction;
 	private int lives;
 	private boolean isInvincible;
+	private Element tempStorage;
 	
 	
 	public Character(int[] position, Double speed, int lives)
@@ -37,6 +38,16 @@ public abstract class Character extends Element {
 	public void setLives(int lives) { this.lives = lives; }
 	
 	public boolean isInvincible() {	return isInvincible; }
+	
+	/**
+	 * @return the tempStorage
+	 */
+	public Element getTempStorage()	{ return tempStorage; }
+
+	/**
+	 * @param tempStorage the tempStorage to set
+	 */
+	public void setTempStorage(Element tempStorage) { this.tempStorage = tempStorage; }
 	
 	@SuppressWarnings("deprecation")
 	public void setInvincible(boolean isInvincible) { 
@@ -83,11 +94,14 @@ public abstract class Character extends Element {
 		newCell = board.getCell(newPosition);
 		
 		if (
-				newCell instanceof Bomb || 
-				newCell instanceof Character || 
-				(newCell instanceof Tile && (((Tile)newCell).getType() == TileType.WALL || ((Tile)newCell).getType() == TileType.SOFT_WALL))) // same as !emptyTile?
+			newCell instanceof Bomb || 
+			newCell instanceof Character || 
+			(newCell instanceof Tile && 
+					(((Tile)newCell).getType() == TileType.WALL ||
+					((Tile)newCell).getType() == TileType.SOFT_WALL))) // same as !emptyTile?
 		{ // can't walk over walls, bombs or characters
 			newPosition = prevPosition;
+			newCell = board.getCell(newPosition);
 			hasMoved = false;
 		}
 		
@@ -97,22 +111,26 @@ public abstract class Character extends Element {
 		
 		if (this instanceof BomberMan && newCell instanceof PowerUp) {
 			((model.PowerUp)newCell).execute();
-//			board.setCell(new model.EmptyTile(newPosition), newPosition);
 		}
 		
 		
-		if (board.getCell(newPosition).disappearsOnWalkOn() && this instanceof BomberMan) {		// for powerups
+		
+		if (newCell.disappearsOnWalkOn() && this instanceof Enemy) {		// for powerups
+			((Enemy)this).setTempStorage(newCell);
+			board.setCell(this, newPosition);
+		} 
+		if (newCell.disappearsOnWalkOn() && this instanceof BomberMan) {		// for powerups
 			board.setCell(this, newPosition);
 		} 
 		if (board.getCell(prevPosition).disappearsOnWalkOff()) {
 			board.setCell(new model.EmptyTile(prevPosition), prevPosition);
 		}
-		if (!board.getCell(newPosition).disappearsOnWalkOn() && !board.getCell(newPosition).disappearsOnWalkOff() && this instanceof BomberMan && !(board.getCell(newPosition) instanceof Tile)) {
+		if (!newCell.disappearsOnWalkOn() && !newCell.disappearsOnWalkOff() && this instanceof BomberMan && !(newCell instanceof Tile)) {
 			BomberMan.getInstance().setTempStorage(newCell);
 		}
-		if (this instanceof BomberMan && ((BomberMan)this).getTempStorage() != null && hasMoved) {
-			board.setCell(((BomberMan)this).getTempStorage(), prevPosition);
-			((BomberMan)this).setTempStorage(null);
+		if (this.getTempStorage() != null && hasMoved) {
+			board.setCell(this.getTempStorage(), prevPosition);
+			this.setTempStorage(null);
 		}
 		
 		

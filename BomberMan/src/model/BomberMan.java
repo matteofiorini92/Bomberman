@@ -4,16 +4,16 @@ package model;
 public class BomberMan extends Character {
 	public static BomberMan bomberman;
 	public static final int INITIAL_LIVES = 5;
-	public static final int INITIAL_BOMBS = 1;
-	public static final int INITIAL_RANGE = 1;
+	public static final int INITIAL_BOMBS = 10;
+	public static final int INITIAL_RANGE = 10;
 	public static final int[] INITIAL_POSITION = {1, 2};
-	public static final double INITIAL_SPEED = 1.0;
+	public static final double INITIAL_SPEED = 5.0;
 	public static final int INITIAL_SCORE = 0;
 	
 	private int bombs;
 	private int range;
 	private int score;
-	private Element tempStorage;
+
 	
 	private BomberMan() {
 		super(INITIAL_POSITION, INITIAL_SPEED, INITIAL_LIVES);
@@ -64,21 +64,7 @@ public class BomberMan extends Character {
 		points = partial > 0 ? partial : 0;
 	}
 
-	/**
-	 * @return the tempStorage
-	 */
-	public Element getTempStorage()
-	{
-		return tempStorage;
-	}
 
-	/**
-	 * @param tempStorage the tempStorage to set
-	 */
-	public void setTempStorage(Element tempStorage)
-	{
-		this.tempStorage = tempStorage;
-	}
 	
 
 
