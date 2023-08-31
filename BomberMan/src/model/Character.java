@@ -92,6 +92,7 @@ public abstract class Character extends Element {
 
 
 		newCell = board.getCell(newPosition);
+//		if (this instanceof BomberMan) { System.out.println(newCell.getClass());}
 		
 		if (
 			newCell instanceof Bomb || 
@@ -101,12 +102,12 @@ public abstract class Character extends Element {
 					((Tile)newCell).getType() == TileType.SOFT_WALL))) // same as !emptyTile?
 		{ // can't walk over walls, bombs or characters
 			newPosition = prevPosition;
-			newCell = board.getCell(newPosition);
 			hasMoved = false;
 		}
 		
 		if ((this instanceof BomberMan && newCell instanceof model.Enemy) || (this instanceof Enemy && newCell instanceof BomberMan)) {
 			model.BomberMan.getInstance().loseLife();
+			System.out.println("I'm here");
 		}
 		
 		if (this instanceof BomberMan && newCell instanceof PowerUp) {
@@ -114,31 +115,30 @@ public abstract class Character extends Element {
 		}
 		
 		
+		// probably needs to be improved
 		
-		if (newCell.disappearsOnWalkOn() && this instanceof Enemy) {		// for powerups
-			((Enemy)this).setTempStorage(newCell);
+		if (newCell instanceof EmptyTile) {
 			board.setCell(this, newPosition);
-		} 
-		if (newCell.disappearsOnWalkOn() && this instanceof BomberMan) {		// for powerups
+		} else if (this instanceof Enemy && newCell instanceof PowerUp) {
+			this.setTempStorage(newCell);
 			board.setCell(this, newPosition);
-		} 
-		if (board.getCell(prevPosition).disappearsOnWalkOff()) {
-			board.setCell(new model.EmptyTile(prevPosition), prevPosition);
+		} else if (this instanceof BomberMan && newCell instanceof PowerUp && newCell.disappearsOnWalkOn()) {
+			board.setCell(this, newPosition);
+		} else if (this instanceof BomberMan && newCell instanceof Exit) {
+			this.setTempStorage(newCell);
+			board.setCell(this, newPosition);
 		}
-		if (!newCell.disappearsOnWalkOn() && !newCell.disappearsOnWalkOff() && this instanceof BomberMan && !(newCell instanceof Tile)) {
-			BomberMan.getInstance().setTempStorage(newCell);
+		
+		if (this.getTempStorage() == null && hasMoved ) {
+			board.setCell(new EmptyTile(prevPosition), prevPosition);
 		}
+		
+		
 		if (this.getTempStorage() != null && hasMoved) {
 			board.setCell(this.getTempStorage(), prevPosition);
 			this.setTempStorage(null);
 		}
 		
-		
-		
-//		model.Element prevCell = board.getCell(prevPosition);
-//		prevCell = prevCell instanceof Bomb ? prevCell : new EmptyTile(prevPosition);// to prevent BM from setting an EmptyTile where he's just dropped a bomb
-//		board.setCell(prevCell, prevPosition);
-//		board.setCell(this, newPosition);
 		this.setPosition(newPosition);
 		
 		Object[] args = { model.ChangeType.MOVE, prevPosition };

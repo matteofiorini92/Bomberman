@@ -78,5 +78,28 @@ public class BoardGame extends Observable {
 	public Element[][] getCells() { return cells; }
 	public Element getCell(int[] coordinates) { return cells[coordinates[0]][coordinates[1]]; }
 	public void setCell(Element e, int[] coordinates) { this.cells[coordinates[0]][coordinates[1]] = e; }
+	
+	public void print() {
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				String className[] = cells[i][j].getClass().toString().split("\\.");
+				int l = className.length;
+				System.out.print(className[l-1].charAt(0) + " ");
+			}
+			System.out.println();
+		}
+		System.out.println();
+	}
+	public void printExt() {
+		for (int i = 0; i < HEIGHT; i++) {
+			for (int j = 0; j < WIDTH; j++) {
+				String className[] = cells[i][j].getClass().toString().split("\\.");
+				int l = className.length;
+				System.out.print(className[l-1] + " ");
+			}
+			System.out.println();
+		}
+		System.out.println();
+	}
 
 }

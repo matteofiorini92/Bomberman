@@ -264,6 +264,10 @@ public class LoadLevel {
 		    	
 		    	view.GameBody.getInstance().getItemsPane().getChildren().add(viewBmStackPaneIndex + 1, viewBomb);
 		    	modelBomb.trigger();	        	
+		    } else if (event.getCode() == KeyCode.P) {
+		    	model.BoardGame.getInstance().print();
+		    } else if (event.getCode() == KeyCode.F) {
+		    	model.BoardGame.getInstance().printExt();
 		    }
 		    else {	        	
 		        	Direction direction = null;
