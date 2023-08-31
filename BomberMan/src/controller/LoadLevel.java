@@ -258,6 +258,7 @@ public class LoadLevel {
 		    	view.Bomb viewBomb = new view.Bomb();
 		    	modelBomb.addObserver(viewBomb);
 		    	modelBm.decBombs();
+		    	modelBm.setTempStorage(modelBomb);
 		    	// get viewBm stackPane index in order to add the bomb behind it
 		    	int viewBmStackPaneIndex = baseGroup.getChildren().indexOf(viewBoard.getGridPane());
 		    	

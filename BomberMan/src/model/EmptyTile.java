@@ -7,6 +7,7 @@ public class EmptyTile extends Tile {
 	public EmptyTile(int[] position)
 	{
 		super(position, EMPTY_TILE);
+		this.setDisappearOnWalkOn(true);
 	}
 
 }

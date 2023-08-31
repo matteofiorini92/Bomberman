@@ -8,6 +8,7 @@ public abstract class PowerUp extends Item {
 	{
 		super(null);
 		this.points = points;
+		this.setDisappearOnWalkOn(true);
 	}
 
 	public int getPoints() { return points; }

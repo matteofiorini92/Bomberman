@@ -13,6 +13,7 @@ public class BomberMan extends Character {
 	private int bombs;
 	private int range;
 	private int score;
+	private Element tempStorage;
 	
 	private BomberMan() {
 		super(INITIAL_POSITION, INITIAL_SPEED, INITIAL_LIVES);
@@ -61,6 +62,22 @@ public class BomberMan extends Character {
 	public void losePoints(int points) {
 		int partial = score - points;
 		points = partial > 0 ? partial : 0;
+	}
+
+	/**
+	 * @return the tempStorage
+	 */
+	public Element getTempStorage()
+	{
+		return tempStorage;
+	}
+
+	/**
+	 * @param tempStorage the tempStorage to set
+	 */
+	public void setTempStorage(Element tempStorage)
+	{
+		this.tempStorage = tempStorage;
 	}
 	
 

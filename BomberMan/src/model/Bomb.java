@@ -25,7 +25,7 @@ public class Bomb extends Item {
 	{
 		super(position);
 		board.setCell(this, position);
-		this.range = model.BomberMan.getInstance().getRange();		
+		this.range = model.BomberMan.getInstance().getRange();
 	}
 
 	public int getRange() { return range; }
