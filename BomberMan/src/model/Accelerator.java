@@ -11,11 +11,11 @@ public class Accelerator extends PowerUp {
 	}
 	
 	@Override
-	public boolean execute() {
+	public void execute() {
 		super.execute();
 		BomberMan bomberMan = BomberMan.getInstance();
 		if (bomberMan.getSpeed() < MAX_SPEED) { bomberMan.incSpeed(0.5); }
-		return false;
+//		return false;
 	}
 
 }

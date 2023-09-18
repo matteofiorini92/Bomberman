@@ -11,9 +11,12 @@ public class Exit extends Item implements Hidable { // extends PowerUp because c
 		this.setDisappearOnWalkOn(false);
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean getOut() {
 		if (model.Enemy.getAliveEnemies().size() == 0) { // check if there are enemies alive
 			this.setDisappearOnWalkOn(true);
+			setChanged();
+			notifyObservers();
 			return true;
 		}
 		return false;

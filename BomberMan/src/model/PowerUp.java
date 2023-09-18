@@ -14,12 +14,12 @@ public abstract class PowerUp extends Item implements Hidable {
 	public int getPoints() { return points; }
 	
 	@SuppressWarnings("deprecation")
-	public boolean execute() {
+	public void execute() {
 		BomberMan bomberMan = BomberMan.getInstance();
 		bomberMan.addPoints(points);
 		setChanged();
 		notifyObservers();
-		return false;
+//		return false;
 	};
 
 }

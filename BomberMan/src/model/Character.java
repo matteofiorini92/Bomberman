@@ -109,7 +109,11 @@ public abstract class Character extends Element {
 		}
 		
 		if (this instanceof BomberMan && newCell instanceof PowerUp) {
-			isOut = ((model.PowerUp)newCell).execute();
+			((model.PowerUp)newCell).execute();
+		}
+		
+		if (this instanceof BomberMan && newCell instanceof Exit) {
+			isOut = ((model.Exit)newCell).getOut();
 		}
 		
 		
