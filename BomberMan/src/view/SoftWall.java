@@ -17,7 +17,7 @@ public class SoftWall extends Item {
 	public static final int SOFT_WALL_EXPLOSION = 1500;
 	public static Map<String, String> imageFiles = new HashMap<>();
 	static {
-		String currLevel = controller.LoadLevel.getCurrLevel();
+		String currLevel = controller.Level.getCurrLevel();
 		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/tiles/" + currLevel + ".properties");
 	}
 	

@@ -11,11 +11,12 @@ public class ExtraBomb extends PowerUp {
 	}
 
 	@Override
-	public void execute()
+	public boolean execute()
 	{
 		super.execute();
 		BomberMan bomberMan = BomberMan.getInstance();
 		if (bomberMan.getBombs() < MAX_BOMBS) { bomberMan.incBombs(); }
+		return false;
 	}
 
 }

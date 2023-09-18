@@ -11,10 +11,11 @@ public class ExplosionExpander extends PowerUp {
 	}
 
 	@Override
-	public void execute()
+	public boolean execute()
 	{
 		super.execute();
 		BomberMan bomberMan = BomberMan.getInstance();
 		if (bomberMan.getRange() < MAX_RANGE) { model.BomberMan.getInstance().incRange(); }
+		return false;
 	}
 }

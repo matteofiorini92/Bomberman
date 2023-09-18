@@ -14,11 +14,12 @@ public abstract class PowerUp extends Item {
 	public int getPoints() { return points; }
 	
 	@SuppressWarnings("deprecation")
-	public void execute() {
+	public boolean execute() {
 		BomberMan bomberMan = BomberMan.getInstance();
 		bomberMan.addPoints(points);
 		setChanged();
 		notifyObservers();
+		return false;
 	};
 
 }

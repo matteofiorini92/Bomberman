@@ -23,7 +23,13 @@ public abstract class Element extends Observable {
 	}
 
 	public int[] getPosition() {	return position; }
-	public void setPosition(int[] position) { this.position = position; }
+	public void setPosition(int[] position) { 
+		if (this instanceof model.BomberMan) {
+			System.out.println(position[0]);
+			System.out.println(position[1]);
+		}
+		this.position = position; 
+	}
 //	public void setPosition(int[] prevPosition, int[] newPosition) { this.position = newPosition; }
 
 	/**

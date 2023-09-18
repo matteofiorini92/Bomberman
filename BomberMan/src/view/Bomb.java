@@ -24,7 +24,7 @@ public class Bomb extends Item {
 	public static final int TIME_FOR_EXPLOSION = 1000;
 	public static Map<String, String> imageFiles = new HashMap<>();
 	static {
-		String currLevel = controller.LoadLevel.getCurrLevel();
+		String currLevel = controller.Level.getCurrLevel();
 		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/explosions/" + currLevel + ".properties");
 	}
 	

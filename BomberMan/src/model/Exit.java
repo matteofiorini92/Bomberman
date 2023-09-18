@@ -12,11 +12,14 @@ public class Exit extends PowerUp { // extends PowerUp because can be hidden by 
 	}
 
 	@Override
-	public void execute() {
+	public boolean execute() {
 		if (model.Enemy.getAliveEnemies().size() == 0) { // check if there are enemies alive
 			this.setDisappearOnWalkOn(true);
 			super.execute();
+			System.out.println("I'm here");
+			return true;
 		}
+		return false;
 	}
 
 }

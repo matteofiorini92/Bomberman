@@ -23,6 +23,14 @@ public class BomberMan extends Character {
 		score = INITIAL_SCORE;
 	}
 	
+//	private BomberMan(int bombs, int range, int score, double speed, int lives) {
+//		super(INITIAL_POSITION, speed, lives);
+//		becomeInvincible();
+//		this.bombs = bombs;
+//		this.range = range;
+//		this.score = score;
+//	}
+	
 	public static BomberMan getInstance(){
 		if (bomberman == null) {
 			bomberman = new BomberMan();
@@ -64,7 +72,18 @@ public class BomberMan extends Character {
 		points = partial > 0 ? partial : 0;
 	}
 
-
+//	public void startNewLevel() {
+//		int currBombs = bombs;
+//		int currRange = range;
+//		int currScore = score;
+//		double speed = this.getSpeed();
+//		int lives = this.getLives();
+//		
+//		BomberMan.bomberman = null;
+//		BomberMan.bomberman = new BomberMan(currBombs, currRange, currScore, speed, lives);
+//	}
+	
+	
 	
 
 

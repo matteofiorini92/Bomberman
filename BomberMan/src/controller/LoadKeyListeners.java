@@ -7,12 +7,25 @@ import model.Direction;
 
 public class LoadKeyListeners {
 	
+	public static LoadKeyListeners loadKeyListeners;
+	
 	private model.BomberMan modelBm = model.BomberMan.getInstance();
 	private view.GameBody viewBoard = view.GameBody.getInstance();
 	
 	private long lastKeyPressTime = 0;
 	private static Double throttleDelay = model.Character.INITIAL_TIME_FOR_MOVEMENT / model.BomberMan.getInstance().getSpeed();
 	private boolean keyHeld = false;
+	
+	private LoadKeyListeners() {
+//		keyHeld = false;
+	}
+	
+	public static LoadKeyListeners getInstance() {
+		if (loadKeyListeners == null) {
+			loadKeyListeners = new LoadKeyListeners();
+		}
+		return loadKeyListeners;
+	}
 	
 	public static void updateThrottleDelay() {
 		throttleDelay = model.Character.INITIAL_TIME_FOR_MOVEMENT / model.BomberMan.getInstance().getSpeed();
@@ -33,13 +46,14 @@ public class LoadKeyListeners {
 	@SuppressWarnings("deprecation")
 	private void processKeyPress(KeyEvent event) {
 		
-		
-		view.BaseGroup baseGroup = view.BaseGroup.getInstance();
 	    long currentTime = System.currentTimeMillis();
 
 	    if (currentTime - lastKeyPressTime >= throttleDelay) {
 	    	lastKeyPressTime = currentTime;
-		    if (event.getCode() == KeyCode.SPACE && modelBm.getBombs() > 0 && !(model.BoardGame.getInstance().getCell(model.BomberMan.getInstance().getPosition()) instanceof model.Bomb)) {
+
+	    	if (event.getCode() == KeyCode.SPACE && modelBm.getBombs() > 0 && !(model.BoardGame.getInstance().getCell(model.BomberMan.getInstance().getPosition()) instanceof model.Bomb)) {
+		    
+	    		view.BaseGroup baseGroup = view.BaseGroup.getInstance();
 		    	int currBombs = modelBm.getBombs();
 		    	model.Bomb modelBomb = new model.Bomb(currBombs, modelBm.getPosition());
 		    	view.Bomb viewBomb = new view.Bomb();
@@ -75,8 +89,7 @@ public class LoadKeyListeners {
 		        		default:
 		        			break;	
 		        		}
-		        		modelBm.move(direction);
-		        		
+		        		modelBm.move(direction);	        		
 		        	} catch (NullPointerException e) {
 		        		System.out.println("Invalid command");
 		        	}

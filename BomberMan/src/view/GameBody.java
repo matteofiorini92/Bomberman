@@ -23,7 +23,7 @@ public class GameBody extends StackPane implements Observer {
 	 */
 	private static Map<String, String> imageFiles = new HashMap<>();
 	static {
-		String currLevel = controller.LoadLevel.getCurrLevel();
+		String currLevel = controller.Level.getCurrLevel();
 		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/tiles/" + currLevel + ".properties");
 	}
 	

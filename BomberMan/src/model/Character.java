@@ -65,7 +65,6 @@ public abstract class Character extends Element {
 		int[] prevPosition = this.getPosition();
 		int[] newPosition = new int[2];
 		Element newCell;
-		Element prevCell;
 		
 		setDirection(direction);
 		
@@ -92,6 +91,7 @@ public abstract class Character extends Element {
 
 
 		newCell = board.getCell(newPosition);
+		boolean isOut = false;
 		
 		if (
 			newCell instanceof Bomb || 
@@ -109,39 +109,43 @@ public abstract class Character extends Element {
 		}
 		
 		if (this instanceof BomberMan && newCell instanceof PowerUp) {
-			((model.PowerUp)newCell).execute();
+			isOut = ((model.PowerUp)newCell).execute();
 		}
 		
 		
 		// probably needs to be improved
 		
-		if (newCell instanceof EmptyTile) {
-			board.setCell(this, newPosition);
-		} else if (this instanceof Enemy && newCell instanceof PowerUp) {
-			this.setTempStorage(newCell);
-			board.setCell(this, newPosition);
-		} else if (this instanceof BomberMan && newCell instanceof PowerUp && newCell.disappearsOnWalkOn()) {
-			board.setCell(this, newPosition);
-		} else if (this instanceof BomberMan && newCell instanceof Exit) {
-			this.setTempStorage(newCell);
-			board.setCell(this, newPosition);
+		if (!isOut) {
+			if (newCell instanceof EmptyTile) {
+				board.setCell(this, newPosition);
+			} else if (this instanceof Enemy && newCell instanceof PowerUp) {
+				this.setTempStorage(newCell);
+				board.setCell(this, newPosition);
+			} else if (this instanceof BomberMan && newCell instanceof PowerUp && newCell.disappearsOnWalkOn()) {
+				board.setCell(this, newPosition);
+			} else if (this instanceof BomberMan && newCell instanceof Exit) {
+				this.setTempStorage(newCell);
+				board.setCell(this, newPosition);
+			}
+			
+			if (this.getTempStorage() == null && hasMoved ) {
+				board.setCell(new EmptyTile(prevPosition), prevPosition);
+			}
+			
+			
+			if (this.getTempStorage() != null && hasMoved) {
+				board.setCell(this.getTempStorage(), prevPosition);
+				this.setTempStorage(null);
+			}
+			
+			this.setPosition(newPosition);
+			
+			Object[] args = { model.ChangeType.MOVE, prevPosition };
+			setChanged();
+			notifyObservers(args);
+			
 		}
 		
-		if (this.getTempStorage() == null && hasMoved ) {
-			board.setCell(new EmptyTile(prevPosition), prevPosition);
-		}
-		
-		
-		if (this.getTempStorage() != null && hasMoved) {
-			board.setCell(this.getTempStorage(), prevPosition);
-			this.setTempStorage(null);
-		}
-		
-		this.setPosition(newPosition);
-		
-		Object[] args = { model.ChangeType.MOVE, prevPosition };
-		setChanged();
-		notifyObservers(args);
 		return hasMoved;
 	}
  

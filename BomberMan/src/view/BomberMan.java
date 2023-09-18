@@ -9,7 +9,7 @@ import model.Direction;
 
 @SuppressWarnings("deprecation")
 public class BomberMan extends Character {
-	
+	public static BomberMan bomberMan;
 	public static final int[] INITIAL_POSITION = {1, 2};
 	public static final Double INITIAL_SPEED = model.BomberMan.INITIAL_SPEED;
 	public static Map<Direction, String> imageFiles = new HashMap<>();
@@ -17,9 +17,16 @@ public class BomberMan extends Character {
 		utilities.LoadProperties.loadDirectionStringProperties(imageFiles, "resources/characters/bomberMan.properties");
 	}
 
-	public BomberMan()
+	private BomberMan()
 	{
 		super(INITIAL_POSITION, new Image("images/-bm/" + imageFiles.get(Direction.INITIAL) + ".png"), INITIAL_SPEED);
+	}
+	
+	public static BomberMan getInstance() {
+		if (bomberMan == null) {
+			bomberMan = new BomberMan();
+		}
+		return bomberMan;
 	}
 	
 	@Override
