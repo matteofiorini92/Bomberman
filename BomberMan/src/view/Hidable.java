@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 @SuppressWarnings("deprecation")
-public class PowerUp extends Item {
+public class Hidable extends Item {
 	public static final int POWER_UP_ANIMATION = 100;
 	public static Map<String, String> imageFiles = new HashMap<>();
 	static {
@@ -18,26 +18,27 @@ public class PowerUp extends Item {
 	}
 	private Timeline timeline = new Timeline();
 	
-	public PowerUp(model.PowerUp modelPowerUp)
+	public Hidable(model.Hidable modelHidable)
 	{		
 		super(null);
-		startAnimation(modelPowerUp);
+		startAnimation(modelHidable);
 		
 	}
 	
 	// new ImageView(new Image("images/-power-ups/" + imageFiles.get(modelPowerUp.getClass().getName()).split("\\s+")[0] + ".png"))
 
-	private void startAnimation(model.PowerUp modelPowerUp) {
+	private void startAnimation(model.Hidable modelHidable) {
 		
-		int[] modelPowerUpPosition = modelPowerUp.getPosition();
-		view.GameBody.getInstance().setTile(this, modelPowerUpPosition);
-
-		this.setLayoutX(modelPowerUpPosition[1]*view.Item.ITEM_WIDTH);
-		this.setLayoutY(modelPowerUpPosition[0]*view.Item.ITEM_HEIGHT);
-
-		String[] files = imageFiles.get(modelPowerUp.getClass().getName()).split("\\s+");
 		
-		if (modelPowerUp instanceof model.Exit) {
+		int[] modelHidablePosition = ((model.Item)modelHidable).getPosition();
+		view.GameBody.getInstance().setTile(this, modelHidablePosition);
+
+		this.setLayoutX(modelHidablePosition[1]*view.Item.ITEM_WIDTH);
+		this.setLayoutY(modelHidablePosition[0]*view.Item.ITEM_HEIGHT);
+
+		String[] files = imageFiles.get(modelHidable.getClass().getName()).split("\\s+");
+		
+		if (modelHidable instanceof model.Exit) {
 			Image image = new Image("images/-power-ups/" + files[0] + ".png");
 			this.setImage(image);
 		}

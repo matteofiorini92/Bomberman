@@ -120,9 +120,9 @@ public class SoftWall extends Item {
 			viewBoard.setTile(new view.Tile(desc, im), softWallPosition);
 			
 			if (((model.SoftWall)o).isHidingSomething()) {
-				model.PowerUp modelPowerUp = ((model.SoftWall)o).getHiddenPowerUp();
-				view.PowerUp viewPowerUp = new view.PowerUp(modelPowerUp);
-				modelPowerUp.addObserver(viewPowerUp);
+				model.Item modelItem = (model.Item) ((model.SoftWall)o).getHiddenHidable();
+				view.Hidable viewHidable = new view.Hidable((model.Hidable)modelItem);
+				modelItem.addObserver(viewHidable);
 				
 			}
 			

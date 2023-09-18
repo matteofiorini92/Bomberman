@@ -1,6 +1,6 @@
 package model;
 
-public abstract class PowerUp extends Item {
+public abstract class PowerUp extends Item implements Hidable {
 	
 	private int points;
 

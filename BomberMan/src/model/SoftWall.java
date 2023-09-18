@@ -1,25 +1,27 @@
 package model;
 
-public class SoftWall extends Tile implements HidePowerUp {
+public class SoftWall extends Tile implements Hiding {
 	
 	public static final TileType SOFT_WALL = TileType.SOFT_WALL;
 	public static BoardGame board = model.BoardGame.getInstance();
 	
-	private model.PowerUp hiddenPowerUp = null;
+	private model.Hidable hiddenHidable = null;
 	
 	public SoftWall(int[] position)
 	{
 		super(position, SOFT_WALL);
 	}
 
-	public model.PowerUp getHiddenPowerUp()	{ return hiddenPowerUp; }
-	public void setHiddenPowerUp(model.PowerUp hiddenPowerUp) {	this.hiddenPowerUp = hiddenPowerUp; }
+	public model.Hidable getHiddenHidable()	{ return hiddenHidable; }
+	
+	@Override
+	public void setHiddenHidable(model.Hidable hiddenHidable) {	this.hiddenHidable = hiddenHidable; }
 	
 	@SuppressWarnings("deprecation")
 	public void destroy() {
 		int[] position = this.getPosition();
 		if (isHidingSomething()) {
-			board.setCell(hiddenPowerUp, position);
+			board.setCell((Element)hiddenHidable, position);
 		} else {
 			board.setCell(new EmptyTile(position), position);
 		}
@@ -28,10 +30,10 @@ public class SoftWall extends Tile implements HidePowerUp {
 	}
 
 	@Override
-	public boolean isHidingSomething() { return hiddenPowerUp != null; }
+	public boolean isHidingSomething() { return hiddenHidable != null; }
 
 	@Override
-	public void showHiddenPowerUp()
+	public void showHiddenHidable()
 	{
 		// TODO Auto-generated method stub
 		

@@ -9,12 +9,12 @@ import java.util.concurrent.TimeUnit;
 
 import javafx.application.Platform;
 
-public abstract class Enemy extends Character implements HidePowerUp {
+public abstract class Enemy extends Character implements Hiding {
 	private static List<Enemy> aliveEnemies = new ArrayList<Enemy>();
 	private static BoardGame board = BoardGame.getInstance();
 	ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();	
 	private int points;
-	private model.PowerUp hiddenPowerUp = null;
+	private model.Hidable hiddenHidable = null;
 
 	public Enemy(int[] position, Double speed, int points, int lives)
 	{
@@ -25,14 +25,14 @@ public abstract class Enemy extends Character implements HidePowerUp {
 	
 	public int getPoints() { return points;	}
 	
-	public model.PowerUp getHiddenPowerUp()	{ return hiddenPowerUp; }
-	public void setHiddenPowerUp(model.PowerUp hiddenPowerUp) {	this.hiddenPowerUp = hiddenPowerUp; }
+	public model.Hidable getHiddenHidable()	{ return hiddenHidable; }
+	public void setHiddenHidable(model.Hidable hiddenHidable) {	this.hiddenHidable = hiddenHidable; }
 	
 	@Override
-	public boolean isHidingSomething() { return hiddenPowerUp != null; }
+	public boolean isHidingSomething() { return hiddenHidable != null; }
 	
 	@Override
-	public void showHiddenPowerUp()
+	public void showHiddenHidable()
 	{
 		// TODO Auto-generated method stub
 	}
@@ -42,8 +42,8 @@ public abstract class Enemy extends Character implements HidePowerUp {
 		super.die();
 		aliveEnemies.remove(this);
 		if (isHidingSomething()) {
-			hiddenPowerUp.setPosition(getPosition()); // update the position of the power up to the enemy's current position
-			board.setCell(hiddenPowerUp, this.getPosition());
+			((Item)hiddenHidable).setPosition(getPosition()); // update the position of the power up to the enemy's current position
+			board.setCell((Element)hiddenHidable, this.getPosition());
 		}
 		model.Player.getInstance().addPoints(this.getPoints());
 		executor.shutdownNow(); //stop moving when the enemy dies

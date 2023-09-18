@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import model.Direction;
-import model.HidePowerUp;
+import model.Hiding;
 
 @SuppressWarnings("deprecation")
 public abstract class Character extends Element {
@@ -134,10 +134,10 @@ public abstract class Character extends Element {
 		
 		KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH), event -> {
 			this.setVisible(false);
-			if (character instanceof HidePowerUp && ((HidePowerUp) character).isHidingSomething()) {
-				model.PowerUp modelPowerUp = ((model.HidePowerUp)character).getHiddenPowerUp();
-				view.PowerUp viewPowerUp = new view.PowerUp(modelPowerUp);
-				modelPowerUp.addObserver(viewPowerUp);				
+			if (character instanceof Hiding && ((Hiding) character).isHidingSomething()) {
+				model.Item modelItem = (model.Item) ((model.Hiding)character).getHiddenHidable();
+				view.Hidable viewHidable = new view.Hidable((model.Hidable)modelItem);
+				modelItem.addObserver(viewHidable);				
 			}
 	    });
 		timeline.getKeyFrames().add(keyFrame);

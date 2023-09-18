@@ -105,7 +105,7 @@ public abstract class Character extends Element {
 		}
 		
 		if ((this instanceof BomberMan && newCell instanceof model.Enemy) || (this instanceof Enemy && newCell instanceof BomberMan)) {
-			model.BomberMan.getInstance().loseLife();
+			BomberMan.getInstance().loseLife();
 		}
 		
 		if (this instanceof BomberMan && newCell instanceof PowerUp) {

@@ -63,10 +63,10 @@ public class Level implements Observer {
 	
 	private void hideElements (model.SoftWall[] softWalls, List<model.Enemy> enemies) {
 		
-		List<model.HidePowerUp> hidingElements;
+		List<model.Hiding> hidingElements;
 		
-		hidingElements = enemies.stream()							//convert Enemies to Elements
-				.map(enemy -> (model.HidePowerUp)enemy)
+		hidingElements = enemies.stream()							
+				.map(enemy -> (model.Hiding) enemy )				//convert Enemies to Hiding
 				.collect(Collectors.toList());
 		
 		hidingElements.addAll(Arrays.stream(softWalls).toList());	//convert array of softwalls to list
@@ -78,8 +78,8 @@ public class Level implements Observer {
 			int max = hidingElements.size();
 			
 			Random r = new Random();
-			model.HidePowerUp hidingElement = hidingElements.get(r.nextInt(max));
-			hidingElement.setHiddenPowerUp(powerUp);
+			model.Hiding hidingElement = hidingElements.get(r.nextInt(max));
+			hidingElement.setHiddenHidable(powerUp);
 			powerUp.setPosition(((Element) hidingElement).getPosition());
 			hidingElements.remove(hidingElement);
 		});
@@ -98,8 +98,8 @@ public class Level implements Observer {
 		
 		int max = remaniningSoftWalls.size();
 		Random r = new Random();
-		model.HidePowerUp sotWall = remaniningSoftWalls.get(r.nextInt(max));
-		sotWall.setHiddenPowerUp(exit);
+		model.Hiding sotWall = remaniningSoftWalls.get(r.nextInt(max));
+		sotWall.setHiddenHidable(exit);
 		exit.setPosition(((model.SoftWall) sotWall).getPosition());
 		
 		
