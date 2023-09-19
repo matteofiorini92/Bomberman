@@ -63,7 +63,7 @@ public abstract class Characters {
 				ex.printStackTrace();
 			}
 		}
-		modelBm.setInvincible(true);
+		modelBm.becomeInvincible();
 		return enemies;
 	}
 	

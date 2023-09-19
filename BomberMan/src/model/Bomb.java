@@ -116,7 +116,7 @@ public class Bomb extends Item {
 				int y = currPosition[0] + valY * i;
 				e = board.getCell(new int[] {y, x});
 				l.add(e);
-				if (!(e instanceof EmptyTile)) { // check if there's an obstacle that confines the explosion
+				if (!(e instanceof EmptyTile) && !(e instanceof Hidable)) { // check if there's an obstacle that confines the explosion
 					break;
 				}
 			}

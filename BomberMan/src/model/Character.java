@@ -50,8 +50,11 @@ public abstract class Character extends Element {
 	public void setTempStorage(Element tempStorage) { this.tempStorage = tempStorage; }
 	
 	@SuppressWarnings("deprecation")
-	public void setInvincible(boolean isInvincible) { 
+	private void setInvincible(boolean isInvincible) { 
 		this.isInvincible = isInvincible;
+		if (this instanceof BomberMan) {
+			System.out.println("I'm invincible: " + this.isInvincible);
+		}
 		if (isInvincible) {
 			Object[] args = { model.ChangeType.BECOME_INVINCIBLE, null };
 			setChanged();
