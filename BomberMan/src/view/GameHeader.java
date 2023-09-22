@@ -3,8 +3,10 @@ package view;
 import java.util.Observable;
 import java.util.Observer;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,11 +36,22 @@ public class GameHeader extends StackPane implements Observer {
 		
 	}
 	
+	
 	public static GameHeader getInstance() {
 		if (gameHeader == null) {
 			gameHeader = new GameHeader();
 		}
 		return gameHeader;
+	}
+
+	public void resetTimer() {
+		ObservableList<Node> children = this.getChildren();
+		children.removeAll(children);
+		
+		children.add(baseHeader);
+		setLives(model.BomberMan.getInstance().getLives());
+		children.add(lives);
+		GameHeader.setMargin(lives, new Insets(27,0,0,110));
 	}
 
 	public void setLives(int lives) {

@@ -20,7 +20,7 @@ public class Timer implements Observer {
 		}
 		return timer;
 	}
-
+	
 
 	@Override
 	public void update(Observable o, Object arg)
@@ -34,7 +34,7 @@ public class Timer implements Observer {
 			int numberOfBlocks = ((model.Timer.INITIAL_TIME - (int)args[1]) / model.Timer.STEP);
 			int clock = numberOfBlocks < 14 ? 0 : 63;
 			int leftInset = 69 + clock + 22 * numberOfBlocks;
-			GameHeader.setMargin(imageView, new Insets(75,0,0,leftInset));
+			GameHeader.setMargin(imageView, new Insets(75, 0, 0, leftInset));
 			
 		}
 		

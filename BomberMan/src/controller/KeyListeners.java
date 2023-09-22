@@ -5,6 +5,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import model.Direction;
 
+/**
+ * key listeners to handle commands during the game
+ * @author Matteo
+ *
+ */
 public abstract class KeyListeners {
 	
 	private static model.BomberMan modelBm = model.BomberMan.getInstance();
@@ -14,6 +19,9 @@ public abstract class KeyListeners {
 	private static Double throttleDelay = model.Character.INITIAL_TIME_FOR_MOVEMENT / model.BomberMan.getInstance().getSpeed();
 	private static boolean keyHeld = false;
 	
+	/**
+	 * to update the throttle delay when bomberman speed changes
+	 */
 	public static void updateThrottleDelay() {
 		throttleDelay = model.Character.INITIAL_TIME_FOR_MOVEMENT / model.BomberMan.getInstance().getSpeed();
 	}
@@ -23,7 +31,6 @@ public abstract class KeyListeners {
 	        keyHeld = true;
 	        processKeyPress(event);
 	    }
-
     }
 
 	public static void handleKeyReleased(KeyEvent event) {

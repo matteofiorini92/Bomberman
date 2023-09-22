@@ -9,6 +9,7 @@ public abstract class Timer {
 		view.Timer viewTimer = view.Timer.getInstance();
 		modelTimer.addObserver(viewTimer);
 		modelTimer.reset();
+		view.GameHeader.getInstance().resetTimer();
 		modelTimer.start();
 		
 	}
