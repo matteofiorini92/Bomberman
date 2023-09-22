@@ -7,6 +7,11 @@ import java.util.Observable;
 import javafx.scene.image.Image;
 import model.Direction;
 
+/**
+ * view of the bomberman character
+ * @author Matteo
+ *
+ */
 @SuppressWarnings("deprecation")
 public class BomberMan extends Character {
 	public static BomberMan bomberMan;
@@ -22,6 +27,10 @@ public class BomberMan extends Character {
 		super(INITIAL_POSITION, new Image("images/-bm/" + imageFiles.get(Direction.INITIAL) + ".png"), INITIAL_SPEED);
 	}
 	
+	/**
+	 * singleton pattern
+	 * @return the only existing instance of the class, or creates one
+	 */
 	public static BomberMan getInstance() {
 		if (bomberMan == null) {
 			bomberMan = new BomberMan();

@@ -50,6 +50,9 @@ public class Timer extends Observable {
 		currTime--;
 		if (currTime == 0) {
 			stop();
+			Object[] args = { model.ChangeType.TIME_DECREASE, currTime };
+			setChanged();
+			notifyObservers(args);
 		}
 	}
 	

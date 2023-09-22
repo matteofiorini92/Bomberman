@@ -1,4 +1,4 @@
-package view;
+package view.Boards;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,8 +11,14 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import view.BaseScene;
 
-public class BoardProfile extends StackPane {
+/**
+ * profile board. contains nickname textfield, stats, and avatar selection buttons
+ * @author Matteo
+ *
+ */
+public abstract class Profile extends StackPane {
 	
 	public static final int AVATAR_SIZE = 84;
 	public static final double TEXT_FIELD_WIDTH = 400.0;
@@ -22,10 +28,16 @@ public class BoardProfile extends StackPane {
     
 	private Double prefHeight;
 	private Double prefWidth;
-//	private model.Avatar selectedAvatar = model.Avatar.WHITE;
 	
-	
-	public BoardProfile(int wins, int losses, int totalScore, String nickname, model.Avatar avatar) {
+	/**
+	 * constructor that eiher loads an existing player information or create a new "empty" one
+	 * @param wins 0 if new player, current value otherwise 
+	 * @param losses 0 if new player, current value otherwise
+	 * @param totalScore 0 if new player, current value otherwise
+	 * @param nickname emtpy if new player, current value otherwise
+	 * @param avatar white by default if new player, current value otherwise
+	 */
+	public Profile(int wins, int losses, int totalScore, String nickname, model.Avatar avatar) {
 		
 		Scene scene = BaseScene.getInstance();
 		this.setPrefHeight(scene.getHeight());
@@ -51,13 +63,18 @@ public class BoardProfile extends StackPane {
 		if (nickname != null) {nicknameTextField.setText(nickname); }
 		
 		this.getChildren().add(nicknameTextField);
-		BoardNewProfile.setMargin(nicknameTextField, new Insets(prefHeight * 0.2, 0, 0, prefWidth * 0.05));
+		NewProfile.setMargin(nicknameTextField, new Insets(prefHeight * 0.2, 0, 0, prefWidth * 0.05));
 		
 	}
 	
 //	public model.Avatar getSelectedAvatar() { return selectedAvatar; }
 	
-	
+	/**
+	 * utility function to create all texts on the board
+	 * @param wins value of wins to be displayed
+	 * @param losses value of losses to be displayed
+	 * @param totalScore value of total score to be displayed
+	 */
 	private void createProfileTexts(int wins, int losses, int totalScore) {
 		createText("Nickname", new Insets(prefHeight * 0.1, 0, 0, prefWidth * 0.05), 20, Color.WHITE);
 		createText("Avatar", new Insets(prefHeight * 0.1, 0, 0, prefWidth * 0.6), 20, Color.WHITE);
@@ -79,6 +96,10 @@ public class BoardProfile extends StackPane {
 		
 	}
 	
+	/**
+	 * utility function to create the avatar buttons, and set the selected avatar
+	 * @param avatar avatar to be set as selected
+	 */
 	private void createAvatar(model.Avatar avatar) {
 		createButtonWithImageBackground("white", new Insets(prefHeight * 0.2, 0 , 0, prefWidth * 0.6), "WHITE", avatar);
 		createButtonWithImageBackground("blue", new Insets(prefHeight * 0.2, 0, 0, prefWidth * 0.6 + AVATAR_SIZE * 1.5), "BLUE", avatar);
@@ -86,9 +107,12 @@ public class BoardProfile extends StackPane {
 		createButtonWithImageBackground("black", new Insets(prefHeight * 0.2 + AVATAR_SIZE * 1.5, 0, 0, prefWidth * 0.6 + AVATAR_SIZE * 1.5), "BLACK", avatar);
 	}
 	
+	/**
+	 * utility function to create non avatar buttons
+	 */
 	private void createButtons() {
 		createProfileButton("Save", 0, "SAVE_PROFILE", null); // Runnable click event set by subclasses
-		createProfileButton("Start New Game", 1.5, "NEW_GAME", controller.LoadNewGame::new);
+		createProfileButton("Start New Game", 1.5, "NEW_GAME", controller.NewGame::load);
 	}
 	
 	private Text createText(String content, Insets insets, double size, Color color) {
@@ -98,7 +122,7 @@ public class BoardProfile extends StackPane {
 		text.setFont(textFont);
 		text.setFill(color);
 		this.getChildren().add(text);
-		BoardNewProfile.setMargin(text, insets);
+		NewProfile.setMargin(text, insets);
 		return text;
 	}
 	
@@ -113,7 +137,7 @@ public class BoardProfile extends StackPane {
 			button.setOpacity(1);
 			button.setId("SELECTED_AVATAR");
 		}
-		BoardNewProfile.setMargin(button, insets);
+		NewProfile.setMargin(button, insets);
 		
 		this.getChildren().add(button);
 		
@@ -144,7 +168,7 @@ public class BoardProfile extends StackPane {
     	profileButton.setText(text);
     	profileButton.setId(id);
     	
-    	BoardNewProfile.setMargin(profileButton, new Insets(prefHeight * 0.8, 0, 0, prefWidth * 0.1 + PROFILE_BUTTON_WIDTH * spacing));  
+    	NewProfile.setMargin(profileButton, new Insets(prefHeight * 0.8, 0, 0, prefWidth * 0.1 + PROFILE_BUTTON_WIDTH * spacing));  
     	this.getChildren().add(profileButton);
     	
     	profileButton.setOnMouseClicked(event -> runnable.run());

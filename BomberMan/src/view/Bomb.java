@@ -34,7 +34,7 @@ public class Bomb extends Item {
 	public Bomb() {
 		super(null);
 		pane.getChildren().add(gridPane);
-		ObservableList<Node> gameBodyChildren = GameBody.getInstance().getItemsPane().getChildren(); 
+		ObservableList<Node> gameBodyChildren = GameBoard.getInstance().getItemsPane().getChildren(); 
 		int bombStackPaneIndex = gameBodyChildren.indexOf(this);
 		gameBodyChildren.add(bombStackPaneIndex + 1, this.pane);
 	}

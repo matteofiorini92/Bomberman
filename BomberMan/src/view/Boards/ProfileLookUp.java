@@ -1,4 +1,4 @@
-package view;
+package view.Boards;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,8 +9,15 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import view.BaseScene;
 
-public class BoardProfileLookUp extends StackPane  {
+
+/**
+ * screen for existing profile lookup
+ * @author Matteo
+ *
+ */
+public class ProfileLookUp extends StackPane  {
 
 	public static final double TEXT_FIELD_WIDTH = 400.0;
 	public static final double TEXT_FIELD_HEIGHT = 50.0;
@@ -19,7 +26,7 @@ public class BoardProfileLookUp extends StackPane  {
 	private Double prefHeight;
 	private Double prefWidth;
 	
-	public BoardProfileLookUp() {
+	public ProfileLookUp() {
 
 		Scene scene = BaseScene.getInstance();
 		this.setPrefHeight(scene.getHeight());
@@ -37,7 +44,7 @@ public class BoardProfileLookUp extends StackPane  {
 		text.setFont(textFont);
 		text.setFill(Color.WHITE);
 		this.getChildren().add(text);
-		BoardProfileLookUp.setMargin(text, new Insets(prefHeight * 0.1, 0, 0, prefWidth * 0.05));
+		ProfileLookUp.setMargin(text, new Insets(prefHeight * 0.1, 0, 0, prefWidth * 0.05));
 		
 		// error message
 		
@@ -49,7 +56,7 @@ public class BoardProfileLookUp extends StackPane  {
 		this.getChildren().add(errorMessage);
 		errorMessage.setVisible(false);
 		errorMessage.setId("ERR_NICKNAME_DOES_NOT_EXIST");
-		BoardProfileLookUp.setMargin(errorMessage, new Insets(prefHeight * 0.3, 0, 0, prefWidth * 0.05));
+		ProfileLookUp.setMargin(errorMessage, new Insets(prefHeight * 0.3, 0, 0, prefWidth * 0.05));
 		
 		// nickname text field
 		
@@ -62,7 +69,7 @@ public class BoardProfileLookUp extends StackPane  {
 		nicknameTextField.setId("NICKNAME_LOOKUP");
 		
 		this.getChildren().add(nicknameTextField);
-		BoardProfileLookUp.setMargin(nicknameTextField, new Insets(prefHeight * 0.2, 0, 0, prefWidth * 0.05));
+		ProfileLookUp.setMargin(nicknameTextField, new Insets(prefHeight * 0.2, 0, 0, prefWidth * 0.05));
 		
 		// search button
 		
@@ -72,10 +79,10 @@ public class BoardProfileLookUp extends StackPane  {
         searchButton.setFont(profileFont);
     	searchButton.setText("Search");
     	searchButton.setId("SEARCH");
-    	BoardProfileLookUp.setMargin(searchButton, new Insets(prefHeight * 0.2, 0, 0, prefWidth * 0.7));  
+    	ProfileLookUp.setMargin(searchButton, new Insets(prefHeight * 0.2, 0, 0, prefWidth * 0.7));  
     	this.getChildren().add(searchButton);
     	
-    	searchButton.setOnMouseClicked(event -> new controller.LoadExistingProfileScreen(nicknameTextField.getText().toLowerCase()));
+    	searchButton.setOnMouseClicked(event -> controller.ExistingProfile.load(nicknameTextField.getText().toLowerCase()));
 		
 	}
 

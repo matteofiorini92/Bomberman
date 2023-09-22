@@ -1,4 +1,4 @@
-package view;
+package view.Boards;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,18 +13,28 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import view.BaseScene;
 
-public class BoardWelcome extends StackPane {
+/**
+ * welcome board to select existing or new player
+ * @author Matteo
+ *
+ */
+public class Welcome extends StackPane {
 	
-    private static Text welcomeText = new Text();
     public static final Path PLAYER_PROFILE_FOLDER = Path.of("resources/playerProfiles");
     public static final double PROFILE_BUTTON_HEIGHT = 50.0;
     public static final double PROFILE_BUTTON_WIDTH = 300.0;
     
     
 
-    public BoardWelcome() {
+    public Welcome() {
     	
+    	
+    	/**
+    	 *  big welcome greeting
+    	 */
+    	Text welcomeText = new Text();
         Font.loadFont(getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf"), 50);
         Font welcomeFont = Font.font("Press Start 2P", 50);
         welcomeText.setFont(welcomeFont);
@@ -34,18 +44,23 @@ public class BoardWelcome extends StackPane {
 		this.setPrefHeight(scene.getHeight());
 		this.setPrefWidth(scene.getWidth());
 		Double prefHeight = this.getPrefHeight();
-//		Double prefWidth = this.getPrefWidth();
 		
     	this.setAlignment(Pos.TOP_CENTER);
     	
     	welcomeText.setText("Welcome!");
-    	BoardWelcome.setMargin(welcomeText, new Insets(prefHeight * 0.25, 0, 0, 0));
+    	Welcome.setMargin(welcomeText, new Insets(prefHeight * 0.25, 0, 0, 0));
     	this.getChildren().add(welcomeText); 
 		
-    	createProfileButton(prefHeight, "New Player", 0.0, "NEW_PLAYER", controller.LoadNewProfileScreen::new);
+    	
+    	/**
+    	 * buttons
+    	 * new player always
+    	 * existing player only if player profiles already exist
+    	 */
+    	createProfileButton(prefHeight, "New Player", 0.0, "NEW_PLAYER", controller.NewProfile::load);
 
     	if (existingPlayers()) { 
-    		createProfileButton(prefHeight, "Existing Player", 1.5, "EXISTING_PLAYER", controller.LoadProfileLookUpScreen::new);
+    		createProfileButton(prefHeight, "Existing Player", 1.5, "EXISTING_PLAYER", controller.ProfileLookUp::load);
     	}
         
     }
@@ -63,7 +78,7 @@ public class BoardWelcome extends StackPane {
     	
     	profileButton.setId(id);
     	
-    	BoardWelcome.setMargin(profileButton, new Insets(prefHeight * 0.6 + PROFILE_BUTTON_HEIGHT * spacing, 0, 0, 0));  
+    	Welcome.setMargin(profileButton, new Insets(prefHeight * 0.6 + PROFILE_BUTTON_HEIGHT * spacing, 0, 0, 0));  
     	this.getChildren().add(profileButton);
     	
     	profileButton.setOnMouseClicked(event -> runnable.run());
@@ -72,7 +87,7 @@ public class BoardWelcome extends StackPane {
 
 	/**
 	 * Checks if there are existing player profiles
-	 * @return true if there are no player profiles, false otherwise
+	 * @return true if there are player profiles, false otherwise
 	 */
 	private boolean existingPlayers() {
 		try (Stream<Path> entries = Files.list(PLAYER_PROFILE_FOLDER)) {

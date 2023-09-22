@@ -7,10 +7,15 @@ import java.util.Observable;
 import javafx.scene.image.Image;
 import model.Direction;
 
+/**
+ * view of the bug enemy
+ * @author Matteo
+ *
+ */
 @SuppressWarnings("deprecation")
 public class Bug extends Character {
 
-	public static final Double INITIAL_SPEED = model.Bug.BUG_SPEED;
+	public static final Double SPEED = model.Bug.SPEED;
 	public static Map<Direction, String> imageFiles = new HashMap<>();
 	static {
 		utilities.LoadProperties.loadDirectionStringProperties(imageFiles, "resources/characters/bug.properties");
@@ -18,7 +23,7 @@ public class Bug extends Character {
 
 	public Bug(int[] position)
 	{
-		super(position, new Image("images/-bug/" + imageFiles.get(Direction.INITIAL) + ".png"), INITIAL_SPEED);
+		super(position, new Image("images/-bug/" + imageFiles.get(Direction.INITIAL) + ".png"), SPEED);
 	}
 
 	@Override

@@ -1,9 +1,13 @@
 package model;
 
-
+/**
+ * model of the bomberman character
+ * @author Matteo
+ *
+ */
 public class BomberMan extends Character {
 	public static BomberMan bomberman;
-	public static final int INITIAL_LIVES = 5;
+	public static final int INITIAL_LIVES = 2;
 	public static final int INITIAL_BOMBS = 10;
 	public static final int INITIAL_RANGE = 10;
 	public static final int[] INITIAL_POSITION = {1, 2};
@@ -23,14 +27,10 @@ public class BomberMan extends Character {
 		score = INITIAL_SCORE;
 	}
 	
-//	private BomberMan(int bombs, int range, int score, double speed, int lives) {
-//		super(INITIAL_POSITION, speed, lives);
-//		becomeInvincible();
-//		this.bombs = bombs;
-//		this.range = range;
-//		this.score = score;
-//	}
-	
+	/**
+	 * singleton pattern
+	 * @return the only existing instance of the class, or creates one
+	 */
 	public static BomberMan getInstance(){
 		if (bomberman == null) {
 			bomberman = new BomberMan();
@@ -71,20 +71,6 @@ public class BomberMan extends Character {
 		int partial = score - points;
 		points = partial > 0 ? partial : 0;
 	}
-
-//	public void startNewLevel() {
-//		int currBombs = bombs;
-//		int currRange = range;
-//		int currScore = score;
-//		double speed = this.getSpeed();
-//		int lives = this.getLives();
-//		
-//		BomberMan.bomberman = null;
-//		BomberMan.bomberman = new BomberMan(currBombs, currRange, currScore, speed, lives);
-//	}
 	
-	
-	
-
 
 }

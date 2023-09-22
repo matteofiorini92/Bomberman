@@ -31,7 +31,7 @@ public class Hidable extends Item {
 		
 		
 		int[] modelHidablePosition = ((model.Item)modelHidable).getPosition();
-		view.GameBody.getInstance().setTile(this, modelHidablePosition);
+		view.GameBoard.getInstance().setTile(this, modelHidablePosition);
 
 		this.setLayoutX(modelHidablePosition[1]*view.Item.ITEM_WIDTH);
 		this.setLayoutY(modelHidablePosition[0]*view.Item.ITEM_HEIGHT);

@@ -11,7 +11,7 @@ import javafx.application.Platform;
 
 public abstract class Enemy extends Character implements Hiding {
 	private static List<Enemy> aliveEnemies = new ArrayList<Enemy>();
-	private static BoardGame board = BoardGame.getInstance();
+	private static GameBoard board = GameBoard.getInstance();
 	ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();	
 	private int points;
 	private model.Hidable hiddenHidable = null;

@@ -7,10 +7,15 @@ import java.util.Observable;
 import javafx.scene.image.Image;
 import model.Direction;
 
+/**
+ * view of the helix enemy
+ * @author Matteo
+ *
+ */
 @SuppressWarnings("deprecation")
 public class Helix extends Character {
 	
-	public static final Double INITIAL_SPEED = model.Helix.HELIX_SPEED;
+	public static final Double SPEED = model.Helix.SPEED;
 	public static Map<Direction, String> imageFiles = new HashMap<>();
 	static {
 		utilities.LoadProperties.loadDirectionStringProperties(imageFiles, "resources/characters/helix.properties");
@@ -18,7 +23,7 @@ public class Helix extends Character {
 	
 	public Helix(int[] position)
 	{
-		super(position, new Image("/images/-helix/" + imageFiles.get(Direction.INITIAL) + ".png"), INITIAL_SPEED);
+		super(position, new Image("/images/-helix/" + imageFiles.get(Direction.INITIAL) + ".png"), SPEED);
 	}
 	
 	@Override

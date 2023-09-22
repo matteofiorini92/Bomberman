@@ -2,24 +2,27 @@ package controller;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.layout.StackPane;
 import model.Element;
 import view.BaseScene;
 
+/**
+ * instantiates a level with characters, board, timer, keyListeners etc.
+ * @author Matteo
+ *
+ */
 @SuppressWarnings("deprecation")
 public class Level implements Observer {
 	
@@ -28,14 +31,9 @@ public class Level implements Observer {
 	private List<model.Enemy> enemies;
 	
 	
-//	public void load (String level) {
-//		
-//		
-//	}
-	
 	public Level(String level) {
 		
-		this.level = level;
+		Level.level = level;
 		
 		softWalls = GameBoard.load(level);
 		enemies = Characters.load(level);
@@ -46,18 +44,18 @@ public class Level implements Observer {
 		
 		
 		enemies.stream().forEach(enemy -> enemy.startMoving());
-		// for (model.Enemy enemy : enemies) { enemy.startMoving(); }
+		
 		Timer.load();
-
+		model.Timer modelTimer = model.Timer.getInstance();
+		modelTimer.addObserver(this);
+		
+		model.BomberMan.getInstance().addObserver(this);
 		
 		// key listeners
-		
-//		LoadKeyListeners keyListeners = new LoadKeyListeners();
-		LoadKeyListeners keyListeners = LoadKeyListeners.getInstance();
 		BaseScene baseScene = BaseScene.getInstance();
 		
-		baseScene.setOnKeyPressed(keyListeners::handleKeyPressed);
-		baseScene.setOnKeyReleased(keyListeners::handleKeyReleased);
+		baseScene.setOnKeyPressed(KeyListeners::handleKeyPressed);
+		baseScene.setOnKeyReleased(KeyListeners::handleKeyReleased);
 		
 	}
 	
@@ -132,23 +130,47 @@ public class Level implements Observer {
 
 	public static String getCurrLevel() { return level; }
 
+	
+	/**
+	 * called when timer hits 0, bomberman dies or exits a level
+	 */
 	@Override
 	public void update(Observable o, Object arg)
 	{
-		model.BomberMan modelBm = model.BomberMan.getInstance();
-		view.BomberMan viewBm = view.BomberMan.getInstance();
-		model.BoardGame modelBoard = model.BoardGame.getInstance();
 		
-		ObservableList<Node> baseGroupChildren = view.BaseGroup.getInstance().getChildren();
-		baseGroupChildren.removeAll(baseGroupChildren);
+		Object[] args = (Object[]) arg;
 		
-		view.GameBody.getInstance().getChildren().remove(viewBm);
+		// update when time hits 0 or when bomberman dies
+		if (
+				(args[0].equals(model.ChangeType.TIME_DECREASE) && (int)args[1] == 0 )|| 
+				(args[0].equals(model.ChangeType.DIE) && o instanceof model.BomberMan)
+			) {
+			Runnable loadContinue = () -> {
+				Platform.runLater(() -> { // to have UI related operations all run on the JavaFX thread 				
+					End.load(EndOptions.CONTINUE);
+				});
+			};
+			
+			Executors.newSingleThreadScheduledExecutor().schedule(loadContinue, view.Character.TIME_FOR_DEATH, TimeUnit.MILLISECONDS);
+		}
 		
-//		model.BomberMan.getInstance().startNewLevel();
-		modelBm = model.BomberMan.getInstance();
-		modelBm.setPosition(model.BomberMan.INITIAL_POSITION);
-		modelBoard.setCell(modelBm, model.BomberMan.INITIAL_POSITION);
-//		Level.load("1-2");
-		new Level("1-2");
+	
+		// update when exit executes
+		if (args[0].equals(model.ChangeType.GET_OUT)) {
+			model.BomberMan modelBm = model.BomberMan.getInstance();
+			view.BomberMan viewBm = view.BomberMan.getInstance();
+			model.GameBoard modelBoard = model.GameBoard.getInstance();
+			
+			ObservableList<Node> baseGroupChildren = view.BaseGroup.getInstance().getChildren();
+			baseGroupChildren.removeAll(baseGroupChildren);
+			
+			view.GameBoard.getInstance().getChildren().remove(viewBm);
+			
+			modelBm = model.BomberMan.getInstance();
+			modelBm.setPosition(model.BomberMan.INITIAL_POSITION);
+			modelBoard.setCell(modelBm, model.BomberMan.INITIAL_POSITION);
+			new Level("1-2"); // TODO change this
+		}
 	}
+	
 }

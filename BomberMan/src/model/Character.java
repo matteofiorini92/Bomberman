@@ -11,7 +11,7 @@ public abstract class Character extends Element {
 	public static final int INVINCIBILITY_TIME = 3000;
 	public static final int INITIAL_TIME_FOR_MOVEMENT = 375;
 	
-	private static BoardGame board = model.BoardGame.getInstance();
+	private static GameBoard board = model.GameBoard.getInstance();
 	private Double speed;
 	private Direction direction;
 	private int lives;
@@ -52,9 +52,6 @@ public abstract class Character extends Element {
 	@SuppressWarnings("deprecation")
 	private void setInvincible(boolean isInvincible) { 
 		this.isInvincible = isInvincible;
-		if (this instanceof BomberMan) {
-			System.out.println("I'm invincible: " + this.isInvincible);
-		}
 		if (isInvincible) {
 			Object[] args = { model.ChangeType.BECOME_INVINCIBLE, null };
 			setChanged();

@@ -7,39 +7,46 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
+/**
+ * the board the game is played on
+ * @author Matteo
+ *
+ */
 @SuppressWarnings("deprecation")
-public class BoardGame extends Observable {
+public class GameBoard extends Observable {
 	
-	private static BoardGame board;
+	private static GameBoard board;
 	public static final int WIDTH = 17;
 	public static final int HEIGHT = 13;
 	private Element[][] cells = new Element[HEIGHT][WIDTH];
 	/**
 	 * Loading k:v pairs from resources/tiles/model.properties into Elements
 	 */
-	private static Map<String, Class<? extends Element>> Elements = new HashMap<>(); // using generics as every cell could be a number of different subclasses of Element
+	private static Map<String, Class<? extends Element>> Elements = new HashMap<>();
 	static {
 		utilities.LoadProperties.loadStringClassProperties(Elements, "resources/tiles/model.properties");
 	}
 	
-	private BoardGame() {}
+	private GameBoard() {}
 	
 	
 	/**
 	 * Singleton pattern
 	 * @return only existing instance of board (creates one if it doesn't already exist)
 	 */
-	public static BoardGame getInstance(){
+	public static GameBoard getInstance(){
 		if (board == null) {
-			board = new BoardGame();
+			board = new GameBoard();
 		}
 		return board;
 	}
 	
-	public void fillEmptyBoard(String levelNumber) {
-		/**
-		 * initialize board
-		 */
+	
+	/**
+	 * fill in the board with walls, soft walls and empty tiles
+	 * @param levelNumber the level of the board
+	 */
+	public void fillBoard(String levelNumber) {
 		String desc;
 		String levelFilePath = "src/levels/" + levelNumber + ".txt";
 		String line;
@@ -73,8 +80,6 @@ public class BoardGame extends Observable {
 	}
 	
 
-	public int getWidth() { return WIDTH; }
-	public int getHeight() { return HEIGHT; }
 	public Element[][] getCells() { return cells; }
 	public Element getCell(int[] coordinates) { return cells[coordinates[0]][coordinates[1]]; }
 	public void setCell(Element e, int[] coordinates) { this.cells[coordinates[0]][coordinates[1]] = e; }
@@ -83,6 +88,9 @@ public class BoardGame extends Observable {
 	
 	// debugging purposes only
 	
+	/**
+	 * print the current state of the board (initials only)
+	 */
 	public void print() {
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < WIDTH; j++) {
@@ -94,6 +102,10 @@ public class BoardGame extends Observable {
 		}
 		System.out.println();
 	}
+	
+	/**
+	 * print the current state of the board (whole class name)
+	 */
 	public void printExt() {
 		for (int i = 0; i < HEIGHT; i++) {
 			for (int j = 0; j < WIDTH; j++) {
