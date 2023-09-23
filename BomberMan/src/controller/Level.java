@@ -158,6 +158,7 @@ public class Level implements Observer {
 	
 		// update when exit executes
 		if (args[0].equals(model.ChangeType.GET_OUT)) {
+			int currLevel = NewGame.levelConverter(level);
 			model.BomberMan modelBm = model.BomberMan.getInstance();
 			view.BomberMan viewBm = view.BomberMan.getInstance();
 			model.GameBoard modelBoard = model.GameBoard.getInstance();
@@ -170,7 +171,13 @@ public class Level implements Observer {
 			modelBm = model.BomberMan.getInstance();
 			modelBm.setPosition(model.BomberMan.INITIAL_POSITION);
 			modelBoard.setCell(modelBm, model.BomberMan.INITIAL_POSITION);
-			new Level("1-2"); // TODO change this
+			if (currLevel < NewGame.FINAL_LEVEL) {
+				new Level(NewGame.levelConverter(++currLevel));
+			} 
+			else {
+				End.load(EndOptions.VICTORY);
+			}
+			
 		}
 	}
 	

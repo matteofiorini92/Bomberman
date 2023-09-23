@@ -18,6 +18,7 @@ import view.BaseGroup;
 public abstract class NewGame {
 	
 	public static final int INITIAL_LEVEL = 1;
+	public static final int FINAL_LEVEL = 2; // to be changed when a new level is implemented
 	
 	public static void load() {
 		clearBoard();
@@ -44,7 +45,7 @@ public abstract class NewGame {
 		Properties levelsProperties = new Properties();
 		try (FileInputStream input = new FileInputStream("resources/levels.properties")) {
 			levelsProperties.load(input);
-			String currLevel = (String)levelsProperties.get(Integer.toString(1));
+			String currLevel = (String)levelsProperties.get(Integer.toString(level));
 			
 			return currLevel;
 		} catch (IOException e) {
