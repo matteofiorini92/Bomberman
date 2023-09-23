@@ -37,7 +37,7 @@ public abstract class Character extends Element {
 	{
 		super(image);
 		this.speed = speed;
-		this.timeForMovement = model.Character.INITIAL_TIME_FOR_MOVEMENT / this.speed;
+		this.timeForMovement = model.Character.TIME_FOR_MOVEMENT / this.speed;
 		StackPane.setMargin(this, new Insets(position[0] * Item.ITEM_HEIGHT - HEIGHT_DIFFERENCE, 0, 0, position[1] * Item.ITEM_WIDTH));
 		
 	}
@@ -147,7 +147,7 @@ public abstract class Character extends Element {
 	
 	private void changeSpeed(Double newSpeed) {
 		this.speed = newSpeed;
-		this.timeForMovement = model.Character.INITIAL_TIME_FOR_MOVEMENT / newSpeed;
+		this.timeForMovement = model.Character.TIME_FOR_MOVEMENT / newSpeed;
 		controller.KeyListeners.updateThrottleDelay();
 	}
 	

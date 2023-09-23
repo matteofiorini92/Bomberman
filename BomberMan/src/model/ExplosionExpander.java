@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * model of explosion expander power up
+ * @author Matteo
+ *
+ */
 public class ExplosionExpander extends PowerUp {
 	
 	public static final int EXPLOSION_EXPANDER_POINTS = 200;
@@ -10,6 +15,9 @@ public class ExplosionExpander extends PowerUp {
 		super(EXPLOSION_EXPANDER_POINTS);
 	}
 
+	/**
+	 * increase bomberman range if it's not already at its max
+	 */
 	@Override
 	public void execute()
 	{

@@ -16,14 +16,14 @@ public abstract class KeyListeners {
 	private static view.GameBoard viewBoard = view.GameBoard.getInstance();
 	
 	private static long lastKeyPressTime = 0;
-	private static Double throttleDelay = model.Character.INITIAL_TIME_FOR_MOVEMENT / model.BomberMan.getInstance().getSpeed();
+	private static Double throttleDelay = model.Character.TIME_FOR_MOVEMENT / model.BomberMan.getInstance().getSpeed();
 	private static boolean keyHeld = false;
 	
 	/**
 	 * to update the throttle delay when bomberman speed changes
 	 */
 	public static void updateThrottleDelay() {
-		throttleDelay = model.Character.INITIAL_TIME_FOR_MOVEMENT / model.BomberMan.getInstance().getSpeed();
+		throttleDelay = model.Character.TIME_FOR_MOVEMENT / model.BomberMan.getInstance().getSpeed();
 	}
 
 	public static void handleKeyPressed(KeyEvent event) {
@@ -48,8 +48,7 @@ public abstract class KeyListeners {
 	    	if (event.getCode() == KeyCode.SPACE && modelBm.getBombs() > 0 && !(model.GameBoard.getInstance().getCell(model.BomberMan.getInstance().getPosition()) instanceof model.Bomb)) {
 		    
 	    		view.BaseGroup baseGroup = view.BaseGroup.getInstance();
-		    	int currBombs = modelBm.getBombs();
-		    	model.Bomb modelBomb = new model.Bomb(currBombs, modelBm.getPosition());
+		    	model.Bomb modelBomb = new model.Bomb(modelBm.getPosition());
 		    	view.Bomb viewBomb = new view.Bomb();
 		    	modelBomb.addObserver(viewBomb);
 		    	modelBm.decBombs();

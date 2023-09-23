@@ -9,6 +9,11 @@ import java.util.concurrent.TimeUnit;
 
 import javafx.application.Platform;
 
+/**
+ * model of an enemy character
+ * @author Matteo
+ *
+ */
 public abstract class Enemy extends Character implements Hiding {
 	private static List<Enemy> aliveEnemies = new ArrayList<Enemy>();
 	private static GameBoard board = GameBoard.getInstance();
@@ -23,6 +28,7 @@ public abstract class Enemy extends Character implements Hiding {
 		aliveEnemies.add(this);
 	}
 	
+	public static List<Enemy> getAliveEnemies() { return aliveEnemies; }
 	public int getPoints() { return points;	}
 	
 	public model.Hidable getHiddenHidable()	{ return hiddenHidable; }
@@ -31,24 +37,26 @@ public abstract class Enemy extends Character implements Hiding {
 	@Override
 	public boolean isHidingSomething() { return hiddenHidable != null; }
 	
-	@Override
-	public void showHiddenHidable()
-	{
-		// TODO Auto-generated method stub
-	}
-	
+	/**
+	 * remove enemy from list of alive enemies, drops a power up if needed, adds point to bomberman
+	 */
 	@Override
 	public void die() {
 		super.die();
 		aliveEnemies.remove(this);
 		if (isHidingSomething()) {
-			((Item)hiddenHidable).setPosition(getPosition()); // update the position of the power up to the enemy's current position
+			((Item)hiddenHidable).setPosition(this.getPosition()); // update the position of the power up to the enemy's current position
 			board.setCell((Element)hiddenHidable, this.getPosition());
 		}
-		model.Player.getInstance().addPoints(this.getPoints());
-		executor.shutdownNow(); //stop moving when the enemy dies
+		model.BomberMan.getInstance().addPoints(this.points);
+		executor.shutdownNow();
 	}
 	
+	
+	
+	/**
+	 * enemy start moving in a random direction
+	 */
 	public void startMoving() {
 		boolean[] needsNewDirection = { true };
 		Direction[] randomDirection = { getRandomDirection(this) };
@@ -61,10 +69,10 @@ public abstract class Enemy extends Character implements Hiding {
 			});
 		};
 
-		executor.scheduleAtFixedRate(moveTask, 0, (long)(INITIAL_TIME_FOR_MOVEMENT / this.getSpeed()), TimeUnit.MILLISECONDS);
+		executor.scheduleAtFixedRate(moveTask, 0, (long)(TIME_FOR_MOVEMENT / this.getSpeed()), TimeUnit.MILLISECONDS);
 	}
 	
-	public static Direction getRandomDirection(Enemy enemy) { // public?
+	private static Direction getRandomDirection(Enemy enemy) { // public?
 		// Class<Direction> directionClass;
 		Element[][] cells = board.getCells();
 		int[] currPosition = enemy.getPosition();
@@ -78,7 +86,7 @@ public abstract class Enemy extends Character implements Hiding {
 		return Direction.RIGHT;
     }
 	
-	public static List<Direction> getAvailableDirections(int[] currPosition, Element[][] cells) { // public ?
+	private static List<Direction> getAvailableDirections(int[] currPosition, Element[][] cells) { // public ?
 		List<Direction> availableDirection = new ArrayList<Direction>();
 		int coordinateX = currPosition[1];
 		int coordinateY = currPosition[0];
@@ -99,6 +107,5 @@ public abstract class Enemy extends Character implements Hiding {
 		return availableDirection;
 	}
 	
-	public static List<Enemy> getAliveEnemies() { return aliveEnemies;	}
 	
 }

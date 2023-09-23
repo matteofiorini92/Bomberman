@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * model of accelerator power up
+ * @author Matteo
+ *
+ */
 public class Accelerator extends PowerUp {
 	
 	public static final int ACCELERATOR_POINTS = 400;
@@ -10,6 +15,9 @@ public class Accelerator extends PowerUp {
 		super(ACCELERATOR_POINTS);
 	}
 	
+	/**
+	 * increase speed by 0.5 if it's not already at it's max
+	 */
 	@Override
 	public void execute() {
 		super.execute();

@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * model of Player
+ * @author Matteo
+ *
+ */
 public class Player {
 	private static Player player;
 	public static final int INITIAL_SCORE = 0;
@@ -13,6 +18,10 @@ public class Player {
 		setScore(INITIAL_SCORE);
 	}
 	
+	/**
+	 * singleton pattern
+	 * @return the only existing instance of Player, or creates one
+	 */
 	public static Player getInstance() { 
 		if (player == null) {
 			player = new Player();

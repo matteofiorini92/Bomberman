@@ -6,10 +6,21 @@ import java.util.concurrent.TimeUnit;
 
 import javafx.application.Platform;
 
+/**
+ * model of character class
+ * @author Matteo
+ *
+ */
 public abstract class Character extends Element {
 	
+	/**
+	 * time a character becomes invincible when losing a life (or at the beginning of a level for bomberman)
+	 */
 	public static final int INVINCIBILITY_TIME = 3000;
-	public static final int INITIAL_TIME_FOR_MOVEMENT = 375;
+	/**
+	 * time it takes a character to move (affected by its speed)
+	 */
+	public static final int TIME_FOR_MOVEMENT = 375;
 	
 	private static GameBoard board = model.GameBoard.getInstance();
 	private Double speed;
@@ -18,7 +29,12 @@ public abstract class Character extends Element {
 	private boolean isInvincible;
 	private Element tempStorage;
 	
-	
+	/**
+	 * constructor
+	 * @param position the initial position of a character
+	 * @param speed the initial speed of a character. can change for bomberman
+	 * @param lives initial number of lives of a character
+	 */
 	public Character(int[] position, Double speed, int lives)
 	{
 		super(position);
@@ -40,15 +56,22 @@ public abstract class Character extends Element {
 	public boolean isInvincible() {	return isInvincible; }
 	
 	/**
+	 * used to get the Element a character is temporarly storing (e.g. power ups)
 	 * @return the tempStorage
 	 */
 	public Element getTempStorage()	{ return tempStorage; }
 
 	/**
+	 * used to set the Element a character is temporarly storing (e.g. power ups)
 	 * @param tempStorage the tempStorage to set
 	 */
 	public void setTempStorage(Element tempStorage) { this.tempStorage = tempStorage; }
 	
+	
+	/**
+	 * set isInvincible for the character to true/false, for instance when a character dies 
+	 * @param isInvincible
+	 */
 	@SuppressWarnings("deprecation")
 	private void setInvincible(boolean isInvincible) { 
 		this.isInvincible = isInvincible;
@@ -59,6 +82,11 @@ public abstract class Character extends Element {
 		}
 	}
 	
+	/**
+	 * move the character
+	 * @param direction the direction the character is moving in
+	 * @return true if the character has moved, false otherwise
+	 */
 	@SuppressWarnings("deprecation")
 	public boolean move(Direction direction) {
 		boolean hasMoved = true;
@@ -87,9 +115,6 @@ public abstract class Character extends Element {
 			break;
 		}
 		
-		
-
-
 		newCell = board.getCell(newPosition);
 		boolean isOut = false;
 		
@@ -116,8 +141,6 @@ public abstract class Character extends Element {
 			isOut = ((model.Exit)newCell).getOut();
 		}
 		
-		
-		// probably needs to be improved
 		
 		if (!isOut) {
 			if (newCell instanceof EmptyTile) {
@@ -153,7 +176,9 @@ public abstract class Character extends Element {
 		return hasMoved;
 	}
  
-	
+	/**
+	 * decrease the amount of lives of a character. if it reaches 0, the character dies.
+	 */
 	@SuppressWarnings("deprecation")
 	public void loseLife() {
 		if (!isInvincible) {
@@ -169,6 +194,9 @@ public abstract class Character extends Element {
 		}
 	}
 
+	/**
+	 * make the character invincible. schedule its return to being mortal after INVINCIBILITY_TIME milliseconds
+	 */
 	public void becomeInvincible() {
 		setInvincible(true);
 		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
@@ -178,11 +206,11 @@ public abstract class Character extends Element {
 			});
 		};
 		executor.schedule(becomeMortal, INVINCIBILITY_TIME, TimeUnit.MILLISECONDS);
-//		Object[] args = { model.ChangeType.LOSE_LIFE, lives };
-//		setChanged();
-//		notifyObservers(args);
 	}
 	
+	/**
+	 * remove a character from the game board
+	 */
 	@SuppressWarnings("deprecation")
 	public void die() {
 		board.setCell(new EmptyTile(getPosition()), getPosition());

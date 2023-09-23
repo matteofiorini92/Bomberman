@@ -1,5 +1,11 @@
 package model;
 
+/**
+ * model of a soft wall (wall that can be destroyed by a bomb)
+ * implements Hiding as soft walls can hide power ups and exit
+ * @author Matteo
+ *
+ */
 public class SoftWall extends Tile implements Hiding {
 	
 	public static final TileType SOFT_WALL = TileType.SOFT_WALL;
@@ -17,6 +23,9 @@ public class SoftWall extends Tile implements Hiding {
 	@Override
 	public void setHiddenHidable(model.Hidable hiddenHidable) {	this.hiddenHidable = hiddenHidable; }
 	
+	/**
+	 * destroy the soft wall due to a bomb's explosion
+	 */
 	@SuppressWarnings("deprecation")
 	public void destroy() {
 		int[] position = this.getPosition();
@@ -31,13 +40,6 @@ public class SoftWall extends Tile implements Hiding {
 
 	@Override
 	public boolean isHidingSomething() { return hiddenHidable != null; }
-
-	@Override
-	public void showHiddenHidable()
-	{
-		// TODO Auto-generated method stub
-		
-	}
 
 
 }

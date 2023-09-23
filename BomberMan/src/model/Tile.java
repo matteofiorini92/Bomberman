@@ -1,6 +1,12 @@
 package model;
 
-public abstract class Tile extends Item {
+/**
+ * model of Tile element
+ * every tile has a type, that is one of the values of the TileType enum
+ * @author Matteo
+ *
+ */
+public abstract class Tile extends Element {
 	
 	private TileType type;
 	private String label;

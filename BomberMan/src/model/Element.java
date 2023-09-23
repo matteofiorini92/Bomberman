@@ -3,16 +3,12 @@ package model;
 import java.util.Observable;
 
 /**
- * 
+ * model of a generic element of the game (e.g. characters, items etc)
  * @author Matteo
- *
  */
 
 @SuppressWarnings("deprecation")
 public abstract class Element extends Observable {
-	/**
-	 * 
-	 */
 	
 	private int[] position = new int[2];
 	private boolean disappearOnWalkOn = false;
@@ -24,32 +20,12 @@ public abstract class Element extends Observable {
 
 	public int[] getPosition() {	return position; }
 	public void setPosition(int[] position) { 
-//		if (this instanceof model.BomberMan) {
-//			System.out.println(position[0]);
-//			System.out.println(position[1]);
-//		}
 		this.position = position; 
 	}
-//	public void setPosition(int[] prevPosition, int[] newPosition) { this.position = newPosition; }
 
-	/**
-	 * @return the disappearOnWalkOn
-	 */
 	public boolean disappearsOnWalkOn() { return disappearOnWalkOn; }
-
-	/**
-	 * @param disappearOnWalkOn the disappearOnWalkOn to set
-	 */
 	public void setDisappearOnWalkOn(boolean disappearOnWalkOn) { this.disappearOnWalkOn = disappearOnWalkOn; }
-
-	/**
-	 * @return the disappearOnWalkOff
-	 */
 	public boolean disappearsOnWalkOff() {	return disappearOnWalkOff; }
-
-	/**
-	 * @param disappearOnWalkOff the disappearOnWalkOff to set
-	 */
 	public void setDisappearOnWalkOff(boolean disappearOnWalkOff) { this.disappearOnWalkOff = disappearOnWalkOff; }
 	
 }

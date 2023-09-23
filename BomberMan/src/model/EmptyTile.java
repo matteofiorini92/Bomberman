@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * model of an empty tile of the board
+ * @author Matteo
+ *
+ */
 public class EmptyTile extends Tile {
 	
 	public static final TileType EMPTY_TILE = TileType.EMPTY_TILE;

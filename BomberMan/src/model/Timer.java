@@ -8,6 +8,12 @@ import java.util.concurrent.TimeUnit;
 
 import javafx.application.Platform;
 
+/**
+ * model of timer
+ * 
+ * @author Matteo
+ *
+ */
 @SuppressWarnings("deprecation")
 public class Timer extends Observable {
 
@@ -24,6 +30,10 @@ public class Timer extends Observable {
 		reset();
 	}
 	
+	/**
+	 * singleton pattern
+	 * @return the only existing instance of timer, or creates one
+	 */
 	public static Timer getInstance() {
 		if (timer == null) {
 			timer = new Timer();
@@ -31,10 +41,16 @@ public class Timer extends Observable {
 		return timer;
 	}
 	
+	/**
+	 * resets the timer to its INITIAL_TIME
+	 */
 	public void reset() {
 		currTime = INITIAL_TIME;
 	}
 	
+	/**
+	 * starts the timer
+	 */
 	public void start() {
 		Runnable decrease = () -> {
 			Platform.runLater(() -> { // to have UI related operations all run on the JavaFX thread 				
@@ -56,6 +72,9 @@ public class Timer extends Observable {
 		}
 	}
 	
+	/**
+	 * stops the timer
+	 */
 	public void stop() {
 		future.cancel(true);
 	}

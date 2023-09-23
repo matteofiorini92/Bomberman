@@ -12,6 +12,11 @@ import java.util.function.Predicate;
 
 import javafx.application.Platform;
 
+/**
+ * model of bomb item
+ * @author Matteo
+ *
+ */
 public class Bomb extends Item {
 	
 	public static final int TIME_FOR_EXPLOSION = 3000;
@@ -21,7 +26,11 @@ public class Bomb extends Item {
 	private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 	private ScheduledFuture<?> future;
 	
-	public Bomb(int range, int[] position)
+	/**
+	 * every bomb is created with the bomberman's position and range at time of creation
+	 * @param position
+	 */
+	public Bomb(int[] position)
 	{
 		super(position);
 		board.setCell(this, position);
@@ -45,6 +54,13 @@ public class Bomb extends Item {
 		notifyObservers(args);
 	}
 	
+	/**
+	 * makes a bomb explode
+	 * explosion is stopped by either walls, characters or other bombs
+	 * if wall is a softwall, it's destroyed
+	 * characters lose a life
+	 * bombs explode immediately
+	 */
 	@SuppressWarnings("deprecation")
 	public void explode() {
 		Platform.runLater(() -> { // to have UI related operations all run on the JavaFX thread
@@ -67,11 +83,7 @@ public class Bomb extends Item {
 			
 			// simplistic. if the bomberman never leaves the cell, the cell shouldn't become empty.
 			int[] bombPosition = this.getPosition();
-			
-			Platform.runLater(() -> {			
-				board.setCell(new EmptyTile(bombPosition), bombPosition);
-			});
-			
+			board.setCell(new EmptyTile(bombPosition), bombPosition);
 			model.BomberMan.getInstance().incBombs();
 			
 			String[][] simplifiedSurroundings = simplifySurroundings(surroundings);
@@ -128,21 +140,7 @@ public class Bomb extends Item {
 		
 		String[][] result = new String[range*2+1][range*2+1];
 		result[range][range] = "ex"; //explosion is at the centre of the grid
-		
-		
-		
-		/**
-		 * could use this here as well ?
-		 * 		Object[][] directions = {
-				{Direction.UP, 0, -1},
-				{Direction.DOWN, 0, 1},
-				{Direction.LEFT, -1, 0},
-				{Direction.RIGHT, 1, 0}
-		};
-		 */
-		
-		
-		
+	
 		List<Element> elements;
 		Predicate<Element> isWallOrSoftWall = element ->
         	element instanceof Wall || element instanceof SoftWall;
