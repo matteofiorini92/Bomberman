@@ -31,9 +31,7 @@ public class Welcome extends StackPane {
     public Welcome() {
     	
     	
-    	/**
-    	 *  big welcome greeting
-    	 */
+    	// welcome greeting
     	Text welcomeText = new Text();
         Font.loadFont(getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf"), 50);
         Font welcomeFont = Font.font("Press Start 2P", 50);
@@ -52,11 +50,8 @@ public class Welcome extends StackPane {
     	this.getChildren().add(welcomeText); 
 		
     	
-    	/**
-    	 * buttons
-    	 * new player always
-    	 * existing player only if player profiles already exist
-    	 */
+    	// buttons: new player always, existing player only if player profiles already exist
+    	
     	createProfileButton(prefHeight, "New Player", 0.0, "NEW_PLAYER", controller.NewProfile::load);
 
     	if (existingPlayers()) { 

@@ -24,7 +24,7 @@ public abstract class End extends StackPane {
 	public static final int BUTTON_HEIGHT = 40;
 
 	private Double prefHeight;
-	private Double prefWidth;
+//	private Double prefWidth;
 	
 	public End(
 			String mainText,
@@ -40,7 +40,7 @@ public abstract class End extends StackPane {
 		this.setPrefHeight(scene.getHeight());
 		this.setPrefWidth(scene.getWidth());
 		prefHeight = this.getPrefHeight();
-		prefWidth = this.getPrefWidth();
+//		prefWidth = this.getPrefWidth();
 		this.setAlignment(Pos.TOP_CENTER);
 		Font.loadFont(getClass().getResourceAsStream("/fonts/PressStart2P-Regular.ttf"), 50);
 		

@@ -47,7 +47,25 @@ public class BomberMan extends Character {
 	public void setRange(int range)	{ this.range = range; }
 	public void incRange() { range++; }
 	public void decRange() { range--; }
+	public int  getScore() { return score; }
 	
+	@SuppressWarnings("deprecation")
+	public void addPoints(int points) {
+		score += points;
+		Object[] args = { model.ChangeType.CHANGE_POINTS, score };
+		setChanged();
+		notifyObservers(args);
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void losePoints(int points) {
+		int partial = score - points;
+		points = partial > 0 ? partial : 0;
+		Object[] args = { model.ChangeType.CHANGE_POINTS, score };
+		setChanged();
+		notifyObservers(args);
+	}
+
 	@SuppressWarnings("deprecation")
 	public void incSpeed(Double increase) { 
 		Double newSpeed = getSpeed() + increase;
@@ -66,11 +84,6 @@ public class BomberMan extends Character {
 		notifyObservers(args);
 	}
 
-	public void addPoints(int points) { score += points; }
-	public void losePoints(int points) {
-		int partial = score - points;
-		points = partial > 0 ? partial : 0;
-	}
 	
 
 }
