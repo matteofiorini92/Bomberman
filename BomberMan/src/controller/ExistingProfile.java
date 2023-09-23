@@ -66,6 +66,7 @@ public abstract class ExistingProfile {
 	/**
 	 * save changes to the existing profile
 	 */
+	
 	public static void save() {
 		
 		view.BaseGroup baseGroup = view.BaseGroup.getInstance();
@@ -103,12 +104,29 @@ public abstract class ExistingProfile {
 			e.printStackTrace();
 		}
 		
-		
 	}
 	
-	
-	
-//	public LoadExistingProfileScreen(String nickname) {
-//		
-//	}
+	/**
+	 * save the updated stats of the player in the relevant file
+	 */
+	public static void updateStats() {
+		model.Player player = model.Player.getInstance();
+		try {
+			
+			File existingProfile = new File("resources/playerProfiles/" + player.getName() + ".txt");
+			
+			FileWriter fileWriter = new FileWriter(existingProfile);
+			fileWriter.write(
+				player.getAvatar().toString() + " " +
+				player.getWins() + " " +
+				player.getLosses() + " " +
+				player.getScore()
+			);
+			
+			fileWriter.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

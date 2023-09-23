@@ -41,14 +41,15 @@ public class Player {
 	
 	public int getWins() { return wins; }
 	public void setWins(int wins) {	Player.wins = wins; }
+	public void addWin() { wins++; }
 	
 	public int getLosses() { return losses;	}
 	public void setLosses(int losses) {	Player.losses = losses; }
+	public void addLoss() { losses++; }
 	
 	public Avatar getAvatar() {	return avatar; }
 	public void setAvatar(Avatar avatar) { Player.avatar = avatar; }
 
 	public void addPoints(int points) { totalScore += points; }
-	public void losePoints(int points) { totalScore -= points; }
 	
 }

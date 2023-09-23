@@ -27,11 +27,15 @@ public class End {
 				boardEnd = new view.Boards.Continue();
 				break;
 			case VICTORY:
-				// TODO update player statistics
+				model.Player.getInstance().addWin();
+				model.Player.getInstance().addPoints(model.BomberMan.getInstance().getScore());
+				ExistingProfile.updateStats();
 				boardEnd = new view.Boards.Victory();
 				break;
 			case DEFEAT:
-				// TODO update player statistics
+				model.Player.getInstance().addLoss();
+				model.Player.getInstance().addPoints(model.BomberMan.getInstance().getScore());
+				ExistingProfile.updateStats();
 				boardEnd = new view.Boards.Defeat();
 				break;
 			default:

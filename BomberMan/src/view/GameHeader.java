@@ -1,6 +1,5 @@
 package view;
 
-import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -11,10 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Paint;
 
 /**
  * view of the game header, with lives, timer, points etc.
@@ -50,16 +46,16 @@ public class GameHeader extends StackPane implements Observer {
 	}
 
 	/**
-	 * resets the timer to its initial state. used when starting new levels
+	 * resets the timer to its initial state. used when starting a level
 	 */
 	public void resetTimer() {
 		ObservableList<Node> children = this.getChildren();
 		children.removeAll(children);
 		
 		children.add(baseHeader);
+		
 		setLives(model.BomberMan.getInstance().getLives());
 		children.add(lives);
-		GameHeader.setMargin(lives, new Insets(27, 0, 0, 110));
 		
 		setScore(model.BomberMan.getInstance().getScore());
 		children.add(score);
@@ -70,6 +66,7 @@ public class GameHeader extends StackPane implements Observer {
 
 	private void setLives(int lives) {
 		this.lives.setImage(new Image("images/-board-header/-numbers/" + lives + ".png"));
+		GameHeader.setMargin(this.lives, new Insets(27, 0, 0, 110));
 	}
 	
 	private void setScore(int score) {
@@ -86,7 +83,7 @@ public class GameHeader extends StackPane implements Observer {
 			
 		}
 		this.score.getChildren().add(tempPane);
-		GameHeader.setMargin(this.score, new Insets(27, 0, 0, 365 - 24*scoreAsArray.length));
+		GameHeader.setMargin(this.score, new Insets(27, 0, 0, 365 - 24 * scoreAsArray.length));
 	}
 	
 	
