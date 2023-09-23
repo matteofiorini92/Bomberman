@@ -3,9 +3,6 @@ package controller;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
-
 /**
  * to load the game board with its cells and configuration
  * @author Matteo

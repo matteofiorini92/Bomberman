@@ -66,6 +66,9 @@ public class GameBoard extends StackPane implements Observer {
 		tiles[position[0]][position[1]] = item;
 	}
 	
+	/**
+	 * OO pattern
+	 */
 	@Override
 	public void update(Observable o, Object arg)
 	{

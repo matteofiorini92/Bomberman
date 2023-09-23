@@ -12,6 +12,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import view.BaseScene;
 
+/**
+ * view of a final board (e.g. continue, defeat, victory)
+ * @author Matteo
+ *
+ */
 public abstract class End extends StackPane {
 
 	

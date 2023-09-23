@@ -26,6 +26,10 @@ public class Helix extends Character {
 		super(position, new Image("/images/-helix/" + imageFiles.get(Direction.INITIAL) + ".png"), SPEED);
 	}
 	
+	/**
+	 * OO pattern
+	 * calls the character update method for move, die, become invincible etc.
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		super.update(o, arg, imageFiles);

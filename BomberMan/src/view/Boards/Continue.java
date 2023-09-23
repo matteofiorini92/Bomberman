@@ -2,6 +2,11 @@ package view.Boards;
 
 import controller.EndOptions;
 
+/**
+ * view of continue board
+ * @author Matteo
+ *
+ */
 public class Continue extends End {
 	
 	public Continue() {

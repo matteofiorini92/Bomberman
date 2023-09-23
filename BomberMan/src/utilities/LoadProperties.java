@@ -7,8 +7,18 @@ import java.util.Set;
 
 import model.Element;
 
+/**
+ * utility class to load properties from file
+ * @author Matteo
+ *
+ */
 public class LoadProperties {
 	
+	/**
+	 * loads properties from a file
+	 * @param inputMap the map with a string (description) as key, and the relevant class as value
+	 * @param filePath the file path where properties are stored
+	 */
 	public static void loadStringClassProperties(Map<String, Class<? extends Element>> inputMap, String filePath)
 	{
 		Properties properties = new Properties();
@@ -17,7 +27,8 @@ public class LoadProperties {
             Set<Object> keys = properties.keySet();
             for (Object key : keys) {
             	String className = (String) properties.get(key);
-            	Class<? extends Element> c = (Class<? extends Element>) Class.forName(className);
+            	@SuppressWarnings("unchecked")
+				Class<? extends Element> c = (Class<? extends Element>) Class.forName(className);
             	inputMap.put((String) key, c);
             }
         } catch (Exception e) {
@@ -25,6 +36,11 @@ public class LoadProperties {
         }
 	}
 	
+	/**
+	 * loads properties from a file
+	 * @param inputMap the map with a string (description) as key, and a string as value (used to load images for explosions for example)
+	 * @param filePath the file path where properties are stored
+	 */
 	public static void loadStringStringProperties(Map<String, String> inputMap, String filePath) {
 		Properties properties = new Properties();
         try (FileInputStream input = new FileInputStream(filePath)) {
@@ -39,7 +55,11 @@ public class LoadProperties {
         }
 	}
 	
-	
+	/**
+	 * loads properties from a file
+	 * @param inputMap the map with a direction as key, and a string as value (used to load images for characters)
+	 * @param filePath the file path where properties are stored
+	 */
 	public static void loadDirectionStringProperties(Map<model.Direction, String> inputMap, String filePath) {
 		Properties properties = new Properties();
         try (FileInputStream input = new FileInputStream(filePath)) {

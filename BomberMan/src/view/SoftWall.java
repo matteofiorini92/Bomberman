@@ -10,8 +10,13 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 
+/**
+ * view of a softwall tile
+ * @author Matteo
+ *
+ */
 @SuppressWarnings("deprecation")
-public class SoftWall extends Item {
+public class SoftWall extends Tile {
 	
 	public static final int SOFT_WALL_ANIMATION = 500;
 	public static final int SOFT_WALL_EXPLOSION = 1500;
@@ -25,10 +30,14 @@ public class SoftWall extends Item {
 	
 	public SoftWall(String desc)
 	{
-		super(null);
+		super(desc, null);
 		startAnimation(desc);
 	}
 	
+	/**
+	 * constructor
+	 * @param desc the short description of the softwall, to handle possible shadows
+	 */
 	private void startAnimation(String desc) {
 		String[] files = imageFiles.get(desc).split("\\s+");
 		for (int frame = 0; frame < files.length; frame++) {
@@ -43,6 +52,10 @@ public class SoftWall extends Item {
 		timeline.play();
 	}
 
+	/**
+	 * OO pattern
+	 * called when a softwall is destroyed by a bomb exploding
+	 */
 	@Override
 	public void update(Observable o, Object arg)
 	{
@@ -52,9 +65,8 @@ public class SoftWall extends Item {
 		timeline.getKeyFrames().clear();
 		timeline = new Timeline();
 		
-		/**
-		 * Soft wall explosion animation
-		 */
+		
+		// Soft wall explosion animation
 		
 		String[] files = imageFiles.get("swe").split("\\s+");
 		
@@ -72,9 +84,7 @@ public class SoftWall extends Item {
 		int y = softWallPosition[0];
 		int x = softWallPosition[1];
 		
-		/**
-		 * Last frame of animation (after the softwall exploded)
-		 */
+		// Last frame of animation (after the softwall exploded)
 		
 		KeyFrame keyFrame = new KeyFrame(Duration.millis(SOFT_WALL_EXPLOSION), event -> {
 			
@@ -127,8 +137,6 @@ public class SoftWall extends Item {
 			}
 			
 		});
-		
-
 		timeline.getKeyFrames().add(keyFrame);
 		timeline.play();
 		

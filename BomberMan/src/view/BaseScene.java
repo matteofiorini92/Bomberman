@@ -3,6 +3,11 @@ package view;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 
+/**
+ * view of the base scene to which the base group is added
+ * @author Matteo
+ *
+ */
 public class BaseScene extends Scene {
 	
 	public static BaseScene baseScene;

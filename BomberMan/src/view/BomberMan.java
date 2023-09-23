@@ -38,6 +38,10 @@ public class BomberMan extends Character {
 		return bomberMan;
 	}
 	
+	/**
+	 * OO pattern
+	 * calls the character update method for move, die, become invincible etc.
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		super.update(o, arg, imageFiles);

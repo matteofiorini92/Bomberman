@@ -114,6 +114,7 @@ public class Level implements Observer {
 			BufferedReader reader = new BufferedReader(new FileReader(levelFilePath));
 			line = reader.readLine();
 			while (line != null) {
+				@SuppressWarnings("unchecked")
 				Class<? extends model.PowerUp> powerUp = (Class<? extends model.PowerUp>) Class.forName("model."+line);		// get class from name of the class
 				model.PowerUp powerUpInstance = (model.PowerUp) powerUp.getDeclaredConstructor().newInstance();				// instantiate a new object of that class
 	            result.add(powerUpInstance);

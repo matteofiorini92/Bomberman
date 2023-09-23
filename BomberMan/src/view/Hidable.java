@@ -9,6 +9,11 @@ import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
+/**
+ * the view of hidable objects (e.g. power ups and exit)
+ * @author Matteo
+ *
+ */
 @SuppressWarnings("deprecation")
 public class Hidable extends Item {
 	public static final int POWER_UP_ANIMATION = 100;
@@ -18,6 +23,11 @@ public class Hidable extends Item {
 	}
 	private Timeline timeline = new Timeline();
 	
+	/**
+	 * constructor. called when the hiding object is destroyed/dies
+	 * @param modelHidable the corresponding model hidable object
+	 * starts the object animation when instantiated (or simply sets the image if hidable is the exit)
+	 */
 	public Hidable(model.Hidable modelHidable)
 	{		
 		super(null);
@@ -25,8 +35,6 @@ public class Hidable extends Item {
 		
 	}
 	
-	// new ImageView(new Image("images/-power-ups/" + imageFiles.get(modelPowerUp.getClass().getName()).split("\\s+")[0] + ".png"))
-
 	private void startAnimation(model.Hidable modelHidable) {
 		
 		
@@ -57,6 +65,10 @@ public class Hidable extends Item {
 	}
 	
 	
+	/**
+	 * OO pattern
+	 * called when object is hidden
+	 */
 	@Override
 	public void update(Observable o, Object arg)
 	{

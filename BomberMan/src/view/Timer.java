@@ -7,6 +7,11 @@ import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * view of the timer
+ * @author Matteo
+ *
+ */
 @SuppressWarnings("deprecation")
 public class Timer implements Observer {
 	private static Timer timer;
@@ -14,6 +19,10 @@ public class Timer implements Observer {
 	
 	private Timer () {}
 	
+	/**
+	 * singleton pattern
+	 * @return the only existing instance of timer, or creates one
+	 */
 	public static Timer getInstance() {
 		if (timer == null) {
 			timer = new Timer();
@@ -21,7 +30,10 @@ public class Timer implements Observer {
 		return timer;
 	}
 	
-
+	/**
+	 * OO pattern
+	 * used to add black boxes to the timer to mark passing of time
+	 */
 	@Override
 	public void update(Observable o, Object arg)
 	{

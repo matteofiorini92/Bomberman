@@ -13,6 +13,12 @@ import javafx.util.Duration;
 import model.Direction;
 import model.Hiding;
 
+
+/**
+ * view of a character
+ * @author Matteo
+ *
+ */
 @SuppressWarnings("deprecation")
 public abstract class Character extends Element {
 	
@@ -33,6 +39,12 @@ public abstract class Character extends Element {
 		prefixes.put(model.Bug.class, "bug");
 	}
 
+	/**
+	 * constructor
+	 * @param position the position of the character
+	 * @param image the image of the character
+	 * @param speed the speed of the character, used for movement animation
+	 */
 	public Character(int[] position, Image image, Double speed)
 	{
 		super(image);
@@ -42,8 +54,12 @@ public abstract class Character extends Element {
 		
 	}
 	
-	public Double getTimeForMovement() { return timeForMovement; }
-	
+	/**
+	 * OO pattern
+	 * @param o the observable that changed
+	 * @param arg an array of arguments that changes based on the type of change
+	 * @param imageFiles image files of the specific type of character that is updating
+	 */
 	public void update(Observable o, Object arg, Map<Direction, String> imageFiles) {
 		Object[] args = (Object[]) arg;
 		
@@ -61,6 +77,12 @@ public abstract class Character extends Element {
 		}
 	}
 
+	/**
+	 * move animation of a character
+	 * @param character the character that is moving
+	 * @param imageFiles the images of the character
+	 * @param arg the previous position of the character
+	 */
 	public void move(model.Character character, Map<Direction, String> imageFiles, Object arg) {
 		
 		String prefix = prefixes.get(character.getClass());
@@ -115,7 +137,11 @@ public abstract class Character extends Element {
 		timeline.play();
 	}
 	
-	
+	/**
+	 * animation for when the character dies
+	 * @param character the model of the dead character
+	 * @param imageFiles the image files of the character
+	 */
 	public void die(model.Character character, Map<Direction, String> imageFiles) {
 		
 		String prefix = prefixes.get(character.getClass());
@@ -144,6 +170,7 @@ public abstract class Character extends Element {
 		timeline.play();
 			
 	}
+	
 	
 	private void changeSpeed(Double newSpeed) {
 		this.speed = newSpeed;

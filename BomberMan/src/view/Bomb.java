@@ -17,6 +17,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+/**
+ * view of bomb item
+ * @author Matteo
+ *
+ */
 @SuppressWarnings("deprecation")
 public class Bomb extends Item {
 	
@@ -40,6 +45,10 @@ public class Bomb extends Item {
 	}
 	
 	
+	/**
+	 * OO pattern
+	 * used for explosions and trigger the initial animation
+	 */
 	@Override
 	public void update(Observable o, Object arg)
 	{
@@ -53,7 +62,8 @@ public class Bomb extends Item {
 		
 	}
 	
-	public void triggerBomb(model.Bomb bomb) {
+	
+	private void triggerBomb(model.Bomb bomb) {
 		int[] position = bomb.getPosition();
 		StackPane.setMargin(this, new Insets(position[0]*view.Item.ITEM_HEIGHT, 0,0,position[1]*view.Item.ITEM_WIDTH));
 
@@ -72,7 +82,11 @@ public class Bomb extends Item {
 		timeline.play();
 	}
 	
-	
+	/**
+	 * explosion animation
+	 * @param bomb the model bomb that is exploding
+	 * @param grid an array of arrays of strings that describe the surroundings of the exploding bomb
+	 */
 	public void explode(model.Bomb bomb, String[][] grid) {
 		
 		int range = bomb.getRange();

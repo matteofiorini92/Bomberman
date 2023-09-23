@@ -12,6 +12,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
+/**
+ * view of the game header, with lives, timer, points etc.
+ * @author Matteo
+ *
+ */
 @SuppressWarnings("deprecation")
 public class GameHeader extends StackPane implements Observer {
 	
@@ -31,12 +36,15 @@ public class GameHeader extends StackPane implements Observer {
 		
 		setLives(model.BomberMan.INITIAL_LIVES);
 		this.getChildren().add(lives);
-		GameHeader.setMargin(lives, new Insets(27,0,0,110));
+		GameHeader.setMargin(lives, new Insets(27, 0, 0, 110));
 		
 		
 	}
 	
-	
+	/**
+	 * singleton pattern
+	 * @return only existing instance of the header, or create one
+	 */
 	public static GameHeader getInstance() {
 		if (gameHeader == null) {
 			gameHeader = new GameHeader();
@@ -44,6 +52,9 @@ public class GameHeader extends StackPane implements Observer {
 		return gameHeader;
 	}
 
+	/**
+	 * resets the timer to its initial state. used when starting new levels
+	 */
 	public void resetTimer() {
 		ObservableList<Node> children = this.getChildren();
 		children.removeAll(children);
@@ -51,13 +62,16 @@ public class GameHeader extends StackPane implements Observer {
 		children.add(baseHeader);
 		setLives(model.BomberMan.getInstance().getLives());
 		children.add(lives);
-		GameHeader.setMargin(lives, new Insets(27,0,0,110));
+		GameHeader.setMargin(lives, new Insets(27, 0, 0, 110));
 	}
 
 	public void setLives(int lives) {
 		this.lives.setImage(new Image("images/-board-header/-numbers/" + lives + ".png"));
 	}
 
+	/**
+	 * OO pattern. used to update lives of bomberman
+	 */
 	@Override
 	public void update(Observable o, Object arg)
 	{

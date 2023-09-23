@@ -1,5 +1,10 @@
 package view.Boards;
 
+/**
+ * view of defeat board
+ * @author Matteo
+ *
+ */
 public class Defeat extends End {
 	
 	public Defeat()
