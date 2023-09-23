@@ -13,7 +13,7 @@ public class Victory extends End {
 			"You Won!",
 			"New Game",
 			15,
-			event -> controller.NewGame.load(),
+			event -> controller.Game.load(),
 			"Profile Screen",
 			12,
 			event -> {

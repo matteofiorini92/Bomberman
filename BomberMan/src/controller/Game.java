@@ -11,11 +11,11 @@ import javafx.scene.Node;
 import view.BaseGroup;
 
 /**
- * new game controller class to load and manage a new game
+ * new game controller class to load and manage a game
  * @author Matteo
  *
  */
-public abstract class NewGame {
+public abstract class Game {
 	
 	public static final int INITIAL_LEVEL = 1;
 	public static final int FINAL_LEVEL = 2; // to be changed when a new level is implemented

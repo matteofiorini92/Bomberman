@@ -83,7 +83,19 @@ public class BomberMan extends Character {
 		setChanged();
 		notifyObservers(args);
 	}
-
 	
-
+	/**
+	 * used to start a new game
+	 */
+	public void reset() {
+		this.setPosition(INITIAL_POSITION);
+		this.setSpeed(INITIAL_SPEED);
+		this.setLives(INITIAL_LIVES);
+		becomeInvincible();
+		bombs = INITIAL_BOMBS;
+		range = INITIAL_RANGE;
+		score = INITIAL_SCORE;
+	}
+	
+	
 }

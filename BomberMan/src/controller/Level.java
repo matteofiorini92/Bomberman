@@ -32,8 +32,11 @@ public class Level implements Observer {
 	
 	
 	public Level(String level) {
-		
 		Level.level = level;
+		
+		model.BomberMan.getInstance().reset();
+		view.BomberMan.getInstance().reset();
+		
 		
 		softWalls = GameBoard.load(level);
 		enemies = Characters.load(level);
@@ -45,7 +48,7 @@ public class Level implements Observer {
 		
 		enemies.stream().forEach(enemy -> enemy.startMoving());
 		
-		Timer.load();
+		Timer.load(); 												// when the timer is loaded, it's also reset
 		model.Timer modelTimer = model.Timer.getInstance();
 		modelTimer.addObserver(this);
 		
@@ -158,7 +161,7 @@ public class Level implements Observer {
 	
 		// update when exit executes
 		if (args[0].equals(model.ChangeType.GET_OUT)) {
-			int currLevel = NewGame.levelConverter(level);
+			int currLevel = Game.levelConverter(level);
 			model.BomberMan modelBm = model.BomberMan.getInstance();
 			view.BomberMan viewBm = view.BomberMan.getInstance();
 			model.GameBoard modelBoard = model.GameBoard.getInstance();
@@ -171,8 +174,8 @@ public class Level implements Observer {
 			modelBm = model.BomberMan.getInstance();
 			modelBm.setPosition(model.BomberMan.INITIAL_POSITION);
 			modelBoard.setCell(modelBm, model.BomberMan.INITIAL_POSITION);
-			if (currLevel < NewGame.FINAL_LEVEL) {
-				new Level(NewGame.levelConverter(++currLevel));
+			if (currLevel < Game.FINAL_LEVEL) {
+				new Level(Game.levelConverter(++currLevel));
 			} 
 			else {
 				End.load(EndOptions.VICTORY);

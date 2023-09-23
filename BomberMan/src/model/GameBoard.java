@@ -84,8 +84,6 @@ public class GameBoard extends Observable {
 	public Element getCell(int[] coordinates) { return cells[coordinates[0]][coordinates[1]]; }
 	public void setCell(Element e, int[] coordinates) { this.cells[coordinates[0]][coordinates[1]] = e; }
 	
-	
-	
 	// debugging purposes only
 	
 	/**
@@ -117,5 +115,5 @@ public class GameBoard extends Observable {
 		}
 		System.out.println();
 	}
-
+	
 }

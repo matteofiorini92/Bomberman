@@ -112,7 +112,7 @@ public abstract class Profile extends StackPane {
 	 */
 	private void createButtons() {
 		createProfileButton("Save", 0, "SAVE_PROFILE", null); // Runnable click event set by subclasses
-		createProfileButton("Start New Game", 1.5, "NEW_GAME", controller.NewGame::load);
+		createProfileButton("Start New Game", 1.5, "NEW_GAME", controller.Game::load);
 	}
 	
 	private Text createText(String content, Insets insets, double size, Color color) {

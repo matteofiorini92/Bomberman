@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
+import javafx.geometry.Insets;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
 import model.Direction;
 
 /**
@@ -45,6 +47,15 @@ public class BomberMan extends Character {
 	@Override
 	public void update(Observable o, Object arg) {
 		super.update(o, arg, imageFiles);
+	}
+	
+	/**
+	 * used to start a new game
+	 */
+	public void reset() {
+		StackPane.setMargin(this, new Insets(INITIAL_POSITION[0] * Item.ITEM_HEIGHT - HEIGHT_DIFFERENCE, 0, 0, INITIAL_POSITION[1] * Item.ITEM_WIDTH));
+		this.setImage(new Image("images/-bm/" + imageFiles.get(Direction.INITIAL) + ".png"));
+		this.setSpeed(INITIAL_SPEED);
 	}
 	
 }

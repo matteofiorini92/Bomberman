@@ -54,6 +54,10 @@ public abstract class Character extends Element {
 		
 	}
 	
+	public void setSpeed(Double speed) {
+		this.speed = speed;
+	}
+	
 	/**
 	 * OO pattern
 	 * @param o the observable that changed
