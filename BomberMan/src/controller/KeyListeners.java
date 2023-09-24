@@ -62,10 +62,7 @@ public abstract class KeyListeners {
 		    	model.GameBoard.getInstance().print();
 		    } else if (event.getCode() == KeyCode.F) {
 		    	model.GameBoard.getInstance().printExt();
-		    } else if (event.getCode() == KeyCode.B) {
-		    	System.out.println(model.BomberMan.getInstance().getPosition()[0]);
-		    	System.out.println(model.BomberMan.getInstance().getPosition()[1]);
-		    }
+		    } 
 		    else {	        	
 		        	Direction direction = null;
 		        	try {	        	

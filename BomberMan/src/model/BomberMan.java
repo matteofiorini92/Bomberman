@@ -48,8 +48,13 @@ public class BomberMan extends Character {
 	public void incRange() { range++; }
 	public void decRange() { range--; }
 	public int getScore() { return score; }
+	
+	@SuppressWarnings("deprecation")
 	public void setScore(int score) {
 		this.score = score > 0 ? score : 0;
+		Object[] args = { model.ChangeType.CHANGE_POINTS, score };
+		setChanged();
+		notifyObservers(args);
 	}
 	
 	@SuppressWarnings("deprecation")

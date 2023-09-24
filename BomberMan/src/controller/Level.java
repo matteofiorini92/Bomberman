@@ -31,21 +31,37 @@ public class Level implements Observer {
 	private List<model.Enemy> enemies;
 	
 	
-	public Level(String level) {
-		new Level(level, 0);	
+	/**
+	 * constructor. used when the player would lose a game but decides to continue
+	 * @param level the level to load
+	 * @param score the score to assign to the bomberman
+	 */
+	public Level(String level, int score) {
+		new Level(level, true);
+		model.BomberMan.getInstance().setScore(score);
 	}
 	
-	public Level (String level, int score) {
+	/**
+	 * constuctor. creates a level
+	 * @param level the level to create
+	 * @param needsReset true if this is a new game (including continue after defeat)
+	 * 					 false if it's the next level of an existing game
+	 */
+	public Level(String level, boolean needsReset) {
 		Level.level = level;
 		
-		model.BomberMan.getInstance().reset();
-		model.BomberMan.getInstance().setScore(score);
-		view.BomberMan.getInstance().reset();
-		model.Enemy.getAliveEnemies()
-			.stream()
-			.filter(enemy -> enemy != null)
-			.forEach(enemy -> enemy.removeFromBoard());
-		model.Enemy.getAliveEnemies().clear();
+		
+		// when starting a new game, as opposed to loading the next level in an existing game
+		if (needsReset) {
+			model.BomberMan.getInstance().reset();
+//			model.BomberMan.getInstance().setScore(score);
+			view.BomberMan.getInstance().reset();
+			model.Enemy.getAliveEnemies()
+				.stream()
+				.filter(enemy -> enemy != null)
+				.forEach(enemy -> enemy.removeFromBoard());
+			model.Enemy.getAliveEnemies().clear();
+		}
 		
 		
 		softWalls = GameBoard.load(level);
@@ -89,7 +105,6 @@ public class Level implements Observer {
 			
 			Random r = new Random();
 			model.Hiding hidingElement = hidingElements.get(r.nextInt(max));
-			if (hidingElement instanceof model.Enemy) System.out.println("I'm in an helix"); // TODO to be removed
 			hidingElement.setHiddenHidable(powerUp);
 			powerUp.setPosition(((Element) hidingElement).getPosition());
 			hidingElements.remove(hidingElement);
@@ -185,7 +200,7 @@ public class Level implements Observer {
 			modelBm.setPosition(model.BomberMan.INITIAL_POSITION);
 			modelBoard.setCell(modelBm, model.BomberMan.INITIAL_POSITION);
 			if (currLevel < Game.FINAL_LEVEL) {
-				new Level(Game.levelConverter(++currLevel));
+				new Level(Game.levelConverter(++currLevel), false);
 			} 
 			else {
 				End.load(EndOptions.VICTORY);

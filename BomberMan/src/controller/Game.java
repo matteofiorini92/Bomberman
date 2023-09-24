@@ -22,13 +22,13 @@ public abstract class Game {
 	
 	public static void load() {
 		clearBoard();
-		new Level(levelConverter(INITIAL_LEVEL));
+		new Level(levelConverter(INITIAL_LEVEL), true);
 	}
 	
-	public static void load(String level) {
-		clearBoard();
-		new Level(level);
-	}
+//	public static void load(String level) {
+//		clearBoard();
+//		new Level(level, false);
+//	}
 	
 	public static void load(String level, int score) {
 		clearBoard();
