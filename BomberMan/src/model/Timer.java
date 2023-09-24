@@ -45,6 +45,7 @@ public class Timer extends Observable {
 	 * resets the timer to its INITIAL_TIME
 	 */
 	public void reset() {
+		if (future != null) stop();
 		currTime = INITIAL_TIME;
 	}
 	

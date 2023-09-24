@@ -47,7 +47,10 @@ public class BomberMan extends Character {
 	public void setRange(int range)	{ this.range = range; }
 	public void incRange() { range++; }
 	public void decRange() { range--; }
-	public int  getScore() { return score; }
+	public int getScore() { return score; }
+	public void setScore(int score) {
+		this.score = score > 0 ? score : 0;
+	}
 	
 	@SuppressWarnings("deprecation")
 	public void addPoints(int points) {

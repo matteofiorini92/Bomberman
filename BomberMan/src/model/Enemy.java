@@ -52,6 +52,13 @@ public abstract class Enemy extends Character implements Hiding {
 		executor.shutdownNow();
 	}
 	
+	/**
+	 * used when starting a new game / continuing after dying
+	 */
+	public void removeFromBoard() {
+		executor.shutdown();
+		board.setCell(new EmptyTile(getPosition()), getPosition());
+	}
 	
 	
 	/**

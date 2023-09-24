@@ -32,10 +32,20 @@ public class Level implements Observer {
 	
 	
 	public Level(String level) {
+		new Level(level, 0);	
+	}
+	
+	public Level (String level, int score) {
 		Level.level = level;
 		
 		model.BomberMan.getInstance().reset();
+		model.BomberMan.getInstance().setScore(score);
 		view.BomberMan.getInstance().reset();
+		model.Enemy.getAliveEnemies()
+			.stream()
+			.filter(enemy -> enemy != null)
+			.forEach(enemy -> enemy.removeFromBoard());
+		model.Enemy.getAliveEnemies().clear();
 		
 		
 		softWalls = GameBoard.load(level);
@@ -59,7 +69,6 @@ public class Level implements Observer {
 		
 		baseScene.setOnKeyPressed(KeyListeners::handleKeyPressed);
 		baseScene.setOnKeyReleased(KeyListeners::handleKeyReleased);
-		
 	}
 	
 	private void hideElements (model.SoftWall[] softWalls, List<model.Enemy> enemies) {
@@ -80,6 +89,7 @@ public class Level implements Observer {
 			
 			Random r = new Random();
 			model.Hiding hidingElement = hidingElements.get(r.nextInt(max));
+			if (hidingElement instanceof model.Enemy) System.out.println("I'm in an helix"); // TODO to be removed
 			hidingElement.setHiddenHidable(powerUp);
 			powerUp.setPosition(((Element) hidingElement).getPosition());
 			hidingElements.remove(hidingElement);

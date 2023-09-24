@@ -11,6 +11,5 @@ public abstract class Timer {
 		modelTimer.reset();
 		view.GameHeader.getInstance().resetTimer();
 		modelTimer.start();
-		
 	}
 }

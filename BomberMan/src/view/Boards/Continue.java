@@ -18,7 +18,8 @@ public class Continue extends End {
 			30,
 			event -> {
 				String level = controller.Level.getCurrLevel();
-				new controller.Level(level);
+				int currScore = model.BomberMan.getInstance().getScore();
+				controller.Game.load(level, currScore - 500);
 			},
 			"No",
 			30,

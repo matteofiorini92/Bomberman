@@ -30,6 +30,11 @@ public abstract class Game {
 		new Level(level);
 	}
 	
+	public static void load(String level, int score) {
+		clearBoard();
+		new Level(level, score);
+	}
+	
 	private static void clearBoard() {
 		BaseGroup baseGroup = view.BaseGroup.getInstance();
 		ObservableList<Node> baseGroupChildren = baseGroup.getChildren();
