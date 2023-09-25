@@ -35,6 +35,7 @@ public class Bomb extends Item {
 	
 	private GridPane gridPane = new GridPane();
 	private Pane pane = new Pane();					// have to use a pane for precise positioning
+	private Timeline timeline = new Timeline();
 	
 	public Bomb() {
 		super(null);
@@ -69,8 +70,6 @@ public class Bomb extends Item {
 
 		String[] files = imageFiles.get("beforeEx").split("\\s+");
 		
-		Timeline timeline = new Timeline();
-		
 		for (int i = 0; i < files.length; i++) {
 			final int iPlusOne = i+1;
 			Image image = new Image("images/-tiles/" + files[i]+ ".png");
@@ -88,12 +87,11 @@ public class Bomb extends Item {
 	 * @param grid an array of arrays of strings that describe the surroundings of the exploding bomb
 	 */
 	public void explode(model.Bomb bomb, String[][] grid) {
-		
 		int range = bomb.getRange();
 		int[] bombPosition = bomb.getPosition();
-		Timeline timeline = new Timeline();
 		
-
+		timeline.stop();
+		timeline.getKeyFrames().clear();
 
 		for (int frame = 0; frame < 5; frame++) {
 			final int framePlusOne = frame+1;
