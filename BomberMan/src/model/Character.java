@@ -41,7 +41,7 @@ public abstract class Character extends Element {
 		this.speed = speed;
 		this.lives = lives;
 		setInvincible(false);
-		this.setDisappearOnWalkOff(true);
+//		this.setDisappearOnWalkOff(true);
 	}
 	
 	public Double getSpeed() { return speed; }
@@ -143,27 +143,28 @@ public abstract class Character extends Element {
 		
 		
 		if (!isOut) {
+			if (this.getTempStorage() == null && hasMoved ) {
+				board.setCell(new EmptyTile(prevPosition), prevPosition);
+			}
+			if (this.getTempStorage() != null && hasMoved) {
+				board.setCell(this.getTempStorage(), prevPosition);
+				this.setTempStorage(null);
+			}
+			
+			
 			if (newCell instanceof EmptyTile) {
 				board.setCell(this, newPosition);
-			} else if (this instanceof Enemy && newCell instanceof PowerUp) {
+			} else if ((this instanceof Enemy && newCell instanceof PowerUp) || (this instanceof Enemy && newCell instanceof Exit)) {
 				this.setTempStorage(newCell);
 				board.setCell(this, newPosition);
 			} else if (this instanceof BomberMan && newCell instanceof PowerUp && newCell.disappearsOnWalkOn()) {
 				board.setCell(this, newPosition);
 			} else if (this instanceof BomberMan && newCell instanceof Exit) {
+				System.out.println("Hellooooo");
 				this.setTempStorage(newCell);
 				board.setCell(this, newPosition);
 			}
 			
-			if (this.getTempStorage() == null && hasMoved ) {
-				board.setCell(new EmptyTile(prevPosition), prevPosition);
-			}
-			
-			
-			if (this.getTempStorage() != null && hasMoved) {
-				board.setCell(this.getTempStorage(), prevPosition);
-				this.setTempStorage(null);
-			}
 			
 			this.setPosition(newPosition);
 			

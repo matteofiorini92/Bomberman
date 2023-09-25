@@ -44,8 +44,13 @@ public abstract class KeyListeners {
 
 	    if (currentTime - lastKeyPressTime >= throttleDelay) {
 	    	lastKeyPressTime = currentTime;
-
-	    	if (event.getCode() == KeyCode.SPACE && modelBm.getBombs() > 0 && !(model.GameBoard.getInstance().getCell(model.BomberMan.getInstance().getPosition()) instanceof model.Bomb)) {
+	    	model.BomberMan modelBm = model.BomberMan.getInstance();
+	    	if (event.getCode() == KeyCode.SPACE && 
+	    		modelBm.getBombs() > 0 && 
+	    		!(model.GameBoard.getInstance().getCell(modelBm.getPosition()) instanceof model.Bomb) &&
+	    		!(modelBm.getTempStorage() instanceof model.Exit)
+	    	) {
+	    		System.out.println(modelBm.getTempStorage());
 		    
 	    		view.BaseGroup baseGroup = view.BaseGroup.getInstance();
 		    	model.Bomb modelBomb = new model.Bomb(modelBm.getPosition());

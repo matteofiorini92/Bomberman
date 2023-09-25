@@ -99,6 +99,7 @@ public class BomberMan extends Character {
 		this.setPosition(INITIAL_POSITION);
 		this.setSpeed(INITIAL_SPEED);
 		this.setLives(INITIAL_LIVES);
+		this.setTempStorage(null);
 		becomeInvincible();
 		bombs = INITIAL_BOMBS;
 		range = INITIAL_RANGE;

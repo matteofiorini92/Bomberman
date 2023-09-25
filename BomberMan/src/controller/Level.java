@@ -54,7 +54,6 @@ public class Level implements Observer {
 		// when starting a new game, as opposed to loading the next level in an existing game
 		if (needsReset) {
 			model.BomberMan.getInstance().reset();
-//			model.BomberMan.getInstance().setScore(score);
 			view.BomberMan.getInstance().reset();
 			model.Enemy.getAliveEnemies()
 				.stream()
@@ -127,6 +126,7 @@ public class Level implements Observer {
 		model.Hiding sotWall = remaniningSoftWalls.get(r.nextInt(max));
 		sotWall.setHiddenHidable(exit);
 		exit.setPosition(((model.SoftWall) sotWall).getPosition());
+		System.out.println("Exit is in [" + exit.getPosition()[0] + ", " + exit.getPosition()[1] + "]");
 		
 		
 	}
