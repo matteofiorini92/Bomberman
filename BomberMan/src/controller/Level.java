@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import model.Element;
 import view.BaseScene;
 
@@ -29,6 +32,7 @@ public class Level implements Observer {
 	private static String level;
 	private model.SoftWall[] softWalls;
 	private List<model.Enemy> enemies;
+	private static MediaPlayer mediaPlayer;
 	
 	
 	/**
@@ -78,6 +82,7 @@ public class Level implements Observer {
 		modelTimer.addObserver(this);
 		
 		model.BomberMan.getInstance().addObserver(this);
+		playBackgroundMusic();
 		
 		// key listeners
 		BaseScene baseScene = BaseScene.getInstance();
@@ -158,6 +163,19 @@ public class Level implements Observer {
 	
 
 	public static String getCurrLevel() { return level; }
+	
+	public static void playBackgroundMusic() {
+		String fileName = "resources/musics/backgroundTune.mp3";
+		File backgroundMusicFile = new File (fileName);
+		Media media = new Media(backgroundMusicFile.toURI().toString());
+		mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+		mediaPlayer.play();
+	}
+	
+	public static void pauseBackgroundMusic() {
+		mediaPlayer.pause();
+	}
 
 	
 	/**

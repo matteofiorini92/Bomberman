@@ -16,7 +16,7 @@ public class End {
 	 */
 	public static void load(EndOptions option) {
 		
-		
+		Level.pauseBackgroundMusic();
 		ObservableList<Node> baseGroupChildren = view.BaseGroup.getInstance().getChildren();
 		baseGroupChildren.removeAll(baseGroupChildren);
 		
