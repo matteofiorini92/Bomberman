@@ -25,7 +25,4 @@ public abstract class Element extends Observable {
 
 	public boolean disappearsOnWalkOn() { return disappearOnWalkOn; }
 	public void setDisappearOnWalkOn(boolean disappearOnWalkOn) { this.disappearOnWalkOn = disappearOnWalkOn; }
-//	public boolean disappearsOnWalkOff() {	return disappearOnWalkOff; }
-//	public void setDisappearOnWalkOff(boolean disappearOnWalkOff) { this.disappearOnWalkOff = disappearOnWalkOff; }
-	
 }

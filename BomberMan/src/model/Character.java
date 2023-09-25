@@ -41,7 +41,6 @@ public abstract class Character extends Element {
 		this.speed = speed;
 		this.lives = lives;
 		setInvincible(false);
-//		this.setDisappearOnWalkOff(true);
 	}
 	
 	public Double getSpeed() { return speed; }
