@@ -81,6 +81,7 @@ public class Bomb extends Item {
 				}
 			}
 			
+			
 			int[] bombPosition = this.getPosition();
 			BomberMan bomberMan = BomberMan.getInstance();
 			
