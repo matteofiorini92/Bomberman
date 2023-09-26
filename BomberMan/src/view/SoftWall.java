@@ -133,7 +133,6 @@ public class SoftWall extends Tile {
 				model.Item modelItem = (model.Item) ((model.SoftWall)o).getHiddenHidable();
 				view.Hidable viewHidable = new view.Hidable((model.Hidable)modelItem);
 				modelItem.addObserver(viewHidable);
-				
 			}
 			
 		});

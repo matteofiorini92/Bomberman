@@ -67,11 +67,12 @@ public class Hidable extends Item {
 	
 	/**
 	 * OO pattern
-	 * called when object is hidden
+	 * called when object is picked up
 	 */
 	@Override
 	public void update(Observable o, Object arg)
 	{
+		System.out.println("I've been picked up");
 		this.setVisible(false);
 	}
 

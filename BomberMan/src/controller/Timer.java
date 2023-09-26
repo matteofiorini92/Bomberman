@@ -12,4 +12,8 @@ public abstract class Timer {
 		view.GameHeader.getInstance().resetTimer();
 		modelTimer.start();
 	}
+	
+	public static void stop() {
+		model.Timer.getInstance().stop();
+	}
 }

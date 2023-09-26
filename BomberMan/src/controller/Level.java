@@ -165,6 +165,7 @@ public class Level implements Observer {
 		String fileName = "resources/musics/backgroundTune.mp3";
 		File backgroundMusicFile = new File (fileName);
 		Media media = new Media(backgroundMusicFile.toURI().toString());
+		if (mediaPlayer != null) mediaPlayer.stop();
 		mediaPlayer = new MediaPlayer(media);
 		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 		mediaPlayer.play();

@@ -12,7 +12,6 @@ public abstract class Element extends Observable {
 	
 	private int[] position = new int[2];
 	private boolean disappearOnWalkOn = false;
-//	private boolean disappearOnWalkOff = false;
 	
 	public Element(int[] position) {
 		this.position = position;
