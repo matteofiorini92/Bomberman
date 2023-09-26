@@ -115,10 +115,10 @@ public class SoftWall extends Tile {
 			model.Element cellAbove = modelBoard.getCell(positionAbove);
 			
 			String desc = "e";
-			if (cellAbove instanceof model.Wall && positionAbove[0] == 1) {
+			if (cellAbove instanceof model.HardWall && positionAbove[0] == 1) {
 				desc = "ebs";
 			}
-			else if (cellAbove instanceof model.Wall && positionAbove[0] != 1) {
+			else if (cellAbove instanceof model.HardWall && positionAbove[0] != 1) {
 				desc = "ews";
 			}
 			else if (cellAbove instanceof model.SoftWall) {

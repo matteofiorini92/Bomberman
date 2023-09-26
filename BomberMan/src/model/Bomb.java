@@ -143,7 +143,7 @@ public class Bomb extends Item {
 	
 		List<Element> elements;
 		Predicate<Element> isWallOrSoftWall = element ->
-        	element instanceof Wall || element instanceof SoftWall;
+        	element instanceof HardWall || element instanceof SoftWall;
 		
 		elements = surroundings.get(Direction.UP);
 		elements.removeIf(isWallOrSoftWall);

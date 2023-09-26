@@ -121,7 +121,7 @@ public abstract class Character extends Element {
 			newCell instanceof Bomb || 
 			newCell instanceof Character || 
 			(newCell instanceof Tile && 
-					(((Tile)newCell).getType() == TileType.WALL ||
+					(((Tile)newCell).getType() == TileType.HARD_WALL ||
 					((Tile)newCell).getType() == TileType.SOFT_WALL))) // same as !emptyTile?
 		{ // can't walk over walls, bombs or characters
 			newPosition = prevPosition;
@@ -159,7 +159,6 @@ public abstract class Character extends Element {
 			} else if (this instanceof BomberMan && newCell instanceof PowerUp && newCell.disappearsOnWalkOn()) {
 				board.setCell(this, newPosition);
 			} else if (this instanceof BomberMan && newCell instanceof Exit) {
-				System.out.println("Hellooooo");
 				this.setTempStorage(newCell);
 				board.setCell(this, newPosition);
 			}

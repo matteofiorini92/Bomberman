@@ -80,7 +80,6 @@ public abstract class Enemy extends Character implements Hiding {
 	}
 	
 	private static Direction getRandomDirection(Enemy enemy) { // public?
-		// Class<Direction> directionClass;
 		Element[][] cells = board.getCells();
 		int[] currPosition = enemy.getPosition();
 		List<Direction> availableDirections = getAvailableDirections(currPosition, cells);
@@ -97,16 +96,16 @@ public abstract class Enemy extends Character implements Hiding {
 		List<Direction> availableDirection = new ArrayList<Direction>();
 		int coordinateX = currPosition[1];
 		int coordinateY = currPosition[0];
-		if (cells[coordinateY][coordinateX-1] instanceof EmptyTile) {
+		if (!(cells[coordinateY][coordinateX-1] instanceof Wall)) {
 			availableDirection.add(Direction.LEFT);
 		}
-		if (cells[coordinateY][coordinateX+1] instanceof EmptyTile) {
+		if (!(cells[coordinateY][coordinateX+1] instanceof Wall)) {
 			availableDirection.add(Direction.RIGHT);
 		}
-		if (cells[coordinateY-1][coordinateX] instanceof EmptyTile) {
+		if (!(cells[coordinateY-1][coordinateX] instanceof Wall)) {
 			availableDirection.add(Direction.UP);
 		}
-		if (cells[coordinateY+1][coordinateX] instanceof EmptyTile) {
+		if (!(cells[coordinateY+1][coordinateX] instanceof Wall)) {
 			availableDirection.add(Direction.DOWN);
 		}
 		

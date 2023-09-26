@@ -50,8 +50,6 @@ public abstract class KeyListeners {
 	    		!(model.GameBoard.getInstance().getCell(modelBm.getPosition()) instanceof model.Bomb) &&
 	    		!(modelBm.getTempStorage() instanceof model.Exit)
 	    	) {
-	    		System.out.println(modelBm.getTempStorage());
-		    
 	    		view.BaseGroup baseGroup = view.BaseGroup.getInstance();
 		    	model.Bomb modelBomb = new model.Bomb(modelBm.getPosition());
 		    	view.Bomb viewBomb = new view.Bomb();

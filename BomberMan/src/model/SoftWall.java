@@ -6,16 +6,15 @@ package model;
  * @author Matteo
  *
  */
-public class SoftWall extends Tile implements Hiding {
+public class SoftWall extends Wall implements Hiding {
 	
-	public static final TileType SOFT_WALL = TileType.SOFT_WALL;
 	public static GameBoard board = model.GameBoard.getInstance();
 	
 	private model.Hidable hiddenHidable = null;
 	
 	public SoftWall(int[] position)
 	{
-		super(position, SOFT_WALL);
+		super(position, TileType.SOFT_WALL);
 	}
 
 	public model.Hidable getHiddenHidable()	{ return hiddenHidable; }

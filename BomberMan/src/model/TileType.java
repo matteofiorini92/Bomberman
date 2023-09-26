@@ -1,7 +1,7 @@
 package model;
 
 public enum TileType {
-	WALL,
+	HARD_WALL,
 	SOFT_WALL,
 	EMPTY_TILE
 }
