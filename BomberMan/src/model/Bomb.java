@@ -81,9 +81,17 @@ public class Bomb extends Item {
 				}
 			}
 			
-			// simplistic. if the bomberman never leaves the cell, the cell shouldn't become empty.
 			int[] bombPosition = this.getPosition();
-			board.setCell(new EmptyTile(bombPosition), bombPosition);
+			BomberMan bomberMan = BomberMan.getInstance();
+			
+			if (bombPosition.equals(bomberMan.getPosition())) {
+				board.setCell(bomberMan, bombPosition);
+				bomberMan.setTempStorage(null);
+				bomberMan.loseLife();
+			}
+			else {
+				board.setCell(new EmptyTile(bombPosition), bombPosition);
+			}
 			model.BomberMan.getInstance().incBombs();
 			
 			String[][] simplifiedSurroundings = simplifySurroundings(surroundings);
