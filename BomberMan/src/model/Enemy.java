@@ -96,16 +96,16 @@ public abstract class Enemy extends Character implements Hiding {
 		List<Direction> availableDirection = new ArrayList<Direction>();
 		int coordinateX = currPosition[1];
 		int coordinateY = currPosition[0];
-		if (!(cells[coordinateY][coordinateX-1] instanceof Wall)) {
+		if (!(cells[coordinateY][coordinateX-1] instanceof Wall || cells[coordinateY][coordinateX-1] instanceof Bomb)) {
 			availableDirection.add(Direction.LEFT);
 		}
-		if (!(cells[coordinateY][coordinateX+1] instanceof Wall)) {
+		if (!(cells[coordinateY][coordinateX+1] instanceof Wall || cells[coordinateY][coordinateX+1] instanceof Bomb)) {
 			availableDirection.add(Direction.RIGHT);
 		}
-		if (!(cells[coordinateY-1][coordinateX] instanceof Wall)) {
+		if (!(cells[coordinateY-1][coordinateX] instanceof Wall || cells[coordinateY-1][coordinateX] instanceof Bomb)) {
 			availableDirection.add(Direction.UP);
 		}
-		if (!(cells[coordinateY+1][coordinateX] instanceof Wall)) {
+		if (!(cells[coordinateY+1][coordinateX] instanceof Wall || cells[coordinateY+1][coordinateX] instanceof Bomb)) {
 			availableDirection.add(Direction.DOWN);
 		}
 		
