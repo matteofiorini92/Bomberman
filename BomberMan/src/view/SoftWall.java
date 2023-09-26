@@ -27,6 +27,7 @@ public class SoftWall extends Tile {
 	}
 	
 	private Timeline timeline = new Timeline(); // class attribute so that it can be accessed by both startAnimation and update (for explosions)
+	private String tilesPath = "images/-tiles/" + controller.Level.getCurrLevel() + "/";
 	
 	public SoftWall(String desc)
 	{
@@ -42,7 +43,7 @@ public class SoftWall extends Tile {
 		String[] files = imageFiles.get(desc).split("\\s+");
 		for (int frame = 0; frame < files.length; frame++) {
 			final int framePlusOne = frame + 1;
-			Image image = new Image("images/-tiles/" + files[frame] + ".png");
+			Image image = new Image(tilesPath + files[frame] + ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(SOFT_WALL_ANIMATION/files.length * framePlusOne), event -> {
 		    	this.setImage(image);
 		    });
@@ -73,7 +74,7 @@ public class SoftWall extends Tile {
 		for (int frame = 0; frame < files.length; frame++) {
 			final int framePlusOne = frame+1;
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(SOFT_WALL_EXPLOSION/(files.length+1) * framePlusOne), event -> {
-				Image im = new Image("images/-tiles/" + files[framePlusOne-1] + ".png");
+				Image im = new Image(tilesPath + files[framePlusOne-1] + ".png");
 				this.setImage(im);				
 			});
 			timeline.getKeyFrames().add(keyFrame);
@@ -96,7 +97,7 @@ public class SoftWall extends Tile {
 			
 			if (cellBelow instanceof model.EmptyTile) {
 				String desc = "e";
-				Image im = new Image("images/-tiles/" + imageFiles.get(desc) + ".png");
+				Image im = new Image(tilesPath + imageFiles.get(desc) + ".png");
 				Tile tileBelow = new Tile(desc, im);
 				cellBelow.addObserver(tileBelow);
 				viewBoard.setTile(tileBelow, positionBelow);
@@ -125,7 +126,7 @@ public class SoftWall extends Tile {
 				desc = "esws";
 			}
 			String file = imageFiles.get(desc);
-			Image im = new Image("images/-tiles/" + file + ".png");
+			Image im = new Image(tilesPath + file + ".png");
 			this.setImage(im);
 			viewBoard.setTile(new view.Tile(desc, im), softWallPosition);
 			

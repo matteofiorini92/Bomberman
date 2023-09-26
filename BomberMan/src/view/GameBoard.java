@@ -36,6 +36,7 @@ public class GameBoard extends StackPane implements Observer {
 	private GridPane gridPane = new GridPane();
 	private Rectangle rectangle = new Rectangle(view.Item.ITEM_WIDTH * model.GameBoard.WIDTH,view.Item.ITEM_HEIGHT * model.GameBoard.HEIGHT, Color.TRANSPARENT);
 	private StackPane itemsPane = new StackPane(rectangle);
+	private String tilesPath = "images/-tiles/" + controller.Level.getCurrLevel() + "/";
 	
 	
 	private GameBoard() {
@@ -81,8 +82,8 @@ public class GameBoard extends StackPane implements Observer {
             	if (desc.equals("sw") || desc.equals("sws")) { // needs a separate assignment because of animation
             		item = new SoftWall(desc);
             	}        	
-            	else {	            		
-            		Image image = new Image("images/-tiles/" + imageFiles.get(desc) + ".png");
+            	else {
+            		Image image = new Image(tilesPath + imageFiles.get(desc) + ".png");
             		item = new Tile(desc, image);
             	}
             	

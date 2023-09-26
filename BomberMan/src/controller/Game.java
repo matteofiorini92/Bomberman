@@ -17,8 +17,8 @@ import view.BaseGroup;
  */
 public abstract class Game {
 	
-	public static final int INITIAL_LEVEL = 1;
-	public static final int FINAL_LEVEL = 2; // to be changed when a new level is implemented
+	public static final int INITIAL_LEVEL = 3;
+	public static final int FINAL_LEVEL = 3; // to be changed when a new level is implemented
 	
 	public static void load() {
 		clearBoard();

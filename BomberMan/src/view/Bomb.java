@@ -36,6 +36,8 @@ public class Bomb extends Item {
 	private GridPane gridPane = new GridPane();
 	private Pane pane = new Pane();					// have to use a pane for precise positioning
 	private Timeline timeline = new Timeline();
+	private String tilesPath = "images/-tiles/" + controller.Level.getCurrLevel() + "/";
+	private String explosionsPath = "images/-explosions/" + controller.Level.getCurrLevel() + "/";
 	
 	public Bomb() {
 		super(null);
@@ -72,7 +74,7 @@ public class Bomb extends Item {
 		
 		for (int i = 0; i < files.length; i++) {
 			final int iPlusOne = i+1;
-			Image image = new Image("images/-tiles/" + files[i]+ ".png");
+			Image image = new Image(tilesPath + files[i]+ ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_TO_TRIGGER/files.length * iPlusOne), event -> {
 		    	this.setImage(image);
 		    });
@@ -102,7 +104,7 @@ public class Bomb extends Item {
 						String type = grid[i][j];
 						if (type != null) {							
 							String[] files = imageFiles.get(type).split("\\s+");
-							Image im = new Image("images/-explosions/" + files[framePlusOne-1] + ".png");
+							Image im = new Image(explosionsPath + files[framePlusOne-1] + ".png");
 							ImageView iv = new ImageView(im);
 							gridPane.add(iv, j, i);
 						}
