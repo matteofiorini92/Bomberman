@@ -14,7 +14,7 @@ import javafx.scene.image.Image;
  * @author Matteo
  *	entry point of the application
  */
-public class Main extends Application {
+public class JBomberMan extends Application {
 	
 	/**
 	 * initialise the group and scene used by javaFX
