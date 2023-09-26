@@ -136,7 +136,7 @@ public class Bomb extends Item {
 				int y = currPosition[0] + valY * i;
 				e = board.getCell(new int[] {y, x});
 				l.add(e);
-				if (!(e instanceof EmptyTile) && !(e instanceof Hidable)) { // check if there's an obstacle that confines the explosion
+				if (!(e instanceof EmptyTile || e instanceof Hidable)) { // check if there's an obstacle that confines the explosion
 					break;
 				}
 			}
@@ -150,32 +150,31 @@ public class Bomb extends Item {
 		result[range][range] = "ex"; //explosion is at the centre of the grid
 	
 		List<Element> elements;
-		Predicate<Element> isWallOrSoftWall = element ->
-        	element instanceof HardWall || element instanceof SoftWall;
+		Predicate<Element> isObstacle = element -> (element instanceof Wall || element instanceof Bomb);
 		
 		elements = surroundings.get(Direction.UP);
-		elements.removeIf(isWallOrSoftWall);
+		elements.removeIf(isObstacle);
 		
 		for (int i = 1; i <= elements.size(); i++) {
 			result[range - i][range] = i == range ? "edgeUp" : "midUp";
 		}
 		
 		elements = surroundings.get(Direction.DOWN);
-		elements.removeIf(isWallOrSoftWall);
+		elements.removeIf(isObstacle);
 		
 		for (int i = 1; i <= elements.size(); i++) {
 			result[range + i][range] = i == range ? "edgeDown" : "midDown";
 		}
 		
 		elements = surroundings.get(Direction.LEFT);
-		elements.removeIf(isWallOrSoftWall);
+		elements.removeIf(isObstacle);
 		
 		for (int i = 1; i <= elements.size(); i++) {
 			result[range][range - i] = i == range ? "edgeLeft" : "midLeft";
 		}
 		
 		elements = surroundings.get(Direction.RIGHT);
-		elements.removeIf(isWallOrSoftWall);
+		elements.removeIf(isObstacle);
 		
 		for (int i = 1; i <= elements.size(); i++) {
 			result[range][range + i] = i == range ? "edgeRight" : "midRight";
