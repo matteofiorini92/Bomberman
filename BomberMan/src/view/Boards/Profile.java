@@ -111,7 +111,7 @@ public abstract class Profile extends StackPane {
 	 * utility function to create non avatar buttons
 	 */
 	private void createButtons() {
-		createProfileButton("Save", 0, "SAVE_PROFILE", null); // Runnable click event set by subclasses
+		createProfileButton("Save", 0, "SAVE_PROFILE", null); // Runnable click event set by controller
 		createProfileButton("Start New Game", 1.5, "NEW_GAME", controller.Game::load);
 	}
 	
@@ -128,7 +128,7 @@ public abstract class Profile extends StackPane {
 	
 	private void createButtonWithImageBackground(String name, Insets insets, String userData, model.Avatar modelAvatar) { 
 		Button button = new Button();
-		Image avatar = new Image("images/-avatars/" + name + ".png");
+		Image avatar = new Image("images/-avatars/big/" + name + ".png");
 		ImageView imageView = new ImageView(avatar);
 		button.setGraphic(imageView);
 		button.setOpacity(0.5);

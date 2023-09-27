@@ -25,6 +25,7 @@ public class GameHeader extends StackPane implements Observer {
 	private ImageView baseHeader = new ImageView(new Image("images/-board-header/header-start.png"));
 	private ImageView lives = new ImageView();
 	private StackPane score = new StackPane();
+	private ImageView avatar = new ImageView();
 	
 	private GameHeader() {
 		Scene scene = BaseScene.getInstance();
@@ -60,7 +61,8 @@ public class GameHeader extends StackPane implements Observer {
 		setScore(model.BomberMan.getInstance().getScore());
 		children.add(score);
 		
-		
+		setAvatar();
+		children.add(avatar);
 		
 	}
 
@@ -84,6 +86,12 @@ public class GameHeader extends StackPane implements Observer {
 		}
 		this.score.getChildren().add(tempPane);
 		GameHeader.setMargin(this.score, new Insets(27, 0, 0, 365 - 24 * scoreAsArray.length));
+	}
+	
+	private void setAvatar() {
+		String avatar = model.Player.getInstance().getAvatar().toString().toLowerCase();
+		this.avatar.setImage(new Image("images/-avatars/small/" + avatar + ".png"));
+		GameHeader.setMargin(this.avatar, new Insets(27, 0, 0, 60));
 	}
 	
 	

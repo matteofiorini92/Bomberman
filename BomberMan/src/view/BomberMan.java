@@ -23,10 +23,12 @@ public class BomberMan extends Character {
 	static {
 		utilities.LoadProperties.loadDirectionStringProperties(imageFiles, "resources/characters/bomberMan.properties");
 	}
+	
+	private static String imagesPath = "images/-bm/" + model.Player.getInstance().getAvatar().toString().toLowerCase() + "/";
 
 	private BomberMan()
 	{
-		super(INITIAL_POSITION, new Image("images/-bm/" + imageFiles.get(Direction.INITIAL) + ".png"), INITIAL_SPEED);
+		super(INITIAL_POSITION, new Image(imagesPath + imageFiles.get(Direction.INITIAL) + ".png"), INITIAL_SPEED);
 	}
 	
 	/**
@@ -54,7 +56,10 @@ public class BomberMan extends Character {
 	 */
 	public void reset() {
 		StackPane.setMargin(this, new Insets(INITIAL_POSITION[0] * Item.ITEM_HEIGHT - HEIGHT_DIFFERENCE, 0, 0, INITIAL_POSITION[1] * Item.ITEM_WIDTH));
-		this.setImage(new Image("images/-bm/" + imageFiles.get(Direction.INITIAL) + ".png"));
+		BomberMan.imagesPath = "images/-bm/" + model.Player.getInstance().getAvatar().toString().toLowerCase() + "/";
+		Character.prefixes.remove(model.BomberMan.class);
+		Character.prefixes.put(model.BomberMan.class, "bm/" + model.Player.getInstance().getAvatar().toString().toLowerCase());
+		this.setImage(new Image(imagesPath + imageFiles.get(Direction.INITIAL) + ".png"));
 		this.setSpeed(INITIAL_SPEED);
 	}
 	

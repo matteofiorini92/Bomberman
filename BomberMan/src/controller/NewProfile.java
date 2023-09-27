@@ -31,7 +31,6 @@ public abstract class NewProfile {
 		startNewGame.setDisable(true);
 		
 		Node saveProfile = baseGroup.lookup("#SAVE_PROFILE");
-//		saveProfile.setOnMouseClicked(event -> new controller.SaveNewProfile()); //TODO DELETE
 		saveProfile.setOnMouseClicked(event -> NewProfile.save());
 		
 	}

@@ -31,11 +31,11 @@ public abstract class Character extends Element {
 	
 	private Double speed;
 	private Double timeForMovement;
-	private String currLevel = controller.Level.getCurrLevel();
+	private String currLevel = this instanceof view.BomberMan ? "" : controller.Level.getCurrLevel() + "/";
 	
 	public static Map<Class<? extends model.Character>, String> prefixes = new HashMap<>();
 	static {
-		prefixes.put(model.BomberMan.class, "bm");
+		prefixes.put(model.BomberMan.class, "bm/" + model.Player.getInstance().getAvatar().toString().toLowerCase());
 		prefixes.put(model.Helix.class, "helix");
 		prefixes.put(model.Bug.class, "bug");
 	}
@@ -156,7 +156,7 @@ public abstract class Character extends Element {
 		
 		for (int frame = 0; frame < files.length; frame++) {
 			final int framePlusOne = frame + 1;
-			Image image = new Image("images/-" + prefix + "/" + currLevel + "/" + files[frame] + ".png");
+			Image image = new Image("images/-" + prefix + "/" + currLevel + files[frame] + ".png");
 			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH/(files.length + 1) * framePlusOne), event -> {
 		    	this.setImage(image);
 		    });
