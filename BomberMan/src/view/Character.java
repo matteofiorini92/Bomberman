@@ -3,10 +3,14 @@ package view;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.Observable;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
@@ -28,11 +32,11 @@ public abstract class Character extends Element {
 	public static final int HEIGHT_DIFFERENCE = CHARACTER_HEIGHT - view.Item.ITEM_HEIGHT;
 
 	public static final int INVINCIBILITY_FRAMES = 50;
-	public static final int TIME_FOR_DEATH = 500;
+	public static final int TIME_FOR_DEATH = 750;
+	public static final int DEATH_FRAMES = 20;
 	
 	private double speed;
 	private double timeForMovement;
-	private String currLevel = this instanceof view.BomberMan ? "" : controller.Level.getCurrLevel() + "/";
 	
 	private static Map<Class<? extends model.Character>, String> prefixes = new HashMap<>();
 	static {
@@ -73,7 +77,7 @@ public abstract class Character extends Element {
 			move((model.Character)o, imageFiles, args[1]);
 		}
 		else if (args[0].equals(model.ChangeType.BECOME_INVINCIBLE)) {
-			flash();
+			flash(model.Character.INVINCIBILITY_TIME, INVINCIBILITY_FRAMES, false, null);
 		}
 		else if (args[0].equals(model.ChangeType.DIE)) {
 			die((model.Character)o, imageFiles);
@@ -130,13 +134,24 @@ public abstract class Character extends Element {
 	 * Flashing animation for when a character loses a life without dying
 	 */
 	
-	public void flash() {
+	public void flash(int time, int frames, boolean isDying, model.Character character) {
 		Timeline timeline = new Timeline();
 		
-		for (int frame = 0; frame < INVINCIBILITY_FRAMES; frame++) {
+		for (int frame = 0; frame < frames; frame++) {
 			final int framePlusOne = frame + 1;
-			KeyFrame keyFrame = new KeyFrame(Duration.millis(model.Character.INVINCIBILITY_TIME/INVINCIBILITY_FRAMES * framePlusOne), event -> {
+			KeyFrame keyFrame = new KeyFrame(Duration.millis(time/frames * framePlusOne), event -> {
 				this.setVisible(framePlusOne % 2 == 0);				
+			});
+			timeline.getKeyFrames().add(keyFrame);
+		}
+		if (isDying) {
+			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH), event -> {
+				this.setVisible(false);
+				if (character instanceof Hiding && ((Hiding) character).isHidingSomething()) {
+					model.Item modelItem = (model.Item) ((model.Hiding)character).getHiddenHidable();
+					Hidable viewHidable = new Hidable((model.Hidable)modelItem);
+					modelItem.addObserver(viewHidable);				
+				}
 			});
 			timeline.getKeyFrames().add(keyFrame);
 		}
@@ -149,32 +164,7 @@ public abstract class Character extends Element {
 	 * @param imageFiles the image files of the character
 	 */
 	public void die(model.Character character, Map<Direction, String> imageFiles) {
-		
-		String prefix = prefixes.get(character.getClass());
-		String[] files = imageFiles.get(model.Direction.DEAD).split("\\s+");
-
-		Timeline timeline = new Timeline();
-		
-		for (int frame = 0; frame < files.length; frame++) {
-			final int framePlusOne = frame + 1;
-			Image image = new Image("images/-" + prefix + "/" + currLevel + files[frame] + ".png");
-			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH/(files.length + 1) * framePlusOne), event -> {
-		    	this.setImage(image);
-		    });
-			timeline.getKeyFrames().add(keyFrame);
-		}
-		
-		KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH), event -> {
-			this.setVisible(false);
-			if (character instanceof Hiding && ((Hiding) character).isHidingSomething()) {
-				model.Item modelItem = (model.Item) ((model.Hiding)character).getHiddenHidable();
-				view.Hidable viewHidable = new view.Hidable((model.Hidable)modelItem);
-				modelItem.addObserver(viewHidable);				
-			}
-	    });
-		timeline.getKeyFrames().add(keyFrame);
-		timeline.play();
-			
+		flash(TIME_FOR_DEATH, DEATH_FRAMES, true, character);
 	}
 	
 	

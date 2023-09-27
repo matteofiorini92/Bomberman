@@ -4,10 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 import model.Direction;
+import model.Hiding;
 
 /**
  * view of the bomberman character
@@ -40,6 +44,27 @@ public class BomberMan extends Character {
 			bomberMan = new BomberMan();
 		}
 		return bomberMan;
+	}
+	
+	/**
+	 * overrides the die method of character as BomberMan has an animation significantly different from enemies when dying
+	 */
+	@Override
+	public void die(model.Character character, Map<Direction, String> imageFiles) {
+		String prefix = "bm/" + model.Player.getInstance().getAvatar().toString().toLowerCase();
+		String[] files = imageFiles.get(model.Direction.DEAD).split("\\s+");
+		
+		Timeline timeline = new Timeline();
+		
+		for (int frame = 0; frame < files.length; frame++) {
+			final int framePlusOne = frame + 1;
+			Image image = new Image("images/-" + prefix + "/" + files[frame] + ".png");
+			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_DEATH/(files.length + 1) * framePlusOne), event -> {
+				this.setImage(image);
+			});
+			timeline.getKeyFrames().add(keyFrame);
+		}
+		timeline.play();
 	}
 	
 	/**

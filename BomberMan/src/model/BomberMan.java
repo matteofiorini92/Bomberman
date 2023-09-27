@@ -7,7 +7,7 @@ package model;
  */
 public class BomberMan extends Character {
 	public static BomberMan bomberman;
-	public static final int INITIAL_LIVES = 5;
+	public static final int INITIAL_LIVES = 2;
 	public static final int INITIAL_BOMBS = 10;
 	public static final int INITIAL_RANGE = 10;
 	public static final int[] INITIAL_POSITION = {1, 2};
