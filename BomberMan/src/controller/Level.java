@@ -134,7 +134,6 @@ public class Level implements Observer {
 		model.Hiding sotWall = remaniningSoftWalls.get(r.nextInt(max));
 		sotWall.setHiddenHidable(exit);
 		exit.setPosition(((model.SoftWall) sotWall).getPosition());
-		System.out.println("exit in ["+((model.SoftWall) sotWall).getPosition()[0] + ", "+ ((model.SoftWall) sotWall).getPosition()+"]");
 	}
 
 	
