@@ -1,5 +1,9 @@
-he 7 7 W 1.0
-he 9 2 S 1.0
-he 11 7 N 1.0
-bug 4 4 W 1.0
-bug 7 13 E 1.0
+bug 1 8
+bug 1 10
+bug 5 8
+bug 7 10
+bug 10 4
+bug 10 12
+bug 11 4
+bug 11 5
+bug 11 6

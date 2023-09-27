@@ -90,9 +90,9 @@ public abstract class Characters {
 	            String[] elements = line.split("\\s+");
 	            int coordinateX = Integer.parseInt(elements[1]);
 	            int coordinateY = Integer.parseInt(elements[2]);
-	            double speed = Double.parseDouble(elements[4]);
+//	            double speed = Double.parseDouble(elements[4]);
 	            
-	            Object[] parsedElements = new Object[]{elements[0], coordinateX, coordinateY, elements[3], speed};
+	            Object[] parsedElements = new Object[]{elements[0], coordinateX, coordinateY};
 	            result.add(parsedElements);
 				line = reader.readLine();
 	        }

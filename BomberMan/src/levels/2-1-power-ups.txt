@@ -1,6 +1,10 @@
 ExtraBomb
 ExtraBomb
+ExtraBomb
 Accelerator
 Accelerator
+Accelerator
+Accelerator
+ExplosionExpander
 ExplosionExpander
 ExplosionExpander
