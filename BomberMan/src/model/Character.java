@@ -20,7 +20,7 @@ public abstract class Character extends Element {
 	/**
 	 * time it takes a character to move (affected by its speed)
 	 */
-	public static final int TIME_FOR_MOVEMENT = 375;
+	public static final int TIME_FOR_MOVEMENT = 200;
 	
 	private static GameBoard board = model.GameBoard.getInstance();
 	private double speed;

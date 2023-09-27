@@ -26,7 +26,7 @@ import javafx.util.Duration;
 public class Bomb extends Item {
 	
 	public static final int TIME_TO_EXPLODE = model.Bomb.TIME_TO_EXPLODE;
-	public static final int EXPLOSION_ANIMATION = 1000;
+	public static final int EXPLOSION_ANIMATION = 500;
 	private static Map<String, String> imageFiles = new HashMap<>();
 	
 	private GridPane gridPane = new GridPane();

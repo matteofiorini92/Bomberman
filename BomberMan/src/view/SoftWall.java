@@ -19,7 +19,7 @@ import javafx.scene.image.Image;
 public class SoftWall extends Tile {
 	
 	public static final int SOFT_WALL_ANIMATION = 500;
-	public static final int SOFT_WALL_EXPLOSION = 1500;
+	public static final int SOFT_WALL_EXPLOSION = 500;
 	private static Map<String, String> imageFiles = new HashMap<>();
 	
 	private Timeline timeline = new Timeline(); // class attribute so that it can be accessed by both startAnimation and update (for explosions)
