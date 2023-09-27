@@ -1,4 +1,4 @@
-package view.Boards;
+package view.boards;
 
 /**
  * a profile board for an existing player profile

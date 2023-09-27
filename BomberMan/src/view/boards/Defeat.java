@@ -1,4 +1,4 @@
-package view.Boards;
+package view.boards;
 
 /**
  * view of defeat board

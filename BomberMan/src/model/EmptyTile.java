@@ -9,7 +9,7 @@ public class EmptyTile extends Tile {
 	
 	public EmptyTile(int[] position)
 	{
-		super(position, TileType.EMPTY_TILE);
+		super(position);
 		this.setDisappearOnWalkOn(true);
 	}
 

@@ -10,23 +10,24 @@ public class SoftWall extends Wall implements Hiding {
 	
 	public static GameBoard board = model.GameBoard.getInstance();
 	
-	private model.Hidable hiddenHidable = null;
+	private Hidable hiddenHidable = null;
 	
 	public SoftWall(int[] position)
 	{
-		super(position, TileType.SOFT_WALL);
+		super(position);
 	}
 
-	public model.Hidable getHiddenHidable()	{ return hiddenHidable; }
+	public Hidable getHiddenHidable()	{ return hiddenHidable; }
 	
 	@Override
-	public void setHiddenHidable(model.Hidable hiddenHidable) {	this.hiddenHidable = hiddenHidable; }
+	public void setHiddenHidable(Hidable hiddenHidable) {	this.hiddenHidable = hiddenHidable; }
 	
 	/**
 	 * destroy the soft wall due to a bomb's explosion
 	 */
 	@SuppressWarnings("deprecation")
 	public void destroy() {
+		// TODO  destroy after x seconds. create constant. "import" constant in view
 		int[] position = this.getPosition();
 		if (isHidingSomething()) {
 			board.setCell((Element)hiddenHidable, position);

@@ -2,6 +2,7 @@ package view;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Observable;
 
 import javafx.animation.KeyFrame;
@@ -27,13 +28,13 @@ public abstract class Character extends Element {
 	public static final int HEIGHT_DIFFERENCE = CHARACTER_HEIGHT - view.Item.ITEM_HEIGHT;
 
 	public static final int INVINCIBILITY_FRAMES = 20;
-	public static int TIME_FOR_DEATH = 1000;
+	public static final int TIME_FOR_DEATH = 1000;
 	
-	private Double speed;
-	private Double timeForMovement;
+	private double speed;
+	private double timeForMovement;
 	private String currLevel = this instanceof view.BomberMan ? "" : controller.Level.getCurrLevel() + "/";
 	
-	public static Map<Class<? extends model.Character>, String> prefixes = new HashMap<>();
+	private static Map<Class<? extends model.Character>, String> prefixes = new HashMap<>();
 	static {
 		prefixes.put(model.BomberMan.class, "bm/" + model.Player.getInstance().getAvatar().toString().toLowerCase());
 		prefixes.put(model.Helix.class, "helix");
@@ -46,7 +47,7 @@ public abstract class Character extends Element {
 	 * @param image the image of the character
 	 * @param speed the speed of the character, used for movement animation
 	 */
-	public Character(int[] position, Image image, Double speed)
+	public Character(int[] position, Image image, double speed)
 	{
 		super(image);
 		this.speed = speed;
@@ -55,7 +56,7 @@ public abstract class Character extends Element {
 		
 	}
 	
-	public void setSpeed(Double speed) {
+	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
 	
@@ -177,12 +178,18 @@ public abstract class Character extends Element {
 	}
 	
 	
-	private void changeSpeed(Double newSpeed) {
+	private void changeSpeed(double newSpeed) {
 		this.speed = newSpeed;
 		this.timeForMovement = model.Character.TIME_FOR_MOVEMENT / newSpeed;
 		controller.KeyListeners.updateThrottleDelay();
 	}
 	
+	public static void removePrefix(Class<? extends model.Character> className) {
+		prefixes.remove(className);
+	}
 	
+	public static void addPrefix(Class<? extends model.Character> className, String path) {
+		prefixes.put(className, path);
+	}
 	
 }

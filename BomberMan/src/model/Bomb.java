@@ -19,7 +19,7 @@ import javafx.application.Platform;
  */
 public class Bomb extends Item {
 	
-	public static final int TIME_FOR_EXPLOSION = 3000;
+	public static final int TIME_TO_EXPLODE = 3000;
 
 	private static GameBoard board = model.GameBoard.getInstance();
 	private int range;
@@ -48,7 +48,7 @@ public class Bomb extends Item {
 			});
 		};
 		
-		future = executor.schedule(explode, TIME_FOR_EXPLOSION, TimeUnit.MILLISECONDS);
+		future = executor.schedule(explode, TIME_TO_EXPLODE, TimeUnit.MILLISECONDS);
 		Object[] args = { model.ChangeType.TRIGGER };
 		setChanged();
 		notifyObservers(args);

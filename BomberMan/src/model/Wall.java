@@ -2,9 +2,9 @@ package model;
 
 public abstract class Wall extends Tile {
 
-	public Wall(int[] position, TileType type)
+	public Wall(int[] position)
 	{
-		super(position, type);
+		super(position);
 	}
 
 }

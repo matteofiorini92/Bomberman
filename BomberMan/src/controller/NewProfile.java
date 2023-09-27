@@ -25,7 +25,7 @@ public abstract class NewProfile {
 	public static void load() {
 		BaseGroup baseGroup = view.BaseGroup.getInstance();
 		baseGroup.getChildren().removeAll(baseGroup.getChildren());
-		baseGroup.getChildren().add(new view.Boards.NewProfile());
+		baseGroup.getChildren().add(new view.boards.NewProfile());
 		
 		Node startNewGame = baseGroup.lookup("#NEW_GAME");
 		startNewGame.setDisable(true);

@@ -1,4 +1,4 @@
-package view.Boards;
+package view.boards;
 
 import java.io.IOException;
 import java.nio.file.Files;

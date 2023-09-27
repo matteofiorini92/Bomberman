@@ -8,7 +8,7 @@ import javafx.scene.Group;
  *
  */
 public class BaseGroup extends Group {
-	public static BaseGroup baseGroup;
+	private static BaseGroup baseGroup;
 	
 	private BaseGroup() {}
 	

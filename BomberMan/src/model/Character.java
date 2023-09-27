@@ -23,7 +23,7 @@ public abstract class Character extends Element {
 	public static final int TIME_FOR_MOVEMENT = 375;
 	
 	private static GameBoard board = model.GameBoard.getInstance();
-	private Double speed;
+	private double speed;
 	private Direction direction;
 	private int lives;
 	private boolean isInvincible;
@@ -35,7 +35,7 @@ public abstract class Character extends Element {
 	 * @param speed the initial speed of a character. can change for bomberman
 	 * @param lives initial number of lives of a character
 	 */
-	public Character(int[] position, Double speed, int lives)
+	public Character(int[] position, double speed, int lives)
 	{
 		super(position);
 		this.speed = speed;
@@ -43,8 +43,8 @@ public abstract class Character extends Element {
 		setInvincible(false);
 	}
 	
-	public Double getSpeed() { return speed; }
-	public void setSpeed(Double speed) { this.speed = speed; }
+	public double getSpeed() { return speed; }
+	public void setSpeed(double speed) { this.speed = speed; }
 	
 	public Direction getDirection() { return direction; }
 	public void setDirection(Direction direction) {	this.direction = direction; }
@@ -120,9 +120,7 @@ public abstract class Character extends Element {
 		if (
 			newCell instanceof Bomb || 
 			newCell instanceof Character || 
-			(newCell instanceof Tile && 
-					(((Tile)newCell).getType() == TileType.HARD_WALL ||
-					((Tile)newCell).getType() == TileType.SOFT_WALL))) // same as !emptyTile?
+			newCell instanceof Wall)
 		{ // can't walk over walls, bombs or characters
 			newPosition = prevPosition;
 			hasMoved = false;

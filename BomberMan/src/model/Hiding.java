@@ -2,7 +2,7 @@ package model;
 
 public interface Hiding {
 
-	public void setHiddenHidable(model.Hidable hidable);
+	public void setHiddenHidable(Hidable hidable);
 	public boolean isHidingSomething();
-	public model.Hidable getHiddenHidable();
+	public Hidable getHiddenHidable();
 }

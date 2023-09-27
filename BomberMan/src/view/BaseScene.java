@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
  */
 public class BaseScene extends Scene {
 	
-	public static BaseScene baseScene;
+	private static BaseScene baseScene;
 
 	private BaseScene()
 	{

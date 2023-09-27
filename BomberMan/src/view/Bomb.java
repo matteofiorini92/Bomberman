@@ -25,19 +25,15 @@ import javafx.util.Duration;
 @SuppressWarnings("deprecation")
 public class Bomb extends Item {
 	
-	public static final int TIME_TO_TRIGGER = 3000;
-	public static final int TIME_FOR_EXPLOSION = 1000;
-	public static Map<String, String> imageFiles = new HashMap<>();
-	static {
-		String currLevel = controller.Level.getCurrLevel();
-		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/explosions/" + currLevel + ".properties");
-	}
+	public static final int TIME_TO_EXPLODE = model.Bomb.TIME_TO_EXPLODE;
+	public static final int EXPLOSION_ANIMATION = 1000;
+	private static Map<String, String> imageFiles = new HashMap<>();
 	
 	private GridPane gridPane = new GridPane();
 	private Pane pane = new Pane();					// have to use a pane for precise positioning
 	private Timeline timeline = new Timeline();
-	private String tilesPath = "images/-tiles/" + controller.Level.getCurrLevel() + "/";
-	private String explosionsPath = "images/-explosions/" + controller.Level.getCurrLevel() + "/";
+	private static String tilesPath;
+	private static String explosionsPath;
 	
 	public Bomb() {
 		super(null);
@@ -75,7 +71,7 @@ public class Bomb extends Item {
 		for (int i = 0; i < files.length; i++) {
 			final int iPlusOne = i+1;
 			Image image = new Image(tilesPath + files[i]+ ".png");
-			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_TO_TRIGGER/files.length * iPlusOne), event -> {
+			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_TO_EXPLODE/files.length * iPlusOne), event -> {
 		    	this.setImage(image);
 		    });
 			timeline.getKeyFrames().add(keyFrame);
@@ -97,7 +93,7 @@ public class Bomb extends Item {
 
 		for (int frame = 0; frame < 5; frame++) {
 			final int framePlusOne = frame+1;
-			KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_EXPLOSION/6 * framePlusOne), event -> {
+			KeyFrame keyFrame = new KeyFrame(Duration.millis(EXPLOSION_ANIMATION/6 * framePlusOne), event -> {
 				
 				for (int i = 0; i < range * 2 + 1; i++) {
 					for (int j = 0; j < range * 2 + 1; j++) {
@@ -120,12 +116,20 @@ public class Bomb extends Item {
 			});
 			timeline.getKeyFrames().add(keyFrame);
 		}
-		KeyFrame keyFrame = new KeyFrame(Duration.millis(TIME_FOR_EXPLOSION), event -> {
+		KeyFrame keyFrame = new KeyFrame(Duration.millis(EXPLOSION_ANIMATION), event -> {
 			setImage(null);
 			gridPane.getChildren().clear();
 			
 		});
 		timeline.getKeyFrames().add(keyFrame);
 		timeline.play();
+	}
+	
+	public static void loadImageFiles() {
+		tilesPath = "images/-tiles/" + controller.Level.getCurrLevel() + "/";
+		explosionsPath = "images/-explosions/" + controller.Level.getCurrLevel() + "/";
+		imageFiles.clear();
+		String currLevel = controller.Level.getCurrLevel();
+		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/explosions/" + currLevel + ".properties");
 	}
 }

@@ -64,7 +64,7 @@ public class JBomberMan extends Application {
 		/**
 		 * intantiate the welcome board
 		 */
-		view.Boards.Welcome wBoard = new view.Boards.Welcome();
+		view.boards.Welcome wBoard = new view.boards.Welcome();
 		root.getChildren().add(wBoard);
 		
 		

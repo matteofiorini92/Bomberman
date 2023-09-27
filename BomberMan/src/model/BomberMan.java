@@ -8,10 +8,10 @@ package model;
 public class BomberMan extends Character {
 	public static BomberMan bomberman;
 	public static final int INITIAL_LIVES = 5;
-	public static final int INITIAL_BOMBS = 1;
-	public static final int INITIAL_RANGE = 1;
+	public static final int INITIAL_BOMBS = 10;
+	public static final int INITIAL_RANGE = 10;
 	public static final int[] INITIAL_POSITION = {1, 2};
-	public static final double INITIAL_SPEED = 1.0;
+	public static final double INITIAL_SPEED = 5.0;
 	public static final int INITIAL_SCORE = 0;
 	
 	private int bombs;
@@ -75,7 +75,7 @@ public class BomberMan extends Character {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void incSpeed(Double increase) { 
+	public void incSpeed(double increase) { 
 		Double newSpeed = getSpeed() + increase;
 		setSpeed(newSpeed);
 		Object[] args = { model.ChangeType.CHANGE_SPEED, newSpeed };
@@ -84,7 +84,7 @@ public class BomberMan extends Character {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void decSpeed(Double decrease) { 
+	public void decSpeed(double decrease) { 
 		Double newSpeed = getSpeed() - decrease;
 		setSpeed(newSpeed);
 		Object[] args = { model.ChangeType.CHANGE_SPEED, newSpeed };

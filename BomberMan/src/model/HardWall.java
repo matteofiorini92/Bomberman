@@ -9,7 +9,7 @@ public class HardWall extends Wall {
 	
 	public HardWall(int[] position)
 	{
-		super(position, TileType.HARD_WALL);
+		super(position);
 	}
 
 }

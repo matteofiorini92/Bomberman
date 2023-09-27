@@ -10,7 +10,7 @@ import javafx.scene.layout.StackPane;
  */
 public class GameScreen extends StackPane {
 	
-	public static GameScreen gameScreen;
+	private static GameScreen gameScreen;
 	
 	private GameScreen() {
 		this.setPrefHeight(view.BaseScene.getInstance().getHeight());

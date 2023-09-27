@@ -15,8 +15,8 @@ import model.Direction;
 @SuppressWarnings("deprecation")
 public class Bug extends Character {
 
-	public static final Double SPEED = model.Bug.SPEED;
-	public static Map<Direction, String> imageFiles = new HashMap<>();
+	public static final double SPEED = model.Bug.SPEED;
+	private static Map<Direction, String> imageFiles = new HashMap<>();
 	static {
 		utilities.LoadProperties.loadDirectionStringProperties(imageFiles, "resources/characters/bug.properties");
 	}

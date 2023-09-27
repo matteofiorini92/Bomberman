@@ -22,9 +22,9 @@ public class GameBoard extends Observable {
 	/**
 	 * Loading k:v pairs from resources/tiles/model.properties into Elements
 	 */
-	private static Map<String, Class<? extends Element>> Elements = new HashMap<>();
+	private static Map<String, Class<? extends Element>> elements = new HashMap<>();
 	static {
-		utilities.LoadProperties.loadStringClassProperties(Elements, "resources/tiles/model.properties");
+		utilities.LoadProperties.loadStringClassProperties(elements, "resources/tiles/model.properties");
 	}
 	
 	private GameBoard() {}
@@ -55,11 +55,11 @@ public class GameBoard extends Observable {
 		
 	        for (int i = 0; i < HEIGHT; i++) {
 	        	line = reader.readLine();
-				String[] elements = line.split("\\s+");
+				String[] descriptions = line.split("\\s+");
 	            for (int j = 0; j < WIDTH; j++) {
 	            	
-	            	desc = elements[j];
-	            	Class<? extends Element> c = Elements.get(desc);
+	            	desc = descriptions[j];
+	            	Class<? extends Element> c = elements.get(desc);
 	            	Element e;
 	            	int[] p = {i, j};
 					try {

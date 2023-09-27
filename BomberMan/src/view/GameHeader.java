@@ -20,7 +20,7 @@ import javafx.scene.layout.StackPane;
 @SuppressWarnings("deprecation")
 public class GameHeader extends StackPane implements Observer {
 	
-	public static GameHeader gameHeader;
+	private static GameHeader gameHeader;
 	
 	private ImageView baseHeader = new ImageView(new Image("images/-board-header/header-start.png"));
 	private ImageView lives = new ImageView();

@@ -1,4 +1,4 @@
-package view.Boards;
+package view.boards;
 
 import controller.EndOptions;
 

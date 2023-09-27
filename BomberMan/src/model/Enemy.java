@@ -17,11 +17,11 @@ import javafx.application.Platform;
 public abstract class Enemy extends Character implements Hiding {
 	private static List<Enemy> aliveEnemies = new ArrayList<Enemy>();
 	private static GameBoard board = GameBoard.getInstance();
-	ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();	
+	private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();	
 	private int points;
-	private model.Hidable hiddenHidable = null;
+	private Hidable hiddenHidable = null;
 
-	public Enemy(int[] position, Double speed, int points, int lives)
+	public Enemy(int[] position, double speed, int points, int lives)
 	{
 		super(position, speed, lives);
 		this.points = points;
@@ -31,8 +31,8 @@ public abstract class Enemy extends Character implements Hiding {
 	public static List<Enemy> getAliveEnemies() { return aliveEnemies; }
 	public int getPoints() { return points;	}
 	
-	public model.Hidable getHiddenHidable()	{ return hiddenHidable; }
-	public void setHiddenHidable(model.Hidable hiddenHidable) {	this.hiddenHidable = hiddenHidable; }
+	public Hidable getHiddenHidable()	{ return hiddenHidable; }
+	public void setHiddenHidable(Hidable hiddenHidable) {	this.hiddenHidable = hiddenHidable; }
 	
 	@Override
 	public boolean isHidingSomething() { return hiddenHidable != null; }
@@ -66,12 +66,12 @@ public abstract class Enemy extends Character implements Hiding {
 	 */
 	public void startMoving() {
 		boolean[] needsNewDirection = { true };
-		Direction[] randomDirection = { getRandomDirection(this) };
+		Direction[] randomDirection = { getRandomDirection() };
 		Runnable moveTask = () -> {
 			Platform.runLater(() -> { // to have UI related operations all run on the JavaFX thread 				
 				needsNewDirection[0] = !this.move(randomDirection[0]);
 				if (needsNewDirection[0]) {				
-					randomDirection[0] = getRandomDirection(this);
+					randomDirection[0] = getRandomDirection();
 				}
 			});
 		};
@@ -79,10 +79,8 @@ public abstract class Enemy extends Character implements Hiding {
 		executor.scheduleAtFixedRate(moveTask, 0, (long)(TIME_FOR_MOVEMENT / this.getSpeed()), TimeUnit.MILLISECONDS);
 	}
 	
-	private static Direction getRandomDirection(Enemy enemy) { // public?
-		Element[][] cells = board.getCells();
-		int[] currPosition = enemy.getPosition();
-		List<Direction> availableDirections = getAvailableDirections(currPosition, cells);
+	private Direction getRandomDirection() {
+		List<Direction> availableDirections = getAvailableDirections();
 		if (availableDirections.size() != 0) {			
 			Random random = new Random();
 			int index = random.nextInt(availableDirections.size());
@@ -92,7 +90,9 @@ public abstract class Enemy extends Character implements Hiding {
 		return Direction.RIGHT;
     }
 	
-	private static List<Direction> getAvailableDirections(int[] currPosition, Element[][] cells) { // public ?
+	private List<Direction> getAvailableDirections() {
+		int[] currPosition = this.getPosition();
+		Element[][] cells = board.getCells();
 		List<Direction> availableDirection = new ArrayList<Direction>();
 		int coordinateX = currPosition[1];
 		int coordinateY = currPosition[0];

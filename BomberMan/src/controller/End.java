@@ -21,26 +21,26 @@ public class End {
 		ObservableList<Node> baseGroupChildren = view.BaseGroup.getInstance().getChildren();
 		baseGroupChildren.removeAll(baseGroupChildren);
 		
-		view.Boards.End boardEnd; 
+		view.boards.End boardEnd; 
 		
 		switch (option) {
 			case CONTINUE:
-				boardEnd = new view.Boards.Continue();
+				boardEnd = new view.boards.Continue();
 				break;
 			case VICTORY:
 				model.Player.getInstance().addWin();
 				model.Player.getInstance().addPoints(model.BomberMan.getInstance().getScore());
 				ExistingProfile.updateStats();
-				boardEnd = new view.Boards.Victory();
+				boardEnd = new view.boards.Victory();
 				break;
 			case DEFEAT:
 				model.Player.getInstance().addLoss();
 				model.Player.getInstance().addPoints(model.BomberMan.getInstance().getScore());
 				ExistingProfile.updateStats();
-				boardEnd = new view.Boards.Defeat();
+				boardEnd = new view.boards.Defeat();
 				break;
 			default:
-				boardEnd = new view.Boards.Continue();
+				boardEnd = new view.boards.Continue();
 		}
 		
 		view.BaseGroup.getInstance().getChildren().add(boardEnd);

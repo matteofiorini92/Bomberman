@@ -12,7 +12,7 @@ import model.Element;
  * @author Matteo
  *
  */
-public class LoadProperties {
+public abstract class LoadProperties {
 	
 	/**
 	 * loads properties from a file

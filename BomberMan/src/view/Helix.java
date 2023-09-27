@@ -15,8 +15,8 @@ import model.Direction;
 @SuppressWarnings("deprecation")
 public class Helix extends Character {
 	
-	public static final Double SPEED = model.Helix.SPEED;
-	public static Map<Direction, String> imageFiles = new HashMap<>();
+	public static final double SPEED = model.Helix.SPEED;
+	private static Map<Direction, String> imageFiles = new HashMap<>();
 	static {
 		utilities.LoadProperties.loadDirectionStringProperties(imageFiles, "resources/characters/helix.properties");
 	}

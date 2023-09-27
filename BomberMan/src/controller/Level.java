@@ -66,6 +66,9 @@ public class Level implements Observer {
 			model.Enemy.getAliveEnemies().clear();
 		}
 		
+		view.GameBoard.loadImageFiles();
+		view.Bomb.loadImageFiles();
+		view.SoftWall.loadImageFiles();
 		
 		softWalls = GameBoard.load(level);
 		enemies = Characters.load(level);
@@ -131,6 +134,7 @@ public class Level implements Observer {
 		model.Hiding sotWall = remaniningSoftWalls.get(r.nextInt(max));
 		sotWall.setHiddenHidable(exit);
 		exit.setPosition(((model.SoftWall) sotWall).getPosition());
+		System.out.println("exit in ["+((model.SoftWall) sotWall).getPosition()[0] + ", "+ ((model.SoftWall) sotWall).getPosition()+"]");
 	}
 
 	

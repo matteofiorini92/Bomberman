@@ -1,4 +1,4 @@
-package view.Boards;
+package view.boards;
 
 /**
  * a profile board with all stats at 0, no nickname and default avatar

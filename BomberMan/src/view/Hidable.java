@@ -17,7 +17,7 @@ import javafx.util.Duration;
 @SuppressWarnings("deprecation")
 public class Hidable extends Item {
 	public static final int POWER_UP_ANIMATION = 100;
-	public static Map<String, String> imageFiles = new HashMap<>();
+	private static Map<String, String> imageFiles = new HashMap<>();
 	static {
 		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/power-ups.properties");
 	}

@@ -20,14 +20,10 @@ public class SoftWall extends Tile {
 	
 	public static final int SOFT_WALL_ANIMATION = 500;
 	public static final int SOFT_WALL_EXPLOSION = 1500;
-	public static Map<String, String> imageFiles = new HashMap<>();
-	static {
-		String currLevel = controller.Level.getCurrLevel();
-		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/tiles/" + currLevel + ".properties");
-	}
+	private static Map<String, String> imageFiles = new HashMap<>();
 	
 	private Timeline timeline = new Timeline(); // class attribute so that it can be accessed by both startAnimation and update (for explosions)
-	private String tilesPath = "images/-tiles/" + controller.Level.getCurrLevel() + "/";
+	private static String tilesPath;
 	
 	public SoftWall(String desc)
 	{
@@ -140,6 +136,13 @@ public class SoftWall extends Tile {
 		timeline.getKeyFrames().add(keyFrame);
 		timeline.play();
 		
+	}
+	
+	public static void loadImageFiles() {
+		tilesPath = "images/-tiles/" + controller.Level.getCurrLevel() + "/";
+		imageFiles.clear();
+		String currLevel = controller.Level.getCurrLevel();
+		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/tiles/" + currLevel + ".properties");
 	}
 
 }

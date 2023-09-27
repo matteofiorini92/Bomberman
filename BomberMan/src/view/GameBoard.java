@@ -20,15 +20,11 @@ import javafx.scene.shape.Rectangle;
 @SuppressWarnings("deprecation")
 public class GameBoard extends StackPane implements Observer {
 	
-	private static view.GameBoard gameBoard;
+	private static GameBoard gameBoard;
 	/**
 	 * Loading k:v pairs from resources/tiles/ currLevel .properties into imageFiles
 	 */
 	private static Map<String, String> imageFiles = new HashMap<>();
-	static {
-		String currLevel = controller.Level.getCurrLevel();
-		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/tiles/" + currLevel + ".properties");
-	}
 	
 	private int height = model.GameBoard.HEIGHT;
 	private int width = model.GameBoard.WIDTH;
@@ -36,7 +32,7 @@ public class GameBoard extends StackPane implements Observer {
 	private GridPane gridPane = new GridPane();
 	private Rectangle rectangle = new Rectangle(view.Item.ITEM_WIDTH * model.GameBoard.WIDTH,view.Item.ITEM_HEIGHT * model.GameBoard.HEIGHT, Color.TRANSPARENT);
 	private StackPane itemsPane = new StackPane(rectangle);
-	private String tilesPath = "images/-tiles/" + controller.Level.getCurrLevel() + "/";
+	private static String tilesPath;
 	
 	
 	private GameBoard() {
@@ -91,6 +87,13 @@ public class GameBoard extends StackPane implements Observer {
             	gridPane.add(item, j, i);
 			}
 		}
+	}
+	
+	public static void loadImageFiles() {
+		tilesPath = "images/-tiles/" + controller.Level.getCurrLevel() + "/";
+		imageFiles.clear();
+		String currLevel = controller.Level.getCurrLevel();
+		utilities.LoadProperties.loadStringStringProperties(imageFiles, "resources/tiles/" + currLevel + ".properties");
 	}
 
 }

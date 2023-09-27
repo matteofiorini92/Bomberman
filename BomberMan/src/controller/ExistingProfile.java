@@ -44,7 +44,7 @@ public abstract class ExistingProfile {
 				
 				
 				
-				view.Boards.ExistingProfile existingProfileBoard = new view.Boards.ExistingProfile(
+				view.boards.ExistingProfile existingProfileBoard = new view.boards.ExistingProfile(
 						Integer.parseInt(playerStats[1]),
 						Integer.parseInt(playerStats[2]),
 						Integer.parseInt(playerStats[3]),
