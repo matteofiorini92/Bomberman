@@ -11,7 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 import model.Direction;
-import model.Hiding;
 
 /**
  * view of the bomberman character
