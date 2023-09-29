@@ -39,10 +39,10 @@ public class Hidable extends Item {
 		
 		
 		int[] modelHidablePosition = ((model.Item)modelHidable).getPosition();
-		view.GameBoard.getInstance().setTile(this, modelHidablePosition);
+		GameBoard.getInstance().setTile(this, modelHidablePosition);
 
-		this.setLayoutX(modelHidablePosition[1]*view.Item.ITEM_WIDTH);
-		this.setLayoutY(modelHidablePosition[0]*view.Item.ITEM_HEIGHT);
+		this.setLayoutX(modelHidablePosition[1] * Item.ITEM_WIDTH);
+		this.setLayoutY(modelHidablePosition[0] * Item.ITEM_HEIGHT);
 
 		String[] files = imageFiles.get(modelHidable.getClass().getName()).split("\\s+");
 		

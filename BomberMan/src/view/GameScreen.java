@@ -13,13 +13,13 @@ public class GameScreen extends StackPane {
 	private static GameScreen gameScreen;
 	
 	private GameScreen() {
-		this.setPrefHeight(view.BaseScene.getInstance().getHeight());
-		this.setPrefWidth(view.BaseScene.getInstance().getWidth());
+		this.setPrefHeight(BaseScene.getInstance().getHeight());
+		this.setPrefWidth(BaseScene.getInstance().getWidth());
 		
 		
 		this.getChildren().add(GameHeader.getInstance());
 		this.getChildren().add(GameBoard.getInstance());
-		GameScreen.setMargin(GameBoard.getInstance(), new Insets(view.Item.ITEM_HEIGHT * 2, 0, 0, 0));
+		GameScreen.setMargin(GameBoard.getInstance(), new Insets(Item.ITEM_HEIGHT * 2, 0, 0, 0));
 	}
 	
 	/**

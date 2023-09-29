@@ -48,7 +48,7 @@ public abstract class Enemy extends Character implements Hiding {
 			((Item)hiddenHidable).setPosition(this.getPosition()); // update the position of the power up to the enemy's current position
 			board.setCell((Element)hiddenHidable, this.getPosition());
 		}
-		model.BomberMan.getInstance().addPoints(this.points);
+		BomberMan.getInstance().addPoints(this.points);
 		executor.shutdownNow();
 	}
 	

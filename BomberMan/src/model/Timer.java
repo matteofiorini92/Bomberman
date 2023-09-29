@@ -60,14 +60,14 @@ public class Timer extends Observable {
 		};
 		future = executor.schedule(decrease, 1000, TimeUnit.MILLISECONDS);
 		if (currTime % STEP == 0) {
-			Object[] args = { model.ChangeType.TIME_DECREASE, currTime };
+			Object[] args = { ChangeType.TIME_DECREASE, currTime };
 			setChanged();
 			notifyObservers(args);
 		}
 		currTime--;
 		if (currTime == 0) {
 			stop();
-			Object[] args = { model.ChangeType.TIME_DECREASE, currTime };
+			Object[] args = { ChangeType.TIME_DECREASE, currTime };
 			setChanged();
 			notifyObservers(args);
 		}

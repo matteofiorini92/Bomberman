@@ -21,7 +21,7 @@ public class Bomb extends Item {
 	
 	public static final int TIME_TO_EXPLODE = 3000;
 
-	private static GameBoard board = model.GameBoard.getInstance();
+	private static GameBoard board = GameBoard.getInstance();
 	private int range;
 	private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 	private ScheduledFuture<?> future;
@@ -34,7 +34,7 @@ public class Bomb extends Item {
 	{
 		super(position);
 		board.setCell(this, position);
-		this.range = model.BomberMan.getInstance().getRange();
+		this.range = BomberMan.getInstance().getRange();
 	}
 
 	public int getRange() { return range; }
@@ -49,7 +49,7 @@ public class Bomb extends Item {
 		};
 		
 		future = executor.schedule(explode, TIME_TO_EXPLODE, TimeUnit.MILLISECONDS);
-		Object[] args = { model.ChangeType.TRIGGER };
+		Object[] args = { ChangeType.TRIGGER };
 		setChanged();
 		notifyObservers(args);
 	}
@@ -68,15 +68,15 @@ public class Bomb extends Item {
 			for(Map.Entry<Direction, List<Element>> surrounding : surroundings.entrySet()) {
 				List<Element> values = surrounding.getValue();
 				for (Element e : values) {					
-					if (e instanceof model.SoftWall) {
+					if (e instanceof SoftWall) {
 						((SoftWall) e).destroy();
 					}
-					if (e instanceof model.Character) {
+					if (e instanceof Character) {
 						((Character) e).loseLife();
 					} 
-					if (e instanceof model.Bomb) {
-						((model.Bomb)e).getScheduledFuture().cancel(true);
-						((model.Bomb)e).explode();
+					if (e instanceof Bomb) {
+						((Bomb)e).getScheduledFuture().cancel(true);
+						((Bomb)e).explode();
 					}
 				}
 			}
@@ -93,10 +93,10 @@ public class Bomb extends Item {
 			else {
 				board.setCell(new EmptyTile(bombPosition), bombPosition);
 			}
-			model.BomberMan.getInstance().incBombs();
+			BomberMan.getInstance().incBombs();
 			
 			String[][] simplifiedSurroundings = simplifySurroundings(surroundings);
-			Object[] args = { model.ChangeType.EXPLODE, simplifiedSurroundings };
+			Object[] args = { ChangeType.EXPLODE, simplifiedSurroundings };
 			setChanged();
 			notifyObservers(args);
 		});

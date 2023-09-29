@@ -30,13 +30,13 @@ public class GameBoard extends StackPane implements Observer {
 	private int width = model.GameBoard.WIDTH;
 	private Item[][] tiles = new Item[height][width];
 	private GridPane gridPane = new GridPane();
-	private Rectangle rectangle = new Rectangle(view.Item.ITEM_WIDTH * model.GameBoard.WIDTH,view.Item.ITEM_HEIGHT * model.GameBoard.HEIGHT, Color.TRANSPARENT);
+	private Rectangle rectangle = new Rectangle(Item.ITEM_WIDTH * model.GameBoard.WIDTH, Item.ITEM_HEIGHT * model.GameBoard.HEIGHT, Color.TRANSPARENT);
 	private StackPane itemsPane = new StackPane(rectangle);
 	private static String tilesPath;
 	
 	
 	private GameBoard() {
-		this.setPrefHeight(view.Item.ITEM_HEIGHT * model.GameBoard.HEIGHT);
+		this.setPrefHeight(Item.ITEM_HEIGHT * model.GameBoard.HEIGHT);
 		itemsPane.setPrefHeight(this.getPrefHeight());
 		itemsPane.setAlignment(Pos.TOP_LEFT);
 		this.getChildren().add(gridPane);
@@ -47,9 +47,9 @@ public class GameBoard extends StackPane implements Observer {
 	 * singleton pattern
 	 * @return only existing instance of board (creates one if it doesn't already exist)
 	 */
-	public static view.GameBoard getInstance(){
+	public static GameBoard getInstance(){
 		if (gameBoard == null) {
-			gameBoard = new view.GameBoard();
+			gameBoard = new GameBoard();
 		}
 		return gameBoard;
 	}

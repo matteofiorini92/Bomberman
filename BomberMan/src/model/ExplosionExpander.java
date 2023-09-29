@@ -23,7 +23,7 @@ public class ExplosionExpander extends PowerUp {
 	{
 		super.execute();
 		BomberMan bomberMan = BomberMan.getInstance();
-		if (bomberMan.getRange() < MAX_RANGE) { model.BomberMan.getInstance().incRange(); }
+		if (bomberMan.getRange() < MAX_RANGE) { BomberMan.getInstance().incRange(); }
 //		return false;
 	}
 }

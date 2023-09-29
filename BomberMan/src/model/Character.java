@@ -22,7 +22,7 @@ public abstract class Character extends Element {
 	 */
 	public static final int TIME_FOR_MOVEMENT = 200;
 	
-	private static GameBoard board = model.GameBoard.getInstance();
+	private static GameBoard board = GameBoard.getInstance();
 	private double speed;
 	private Direction direction;
 	private int lives;
@@ -75,7 +75,7 @@ public abstract class Character extends Element {
 	private void setInvincible(boolean isInvincible) { 
 		this.isInvincible = isInvincible;
 		if (isInvincible) {
-			Object[] args = { model.ChangeType.BECOME_INVINCIBLE, null };
+			Object[] args = { ChangeType.BECOME_INVINCIBLE, null };
 			setChanged();
 			notifyObservers(args);
 		}
@@ -126,16 +126,16 @@ public abstract class Character extends Element {
 			hasMoved = false;
 		}
 		
-		if ((this instanceof BomberMan && newCell instanceof model.Enemy) || (this instanceof Enemy && newCell instanceof BomberMan)) {
+		if ((this instanceof BomberMan && newCell instanceof Enemy) || (this instanceof Enemy && newCell instanceof BomberMan)) {
 			BomberMan.getInstance().loseLife();
 		}
 		
 		if (this instanceof BomberMan && newCell instanceof PowerUp) {
-			((model.PowerUp)newCell).execute();
+			((PowerUp)newCell).execute();
 		}
 		
 		if (this instanceof BomberMan && newCell instanceof Exit) {
-			isOut = ((model.Exit)newCell).getOut();
+			isOut = ((Exit)newCell).getOut();
 		}
 		
 		
@@ -164,7 +164,7 @@ public abstract class Character extends Element {
 			
 			this.setPosition(newPosition);
 			
-			Object[] args = { model.ChangeType.MOVE, prevPosition };
+			Object[] args = { ChangeType.MOVE, prevPosition };
 			setChanged();
 			notifyObservers(args);
 			
@@ -180,7 +180,7 @@ public abstract class Character extends Element {
 	public void loseLife() {
 		if (!isInvincible && lives > 0) {
 			lives--;
-			Object[] args = { model.ChangeType.LOSE_LIFE, lives };
+			Object[] args = { ChangeType.LOSE_LIFE, lives };
 			setChanged();
 			notifyObservers(args);
 			if (lives == 0) {
@@ -211,7 +211,7 @@ public abstract class Character extends Element {
 	@SuppressWarnings("deprecation")
 	public void die() {
 		board.setCell(new EmptyTile(getPosition()), getPosition());
-		Object[] args = { model.ChangeType.DIE, lives };
+		Object[] args = { ChangeType.DIE, lives };
 		setChanged();
 		notifyObservers(args);
 		

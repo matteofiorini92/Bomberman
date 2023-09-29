@@ -64,7 +64,7 @@ public class Bomb extends Item {
 	
 	private void triggerBomb(model.Bomb bomb) {
 		int[] position = bomb.getPosition();
-		StackPane.setMargin(this, new Insets(position[0]*view.Item.ITEM_HEIGHT, 0,0,position[1]*view.Item.ITEM_WIDTH));
+		StackPane.setMargin(this, new Insets(position[0] * Item.ITEM_HEIGHT, 0, 0, position[1] * Item.ITEM_WIDTH));
 
 		String[] files = imageFiles.get("beforeEx").split("\\s+");
 		
@@ -105,13 +105,13 @@ public class Bomb extends Item {
 							gridPane.add(iv, j, i);
 						}
 						else {
-							Rectangle rect = new Rectangle(view.Item.ITEM_WIDTH,view.Item.ITEM_HEIGHT, Color.TRANSPARENT);
+							Rectangle rect = new Rectangle(Item.ITEM_WIDTH, Item.ITEM_HEIGHT, Color.TRANSPARENT);
 							gridPane.add(rect, j, i);
 						}
 					}
 				}
-				gridPane.setLayoutX((bombPosition[1] - range) * view.Item.ITEM_WIDTH);
-				gridPane.setLayoutY((bombPosition[0] - range) * view.Item.ITEM_HEIGHT);
+				gridPane.setLayoutX((bombPosition[1] - range) * Item.ITEM_WIDTH);
+				gridPane.setLayoutY((bombPosition[0] - range) * Item.ITEM_HEIGHT);
 				
 			});
 			timeline.getKeyFrames().add(keyFrame);

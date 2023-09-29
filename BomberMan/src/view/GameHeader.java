@@ -29,7 +29,7 @@ public class GameHeader extends StackPane implements Observer {
 	
 	private GameHeader() {
 		Scene scene = BaseScene.getInstance();
-		this.setPrefHeight(view.Item.ITEM_HEIGHT * 2);
+		this.setPrefHeight(Item.ITEM_HEIGHT * 2);
 		this.setPrefWidth(scene.getWidth());
 		this.setAlignment(Pos.TOP_LEFT);
 		this.getChildren().add(baseHeader);

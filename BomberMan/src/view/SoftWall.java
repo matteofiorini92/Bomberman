@@ -57,7 +57,7 @@ public class SoftWall extends Tile {
 	public void update(Observable o, Object arg)
 	{
 		
-		view.GameBoard viewBoard = view.GameBoard.getInstance();
+		GameBoard viewBoard = GameBoard.getInstance();
 		model.GameBoard modelBoard = model.GameBoard.getInstance();
 		timeline.getKeyFrames().clear();
 		timeline = new Timeline();
@@ -101,7 +101,7 @@ public class SoftWall extends Tile {
 			}
 			else if (cellBelow instanceof model.SoftWall) {
 				String desc = "sw";
-				SoftWall tileBelow = new view.SoftWall(desc);
+				SoftWall tileBelow = new SoftWall(desc);
 				cellBelow.addObserver(tileBelow);
 				viewBoard.setTile(tileBelow, positionBelow);
 			}
@@ -124,11 +124,11 @@ public class SoftWall extends Tile {
 			String file = imageFiles.get(desc);
 			Image im = new Image(tilesPath + file + ".png");
 			this.setImage(im);
-			viewBoard.setTile(new view.Tile(desc, im), softWallPosition);
+			viewBoard.setTile(new Tile(desc, im), softWallPosition);
 			
 			if (((model.SoftWall)o).isHidingSomething()) {
 				model.Item modelItem = (model.Item) ((model.SoftWall)o).getHiddenHidable();
-				view.Hidable viewHidable = new view.Hidable((model.Hidable)modelItem);
+				Hidable viewHidable = new Hidable((model.Hidable)modelItem);
 				modelItem.addObserver(viewHidable);
 			}
 			

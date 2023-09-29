@@ -8,7 +8,7 @@ package model;
  */
 public class SoftWall extends Wall implements Hiding {
 	
-	public static GameBoard board = model.GameBoard.getInstance();
+	public static GameBoard board = GameBoard.getInstance();
 	
 	private Hidable hiddenHidable = null;
 	

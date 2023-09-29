@@ -52,7 +52,7 @@ public class BomberMan extends Character {
 	@SuppressWarnings("deprecation")
 	public void setScore(int score) {
 		this.score = score > 0 ? score : 0;
-		Object[] args = { model.ChangeType.CHANGE_POINTS, score };
+		Object[] args = { ChangeType.CHANGE_POINTS, score };
 		setChanged();
 		notifyObservers(args);
 	}
@@ -60,7 +60,7 @@ public class BomberMan extends Character {
 	@SuppressWarnings("deprecation")
 	public void addPoints(int points) {
 		score += points;
-		Object[] args = { model.ChangeType.CHANGE_POINTS, score };
+		Object[] args = { ChangeType.CHANGE_POINTS, score };
 		setChanged();
 		notifyObservers(args);
 	}
@@ -69,7 +69,7 @@ public class BomberMan extends Character {
 	public void losePoints(int points) {
 		int partial = score - points;
 		points = partial > 0 ? partial : 0;
-		Object[] args = { model.ChangeType.CHANGE_POINTS, score };
+		Object[] args = { ChangeType.CHANGE_POINTS, score };
 		setChanged();
 		notifyObservers(args);
 	}
@@ -78,7 +78,7 @@ public class BomberMan extends Character {
 	public void incSpeed(double increase) { 
 		Double newSpeed = getSpeed() + increase;
 		setSpeed(newSpeed);
-		Object[] args = { model.ChangeType.CHANGE_SPEED, newSpeed };
+		Object[] args = { ChangeType.CHANGE_SPEED, newSpeed };
 		setChanged();
 		notifyObservers(args);
 	}
@@ -87,7 +87,7 @@ public class BomberMan extends Character {
 	public void decSpeed(double decrease) { 
 		Double newSpeed = getSpeed() - decrease;
 		setSpeed(newSpeed);
-		Object[] args = { model.ChangeType.CHANGE_SPEED, newSpeed };
+		Object[] args = { ChangeType.CHANGE_SPEED, newSpeed };
 		setChanged();
 		notifyObservers(args);
 	}
