@@ -178,7 +178,7 @@ public abstract class Character extends Element {
 	 */
 	@SuppressWarnings("deprecation")
 	public void loseLife() {
-		if (!isInvincible) {
+		if (!isInvincible && lives > 0) {
 			lives--;
 			Object[] args = { model.ChangeType.LOSE_LIFE, lives };
 			setChanged();
